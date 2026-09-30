@@ -24,6 +24,8 @@
 .DS_Store
 *.pem
 
+.infisical.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*
