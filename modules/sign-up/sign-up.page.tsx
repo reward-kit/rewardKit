@@ -2,6 +2,7 @@ import Link from "next/link"
 import { SignUpForm } from "./form/sign-up.form"
 import { Image } from "@rewardkit/packages/ui/components/image"
 import { H1, Paragraph } from "@rewardkit/packages/ui/components/typography"
+import { Suspense } from "react"
 
 export default async function SignUpPage() {
 
@@ -14,7 +15,9 @@ export default async function SignUpPage() {
                     <Paragraph className="text-muted-foreground">Simple affliate platform</Paragraph>
                 </div>
 
-                <SignUpForm />
+                <Suspense fallback={<div className="h-40" />}>
+                    <SignUpForm />
+                </Suspense>
             </div>
         </main>
     )
