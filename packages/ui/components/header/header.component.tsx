@@ -1,7 +1,7 @@
 
 import Link from "next/link"
-import { Button } from "../button"
 import { Image } from "../image"
+import { HeaderAuthActions } from "./auth-action.header"
 
 export const landingPageNavItems = [
     { label: 'Pricing', href: "/pricing", },
@@ -9,7 +9,7 @@ export const landingPageNavItems = [
     { label: 'How it works', href: "#how-it-works", },
 ]
 
-export const HeaderComponent = () => {
+export const HeaderComponent = async () => {
     return (
         <div className='w-full h-16 px-4'>
             <div className='max-w-7xl mx-auto h-full flex justify-between items-center'>
@@ -22,10 +22,7 @@ export const HeaderComponent = () => {
                     ))}
                 </nav>
                 <div className="flex items-center font-medium text-sm gap-4">
-                    <Link href={"/sign-in"}>Login</Link>
-                    <Button nativeButton={false} render={<Link href="/sign-up" />}>
-                        Start your free trial
-                    </Button>
+                    <HeaderAuthActions />
                 </div>
             </div>
         </div>
