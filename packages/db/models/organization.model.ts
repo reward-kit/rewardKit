@@ -9,9 +9,7 @@ const OrganizationSchema = new mongoose.Schema<OrganizationResource>({
     createdBy: { type: String, default: null },
     logoUrl: { type: String, default: null },
     isActive: { type: Boolean, default: true },
-    createdAt: { type: Number },
-    updatedAt: { type: Number },
-})
+}, { timestamps: true, })
 
 OrganizationSchema.plugin(timestampPlugin)
 

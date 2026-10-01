@@ -13,3 +13,5 @@ export const env = {
 }
 
 export const IS_DEVELOPMENT = env.env == "development"
+export const IS_STAGING = env.env == "staging"
+export const IS_PRODUCTION = env.env == "production"

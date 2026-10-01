@@ -8,8 +8,8 @@ const UserSchema = new mongoose.Schema<UserResource>({
     fullName: { type: String, default: null },
     profileUrl: { type: String, default: null },
     isActive: { type: Boolean, default: true },
-    createdAt: { type: Number },
-    updatedAt: { type: Number },
+}, {
+    timestamps: true,
 })
 
 UserSchema.plugin(timestampPlugin)
