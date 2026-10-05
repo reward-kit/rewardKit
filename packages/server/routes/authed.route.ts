@@ -5,6 +5,7 @@ import { connectDB } from "@rewardkit/packages/db/connectDB"
 import { API_KEY_PREFIX, apiKeyService } from "@rewardkit/packages/features/apiKey/services/api-key.service"
 import { permissionCheckMiddleware } from "../middlewares/permission.middleware"
 import { permissionsMetadataSchema } from "../types/permission.middleware.type"
+import { AppError } from "@rewardkit/packages/errors/app-error"
 
 const unauthorized = (long_message: string) =>
     NextResponse.json({ error: "Unauthorized", long_message }, { status: 401 })
@@ -50,7 +51,23 @@ async function resolveIdentity(request: Request): Promise<AuthContext | Response
     return { userId, orgId, authType: "session", permissions: ["*"] }
 }
 
-export const authedRoute = createZodRoute()
+export const authedRoute = createZodRoute({
+    handleServerError: (error) => {
+        if (error instanceof AppError) {
+            return NextResponse.json(
+                { error: error.code ?? error.name, message: error.message },
+                { status: error.statusCode }
+            )
+        }
+
+        // Unknown errors: log the real error, don't leak details to the client
+        console.error("[API ERROR]", error)
+        return NextResponse.json(
+            { error: "INTERNAL_SERVER_ERROR", message: "Internal server error" },
+            { status: 500 }
+        )
+    },
+})
     .defineMetadata(permissionsMetadataSchema)
     .use(async ({ request, next }) => {
         const identity = await resolveIdentity(request)

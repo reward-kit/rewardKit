@@ -1,3 +1,3 @@
 export const keys = {
-    programs: { list: () => "/api/v1/program", detail: (id: string) => `/api/v1/programs/${id}`, },
+    program: { getCurrentProgram: () => "/api/v1/program", updateProgram: (programId: string | undefined) => `/api/v1/program/${programId}` },
 };

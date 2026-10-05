@@ -49,5 +49,5 @@ export function getAvatarColor(seed?: string | null): AvatarColor {
 /** First letter of a name, uppercased, with a safe fallback. */
 export function getInitial(name?: string | null): string {
     const trimmed = name?.trim();
-    return trimmed ? trimmed.charAt(0).toUpperCase() : "?";
+    return trimmed ? trimmed.charAt(0).toUpperCase() : "U";
 }

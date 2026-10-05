@@ -2,13 +2,12 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@layer utilities {
-  .rounded-full {
-    border-radius: 19px;
-  }
-}
-
 @custom-variant dark (&:is(.dark *));
+
+@theme {
+  --text-sm: 14px;
+  --text-xsm: 13px;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -63,6 +62,7 @@
   --color-success-foreground: var(--success-foreground);
   --color-success: var(--success);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-link: var(--link);
 }
 
 @media (prefers-color-scheme: light) {
@@ -73,40 +73,40 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: #052d2b;
-  --card: oklch(1 0 0);
-  --card-foreground: #052d2b;
+  --background: #FAF9F5;
+  --foreground: #222;
+  --card: #FAF9F5;
+  --card-foreground: #222;
   --popover: oklch(1 0 0);
-  --popover-foreground: #052d2b;
-  --primary: #65D920;
+  --popover-foreground: #222;
+  --primary: #00D66F;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary-foreground: #171717;
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: oklch(52.78% 0.00006 271.152);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
+  --border: #e5e5e590;
   --input: #F5F5F5;
-  --ring: #65D920;
+  --ring: #00D66F;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
+  --sidebar: #FAF9F5;
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary: #00D66F;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent: #EBEBEB;
   --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-border: #e5e5e501;
   --sidebar-ring: oklch(0.708 0 0);
-  --btn-primary: #65D920;
-  --btn-primary-foreground: #052D2B;
+  --btn-primary: #000;
+  --btn-primary-foreground: #FFF;
   --destructive-foreground: var(--color-red-800);
   --success: var(--color-emerald-500);
   --success-foreground: var(--color-emerald-900);
@@ -116,6 +116,7 @@
   --warning-foreground: var(--color-yellow-900);
   --invert: var(--color-zinc-900);
   --invert-foreground: var(--color-zinc-50);
+  --link: var(--color-blue-500);
 }
 
 .dark {
@@ -174,4 +175,3 @@
     @apply font-sans;
   }
 }
-

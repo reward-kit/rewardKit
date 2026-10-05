@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 
-const AFTER_SIGN_UP_URL = "/w/_"
+const AFTER_SIGN_UP_URL = "/w"
 const OTP_LENGTH = 6
 const RESEND_COOLDOWN_SECONDS = 25
 

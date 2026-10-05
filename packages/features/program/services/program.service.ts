@@ -1,6 +1,6 @@
 import { db } from "@rewardkit/packages/db/db";
-import { CreateProgramRequest, CreateProgramResponse, GetProgramRequest, GetProgramResponse, UpdateProgramRequest, UpdateProgramResponse } from "@rewardkit/packages/types/program/program.api.schema";
-
+import { NotFoundError } from "@rewardkit/packages/errors/app-error";
+import { CreateProgramRequest, CreateProgramResponse, GetProgramByOrgIdRequest, GetProgramByOrgIdResponse, GetProgramRequest, GetProgramResponse, ListProgramsRequest, ListProgramsResponse, UpdateProgramRequest, UpdateProgramResponse } from "@rewardkit/packages/types/program/program.api.schema";
 
 export class ProgramService {
 
@@ -16,9 +16,25 @@ export class ProgramService {
     async getProgram(getProgramData: GetProgramRequest): Promise<GetProgramResponse> {
         const program = await db.program.findById(getProgramData.programId);
         if (!program) {
-            throw new Error("Program not found");
+            throw new NotFoundError("Program not found");
         }
         return { success: true, message: "Program retrieved successfully", program };
+    }
+
+    async getProgramByOrgId(getProgramData: GetProgramByOrgIdRequest): Promise<GetProgramByOrgIdResponse> {
+        const program = await db.program.findOne({ orgId: getProgramData.orgId });
+        if (!program) {
+            throw new NotFoundError("Program not found");
+        }
+        return { success: true, message: "Program retrieved successfully", program };
+    }
+
+    async listPrograms(listProgramsData: ListProgramsRequest): Promise<ListProgramsResponse> {
+        const programs = await db.program
+            .find({ orgId: listProgramsData.orgId })
+            .sort({ createdAt: 1 })
+
+        return { success: true, message: "Programs retrieved successfully", programs };
     }
 
     async updateProgram(updateProgramData: UpdateProgramRequest): Promise<UpdateProgramResponse> {

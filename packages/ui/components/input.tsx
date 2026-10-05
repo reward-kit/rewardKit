@@ -16,9 +16,9 @@ const inputVariants = cva(
   {
     variants: {
       variant: {
-        lg: "h-10.75 text-sm px-4 rounded-[16px] font-medium tracking-tight file:pe-4 file:me-4",
-        md: "h-9 px-2 text-sm rounded-[16px] file:pe-3 file:me-3",
-        sm: "h-7 px-2.5 text-xs rounded-[16px] file:pe-2.5 file:me-2.5",
+        lg: "h-10.75 text-sm px-4 rounded-sm font-medium tracking-tight file:pe-4 file:me-4",
+        md: "h-9 px-2 text-sm rounded-sm file:pe-3 file:me-3",
+        sm: "h-7 px-2.5 text-xs rounded-sm file:pe-2.5 file:me-2.5",
       },
     },
     defaultVariants: {
