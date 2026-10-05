@@ -1,20 +1,17 @@
 "use client"
 
-import { useAuth, useClerk, useSignIn } from "@clerk/nextjs"
+import { useAuth, useSignIn } from "@clerk/nextjs"
 import { useEffect, useState } from "react"
-import { Badge } from "@rewardkit/components/reui/badge"
 import { Button } from "@rewardkit/packages/ui/components/button"
 import { Image } from "@rewardkit/packages/ui/components/image"
 import { Input } from "@rewardkit/packages/ui/components/input"
-import { Label } from "@rewardkit/packages/ui/components/label"
 import { OtpInput } from "@rewardkit/packages/ui/components/otp-input"
-import { H1, H2, Paragraph } from "@rewardkit/packages/ui/components/typography"
+import { Paragraph } from "@rewardkit/packages/ui/components/typography"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
-import { Spinner } from "@rewardkit/packages/ui/components/spinner"
 
-const AFTER_SIGN_IN_URL = "/w/_"
+const AFTER_SIGN_IN_URL = "/w"
 const OTP_LENGTH = 6
 const RESEND_COOLDOWN_SECONDS = 25
 

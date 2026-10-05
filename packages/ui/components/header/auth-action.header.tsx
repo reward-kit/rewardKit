@@ -11,7 +11,7 @@ export const HeaderAuthActions = () => {
 
     if (isLoaded && isSignedIn) {
         return (
-            <Button variant={"secondary"} nativeButton={false} render={<Link href="/w/_" />}>
+            <Button variant={"secondary"} nativeButton={false} render={<Link href="/w" />}>
                 {user?.imageUrl && <Image className="size-5 rounded-full" src={user?.imageUrl} alt={`${user?.fullName}`} />}
                 Dashboard
             </Button>

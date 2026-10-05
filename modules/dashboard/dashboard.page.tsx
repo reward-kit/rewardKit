@@ -1,11 +1,12 @@
-"use client"
-
-import { usePrograms } from '@rewardkit/packages/features/program/hooks/useProgram'
-import React from 'react'
+import { Dashboard, DashboardHeader } from '@rewardkit/packages/ui/components/layout/dashboard.layout'
+import { AppHeader } from '../../packages/ui/components/sidebar/app.header'
 
 export const DashboardPage = () => {
-    const { programs } = usePrograms()
     return (
-        <div>DashboardPage</div>
+        <Dashboard>
+            <DashboardHeader>
+                <></>
+            </DashboardHeader>
+        </Dashboard>
     )
 }

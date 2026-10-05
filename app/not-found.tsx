@@ -16,7 +16,7 @@ export default function NotFound() {
         removed permanently.
       </p>
 
-      <div className={"mt-4 flex lg:flex-row flex-col items-center justify-center gap-2"}>
+      <div className={"mt-4 flex lg:flex-row flex-col items-center justify-center gap-1"}>
         <Button onClick={() => navigateToHome()}>Go Home</Button>
         <Button variant={"link"} onClick={() => router.back()}>
           Go back
