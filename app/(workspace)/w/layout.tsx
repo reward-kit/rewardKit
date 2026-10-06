@@ -14,7 +14,7 @@ export default async function Layout({
 }) {
     const { sessionClaims, orgId } = await auth.protect()
     if (!sessionClaims?.metadata?.onboardingComplete) {
-        redirect('/onboarding')
+        redirect('/onboarding/new')
     }
 
     return (
