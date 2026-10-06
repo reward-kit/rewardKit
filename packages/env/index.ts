@@ -10,6 +10,13 @@ export const env = {
         uri: process.env.MONGODB_URI!,
         encryptionKey: process.env.MONGODB_ENCRYPTION_KEY,
     },
+
+    aws: {
+        region: process.env.AWS_REGION!,
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+        bucketName: process.env.AWS_BUCKET_NAME!,
+    },
 }
 
 export const IS_DEVELOPMENT = env.env == "development"

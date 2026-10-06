@@ -21,10 +21,10 @@ const buttonVariants = cva(
       },
       size: {
         default:
-          "h-10.5 min-w-28 gap-1.5 px-4 pr-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+          "h-10 min-w-28 gap-1.5 px-4 pr-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         xs: "h-7 gap-1 rounded-md px-3 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-9.5 gap-1 rounded-md px-3.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "h-11.5 min-w-20 text-base font-semibold tracking-tight gap-1.5 px-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        lg: "h-11.5 min-w-20 text-sm font-semibold tracking-tight gap-1.5 px-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         xl: "h-12.5 gap-1.5 px-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         _2xl: "h-14.5 gap-1.5 text-base text-balance px-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         icon: "size-8",

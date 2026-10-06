@@ -6,8 +6,9 @@ const UserSchema = new mongoose.Schema<UserResource>({
     userId: { type: String, default: null, index: true },
     email: { type: String, default: null, unique: true, index: true },
     fullName: { type: String, default: null },
-    profileUrl: { type: String, default: null },
+    imageUrl: { type: String, default: null },
     isActive: { type: Boolean, default: true },
+    isOnboardingCompleted: { type: Boolean, default: false }
 }, {
     timestamps: true,
 })

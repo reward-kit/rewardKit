@@ -8,8 +8,8 @@ export const POST = withRequestId(authedRoute
     .metadata({ requiredPermissions: ["program:write"] })
     .body(ZProgramResource)
     .handler(async (request, context) => {
-        const { orgId, userId } = context.ctx as AuthContext
-        const program = await programService.createProgram({ orgId, userId, programData: context.body })
+        const { userId } = context.ctx as AuthContext
+        const program = await programService.createProgram({ userId, programData: context.body })
         return NextResponse.json(program, { status: 201 })
     })
 )

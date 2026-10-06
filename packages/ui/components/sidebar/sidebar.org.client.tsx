@@ -126,7 +126,7 @@ export function SidebarOrgClient({
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                     render={(props) => (
-                        <Link {...props} href="/onboarding">
+                        <Link {...props} href="/onboarding/program">
                             <IconPlus size={18} stroke={1.2} className="bg-white border p-0.5" />
                             Create new program
                         </Link>

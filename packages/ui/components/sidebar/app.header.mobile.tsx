@@ -4,7 +4,7 @@ import { H3 } from '@rewardkit/packages/ui/components/typography'
 import { Image } from '../image'
 import { SidebarTrigger } from '../sidebar'
 
-export const AppHeaderMobile = async ({ pageTitle }: { pageTitle?: string }) => {
+export const AppHeaderMobile = async ({ pageTitle, enableSidebarTrigger = false }: { pageTitle?: string, enableSidebarTrigger?: boolean }) => {
     const { userId } = await auth()
 
     if (!userId) return null
@@ -15,7 +15,8 @@ export const AppHeaderMobile = async ({ pageTitle }: { pageTitle?: string }) => 
                     <div className='flex items-center gap-1 border p-1 bg-white/92 rounded-lg'>
                         <Image src={"/svg/rewardkit.svg"} priority className="w-28" alt="RewardKit" />
 
-                        <SidebarTrigger className={"p-0 size-6"}/></div>
+                        {enableSidebarTrigger && <SidebarTrigger className={"p-0 size-6"} />}
+                    </div>
                     <div className='md:hidden w-px h-4 bg-border' />
                     <div>
                         <H3 className='font-inter! md:text-[1rem] font-semibold! tracking-tight text-foreground'>{pageTitle}</H3>

@@ -60,7 +60,7 @@ export const MultiSelectInput = ({
                         <button
                             type="button"
                             className={cn(
-                                'flex h-10.5 w-full min-w-0 items-center justify-between gap-2 rounded-lg border bg-transparent px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50',
+                                'flex h-10.5 w-full min-w-0 items-center justify-between gap-2 rounded-md border bg-transparent px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50',
                                 isError && 'border-destructive'
                             )}
                         />

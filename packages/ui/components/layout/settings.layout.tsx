@@ -93,7 +93,7 @@ export const SettingsRow = ({
                     {description && <SettingsDescription className="text-xs! text-muted-foreground/80 font-normal">{description}</SettingsDescription>}
                 </div>
             )}
-            {action && <div className={cn("shrink-0 col-span-1", actionClassName)}>{action}</div>}
+            {action && <div className={cn("shrink-0 col-span-1 justify-end flex", actionClassName)}>{action}</div>}
         </div>
     )
 }

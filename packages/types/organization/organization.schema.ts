@@ -7,7 +7,7 @@ export const ZOrganization = z.object({
     name: z.string().nullable().optional(),
     slug: z.string().nullable().optional(),
     createdBy: z.string().nullable().optional(),
-    logoUrl: z.string().nullable().optional(),
+    imageUrl: z.string().nullable().optional(),
     isActive: z.boolean().optional(),
     createdAt: z.number().optional(),
     updatedAt: z.number().optional(),

@@ -7,7 +7,7 @@ const OrganizationSchema = new mongoose.Schema<OrganizationResource>({
     name: { type: String, default: null, },
     slug: { type: String, default: null },
     createdBy: { type: String, default: null },
-    logoUrl: { type: String, default: null },
+    imageUrl: { type: String, default: null },
     isActive: { type: Boolean, default: true },
 }, { timestamps: true, })
 

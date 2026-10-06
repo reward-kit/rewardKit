@@ -9,7 +9,7 @@ interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement
     label?: string;
     labelClassName?: string;
     required?: boolean;
-    onChange?: (value: string) => void;
+    onChange?: (value: string, e?: React.ChangeEvent<HTMLInputElement>) => void;
     showVisibilityToggle?: boolean;
     parentClassName?: string;
     isLoading?: boolean;
@@ -43,12 +43,12 @@ export const TextInput = ({
             {label && (
                 <Label className={cn(labelClassName, isError && "text-destructive")}>
                     {label}
-                    {required && <span className='text-red-500 ml-1'>*</span>}
+                    {required && <span className='text-red-500 hidden ml-1'>*</span>}
                 </Label>
             )}
             <InputWrapper
                 className={cn(
-                    "bg-transparent border",
+                    "bg-transparent border pl-3 pr-3 overflow-hidden",
                     prefix && "pl-0",
                     suffix && "pr-0",
                     isError && "border-destructive focus-visible:ring-destructive",
@@ -56,22 +56,21 @@ export const TextInput = ({
                     inputProps.className
                 )}>
                 {prefix && (
-                    <p className="text-muted-foreground bg-muted p-1.75 rounded-l-sm">
+                    <p className="text-muted-foreground bg-muted/50 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-l-sm">
                         {prefix}
                     </p>
                 )}
                 <Input
                     type={isPasswordType && showVisibilityToggle ? (isVisible ? "text" : "password") : type}
                     required={required}
-                    onChange={(e) => onChange?.(e.target.value)}
+                    onChange={(e) => onChange?.(e.target.value, e)}
                     onBlur={onBlur}
                     disabled={isLoading || inputProps.disabled}
                     prefix={inputProps.prefix}
-
                     {...inputProps}
                 />
                 {suffix && (
-                    <p className="text-muted-foreground bg-muted p-1.75 rounded-r-sm">
+                    <p className="text-muted-foreground bg-muted/50 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-r-sm">
                         {suffix}
                     </p>
                 )}
@@ -79,15 +78,15 @@ export const TextInput = ({
                 {/* Right Input Slot Actions & Indicators */}
                 {/* <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2"> */}
                 {/* Status Indicators */}
-                {isLoading && (
+                {isLoading && !suffix && (
                     <Spinner className="size-4 text-muted-foreground" />
                 )}
 
-                {!isLoading && isSuccess && (
+                {!isLoading && isSuccess && !suffix && (
                     <IconCheck size={18} className="text-emerald-500 animate-in fade-in zoom-in duration-200" />
                 )}
 
-                {!isLoading && isError && (
+                {!isLoading && isError && !suffix && (
                     <IconAlertCircle size={18} className="text-destructive animate-in fade-in zoom-in duration-200" />
                 )}
 

@@ -13,7 +13,7 @@ export function H1({ children, className }: { children?: React.ReactNode, classN
 
 export function H2({ children, className }: { children?: React.ReactNode, className?: string }) {
   return (
-    <h2 className={cn(headingStyle, "text-[1.55rem] font-semibold tracking-tight leading-9 text-balance", className)}>
+    <h2 className={cn(headingStyle, "text-[1.55rem] font-semibold tracking-tighter leading-9 text-balance", className)}>
       {children}
     </h2>
   )
@@ -21,7 +21,7 @@ export function H2({ children, className }: { children?: React.ReactNode, classN
 
 export function H3({ children, className }: { children?: React.ReactNode, className?: string }) {
   return (
-    <h3 className={cn(headingStyle, "scroll-m-20 font-stack text-xl font-medium tracking-tight", className)}>
+    <h3 className={cn(headingStyle, "scroll-m-20 font-stack text-xl font-semibold tracking-tight", className)}>
       {children}
     </h3>
   )

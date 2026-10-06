@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { ZOrganization } from "../organization/organization.schema";
+import { ZWebsiteUrl } from "../website/website.schema";
 
 export const PROGRAM_STATUS = {
     ACTIVE: "active",
@@ -45,7 +47,7 @@ export const ZProgramResource = z.object({
     orgId: z.string().optional(),
     userId: z.string().optional(),
     name: z.string(),
-    productName: z.string().optional().nullable(),
+    productName: z.string(),
     status: z.enum(PROGRAM_STATUS).optional(),
     type: z.enum(PROGRAM_TYPE).optional(),
     payoutMinimumThreshold: z.number().min(0).optional(),
@@ -64,9 +66,11 @@ export const ZProgramResource = z.object({
     commissionValue: z.number().optional().nullable(),
     currency: z.string().max(3).optional().nullable(),
     faviconUrl: z.string().optional().nullable(),
+    subdomain: z.string(),
     createdAt: z.string().optional(),
     updatedAt: z.string().optional(),
-    websiteUrl: z.string().optional(),
+    websiteUrl: ZWebsiteUrl,
+    organization: ZOrganization.optional().nullable(),
 })
 
 export type ProgramResource = z.infer<typeof ZProgramResource>;

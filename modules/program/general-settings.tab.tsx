@@ -12,6 +12,7 @@ import { ProgramPayoutTermsDialog } from './payout/payout-terms.dialog'
 import { ProgramPayoutThresholdDialog } from './payout/minimum-threshold.dialog'
 import { ProgramPayoutMethodDialog } from './payout/payout-methods.dialog'
 import { ProgramStatusDialog } from './status/program-status.dialog'
+import { DeleteProgramDialog } from './delete/delete-program'
 
 export const GeneralSettingsTab = () => {
     const { program, isLoading, error } = useProgram();
@@ -28,7 +29,7 @@ export const GeneralSettingsTab = () => {
                 <SettingsContent>
                     <SettingsRow
                         title="Program ID"
-                        action={<CopyableId isLoading={isLoading} value={program?.id ?? "-"} />}
+                        action={<CopyableId showCopyButton isLoading={isLoading} value={program?.id ?? "-"} />}
                     />
                     <SettingsRow
                         title="Partner program name"
@@ -101,7 +102,20 @@ export const GeneralSettingsTab = () => {
                     {error && <div className='flex gap-1 items-center text-destructive'><HugeiconsIcon strokeWidth={2} size={13} icon={AlertCircleIcon} /><Small className='inline text-xs text-destructive'> Error: {error.message}</Small></div>}
                 </SettingsFooter>
             </Settings>
-
+            
+            <Settings>
+                <SettingsHeader>
+                    <SettingsTitle>Danger zone</SettingsTitle>
+                    <SettingsDescription>Permanent actions that can't be undone.</SettingsDescription>
+                </SettingsHeader>
+                <SettingsContent>
+                    <SettingsRow
+                        title="Delete program"
+                        description="Permanently deletes this program, its portal subdomain and all uploaded files. Partners lose access immediately."
+                        action={<DeleteProgramDialog />}
+                    />
+                </SettingsContent>
+            </Settings>
         </div>
     )
 }
