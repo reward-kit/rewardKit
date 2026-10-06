@@ -12,7 +12,7 @@ export class OrganizationHandler {
             name: org.name,
             slug: org.slug,
             createdBy: org.created_by,
-            logoUrl: org.image_url
+            imageUrl: org.image_url
         });
     }
 }

@@ -75,20 +75,20 @@
 :root {
   --background: #FAF9F5;
   --foreground: #222;
-  --card: #FAF9F5;
+  --card: #fcfbf8;
   --card-foreground: #222;
-  --popover: oklch(1 0 0);
+  --popover: #fcfbf8;
   --popover-foreground: #222;
   --primary: #00D66F;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: #171717;
-  --muted: oklch(0.97 0 0);
+  --muted: #F3ECE4;
   --muted-foreground: oklch(52.78% 0.00006 271.152);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #e5e5e590;
+  --border: #43261d14;
   --input: #F5F5F5;
   --ring: #00D66F;
   --chart-1: oklch(0.87 0 0);
@@ -103,7 +103,7 @@
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: #EBEBEB;
   --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: #e5e5e501;
+  --sidebar-border: #e5e5e508;
   --sidebar-ring: oklch(0.708 0 0);
   --btn-primary: #000;
   --btn-primary-foreground: #FFF;
@@ -174,4 +174,16 @@
   html {
     @apply font-sans;
   }
+}
+
+/* globals.css */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield;
 }

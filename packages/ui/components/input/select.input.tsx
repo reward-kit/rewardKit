@@ -85,7 +85,7 @@ export const SelectInput = ({
                     >
                         <SelectValue placeholder={placeholder} />
                     </SelectTrigger>
-                    <SelectContent align='start' alignItemWithTrigger={false} >
+                    <SelectContent align='start' className={"border-input"} alignItemWithTrigger={false} >
                         {children || (
                             options?.map((item) => (
                                 <SelectItem key={item.value} value={item.value}>

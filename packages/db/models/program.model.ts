@@ -27,6 +27,7 @@ const ProgramSchema = new mongoose.Schema<ProgramResource>({
     currency: { type: String, default: "USD", uppercase: true, minlength: 3, maxlength: 3 },
     faviconUrl: { type: String, default: null },
     websiteUrl: { type: String, default: null },
+    subdomain: { type: String, defualt: null }
 }, { timestamps: true, })
 
 ProgramSchema.set("toJSON", { virtuals: true, versionKey: false, transform })

@@ -107,8 +107,8 @@ export const CommandAvatarInput = ({
                                 disabled={isDisabled}
                                 onBlur={onBlur}
                                 className={cn(
-                                    "flex w-full items-center justify-between rounded-lg border shadow-xs text-sm placeholder:text-muted-foreground focus:outline-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
-                                    size === "sm" ? "h-8 px-3 text-xs" : "h-9.5 px-3 py-2",
+                                    "flex w-full items-center justify-between rounded-md border font-medium tracking-tight text-sm placeholder:text-muted-foreground focus:outline-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
+                                    size === "sm" ? "h-8 px-3 text-xs" : "h-9 px-3 py-2",
                                     (isLoading || isSuccess || isError) ? 'pr-14' : 'pr-8',
                                     isError && "border-destructive focus:ring-destructive",
                                     isSuccess && "ring-1 focus:ring-1 focus:ring-emerald-500",

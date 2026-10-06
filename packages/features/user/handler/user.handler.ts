@@ -40,7 +40,7 @@ export class UserHandler {
         const payload: UserResource = {
             userId: user.id,
             email: user.email_addresses[0]?.email_address ?? "",
-            profileUrl: user.image_url ?? null,
+            imageUrl: user.image_url ?? null,
             fullName: user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : email.split("@")[0],
             // billingAccount: {
             //     customerId: billingCustomerId

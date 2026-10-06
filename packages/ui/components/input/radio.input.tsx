@@ -50,7 +50,7 @@ export const RadioInput = <T extends string>({
                 <label
                     key={o.value}
                     className={cn(
-                        'flex cursor-pointer items-start gap-3 rounded-xl border p-3 transition-colors hover:bg-muted/50',
+                        'flex cursor-pointer items-start gap-3 rounded-md border p-3 transition-colors hover:bg-muted/50',
                         'has-data-checked:border-btn-primary has-data-checked:bg-muted/40',
                         disabled && 'cursor-not-allowed opacity-50'
                     )}

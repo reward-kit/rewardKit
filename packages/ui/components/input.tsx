@@ -11,14 +11,14 @@ const inputVariants = cva(
     file:h-full [&[type=file]]:py-0 file:border-solid file:border-input file:bg-transparent 
     file:font-medium file:not-italic file:text-foreground file:p-0 file:border-0 file:border-e
     aria-invalid:border-destructive/60 aria-invalid:ring-destructive/10 dark:aria-invalid:border-destructive dark:aria-invalid:ring-destructive/20
-    hover:border-shadow-xs outline-none focus-visible:ring-2 focus-visible:ring-ring bg-input
+    hover:border-shadow-xs outline-none focus-visible:ring-2 focus-visible:ring-ring font-medium bg-input shadow-xs shadow-input
   `,
   {
     variants: {
       variant: {
-        lg: "h-10.75 text-sm px-4 rounded-sm font-medium tracking-tight file:pe-4 file:me-4",
-        md: "h-9 px-2 text-sm rounded-sm file:pe-3 file:me-3",
-        sm: "h-7 px-2.5 text-xs rounded-sm file:pe-2.5 file:me-2.5",
+        lg: "h-10.75 text-sm px-4 rounded-md font-medium tracking-tight file:pe-4 file:me-4",
+        md: "h-9 px-2 text-sm rounded-md file:pe-3 file:me-3",
+        sm: "h-7 px-2.5 text-xs rounded-md file:pe-2.5 file:me-2.5",
       },
     },
     defaultVariants: {

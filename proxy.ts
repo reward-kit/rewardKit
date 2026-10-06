@@ -10,7 +10,12 @@ export default clerkMiddleware(async (auth) => {
 
 
     return NextResponse.next()
+}, {
+    organizationSyncOptions: {
+        personalAccountPatterns: ["/onboarding/new"],
+    },
 })
+
 export const config = {
     matcher: [
         // Skip Next.js internals and all static files, unless found in search params
