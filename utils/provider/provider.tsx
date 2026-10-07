@@ -8,14 +8,14 @@ import { Toaster } from 'react-hot-toast';
 export const Provider = ({ children }: { children: React.ReactNode }) => {
     return (
         <ClerkClientProvider>
-            <TRPCProviders>
-                <SwrProvider>
-                    <TooltipProvider>
-                        <Toaster />
-                        {children}
-                    </TooltipProvider>
-                </SwrProvider>
-            </TRPCProviders>
+                <TRPCProviders>
+                    <SwrProvider>
+                        <TooltipProvider>
+                            <Toaster />
+                            {children}
+                        </TooltipProvider>
+                    </SwrProvider>
+                </TRPCProviders>
         </ClerkClientProvider>
     )
 }

@@ -5,6 +5,7 @@ import { CheckSubdomainRequest, CheckSubdomainResponse, CreateProgramRequest, Cr
 import { faviconService } from "./favicon.service";
 import { s3StorageService } from "@rewardkit/packages/infra/aws/s3Storage";
 import { after } from "next/server";
+import { partnerGroupService } from "../../partner-groups/services/partner-groups.service";
 
 const RESERVED_SUBDOMAINS = new Set([
     "www", "app", "api", "admin", "dashboard", "mail", "support", "docs", "blog", "status", "rewardkit", "admin", "console", "clerk", "status",
@@ -61,12 +62,13 @@ export class ProgramService {
         // runs after the response is sent, so the user never waits for it
         after(async () => {
             try {
+                const group = await partnerGroupService.createPartnerGroup({ orgId: organization.id, userId, groupData: { name: "Default" } })
                 const { key } = await faviconService.save({
                     orgId: organization.id,
                     websiteUrl: programData.websiteUrl,
                     name: programData.productName,
                 })
-                await db.program.updateOne({ _id: program._id }, { $set: { faviconUrl: key } })
+                await db.program.updateOne({ _id: program._id }, { $set: { faviconUrl: key, defaultGroupId: group.partnerGroup.id } })
             } catch (err) {
                 console.error("[createProgram] favicon save failed", err)
             }

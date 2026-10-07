@@ -1,7 +1,7 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import { TextInput } from './text.input';
 import { formatMinorAmount } from '@rewardkit/lib/amount/formatMinorAmount';
-import currencyMap from "currency-symbol-map";
 
 const toEditString = (minor?: number): string => {
     if (minor == null || isNaN(minor)) return "";
