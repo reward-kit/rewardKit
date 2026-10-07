@@ -250,7 +250,7 @@ export function SignInForm() {
                     size="lg"
                     onClick={() => handleSso("oauth_google")}
                     disabled={isFetching}
-                    variant="secondary"
+                    variant="outline"
                     className="gap-3 text-muted-foreground"
                 >
                     <Image src="/svg/google.svg" priority className="size-5" alt="Google" />
@@ -262,7 +262,7 @@ export function SignInForm() {
                     size="lg"
                     onClick={() => handleSso("oauth_microsoft")}
                     disabled={isFetching}
-                    variant="secondary"
+                    variant="outline"
                     className="gap-3 text-muted-foreground"
                 >
                     <Image src="/svg/microsoft.svg" priority className="size-4.5" alt="Microsoft" />

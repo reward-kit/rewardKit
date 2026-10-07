@@ -1,3 +1,4 @@
+"use client"
 import { useRef, useState, type ComponentProps, type ReactNode } from 'react'
 import { PencilLineIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -65,7 +66,7 @@ export const EditRadioDialog = <T extends string>({
                             triggerClassName
                         )}
                     >
-                        <span className="truncate">{children ?? currentLabel ?? '-'}</span>
+                        <span className="truncate text-xsm">{children ?? currentLabel ?? '-'}</span>
                         <Button
                             variant="ghost"
                             className="size-6 min-w-fit shrink-0 rounded-sm px-0 py-0 text-muted-foreground"

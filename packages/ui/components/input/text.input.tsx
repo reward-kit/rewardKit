@@ -17,6 +17,7 @@ interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement
     isError?: boolean;
     errorMessage?: string;
     suffix?: string;
+    hint?: string;
 }
 
 export const TextInput = ({
@@ -32,6 +33,7 @@ export const TextInput = ({
     isError = false,
     errorMessage,
     onBlur,
+    hint,
     ...inputProps
 }: TextInputProps) => {
     const [isVisible, setIsVisible] = useState(false)
@@ -56,7 +58,7 @@ export const TextInput = ({
                     inputProps.className
                 )}>
                 {prefix && (
-                    <p className="text-muted-foreground bg-muted/50 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-l-sm">
+                    <p className="text-muted-foreground text-xsm/snug bg-muted/50 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-l-sm">
                         {prefix}
                     </p>
                 )}
@@ -70,7 +72,7 @@ export const TextInput = ({
                     {...inputProps}
                 />
                 {suffix && (
-                    <p className="text-muted-foreground bg-muted/50 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-r-sm">
+                    <p className="text-muted-foreground text-xsm/snug bg-muted/50 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-r-sm">
                         {suffix}
                     </p>
                 )}
@@ -102,7 +104,12 @@ export const TextInput = ({
                 )}
                 {/* </div> */}
             </InputWrapper>
-
+            {/* Error Message Feedback */}
+            {hint && (
+                <span className="text-xs italic text-muted-foreground">
+                    {hint}
+                </span>
+            )}
             {/* Error Message Feedback */}
             {isError && errorMessage && (
                 <span className="text-xs text-destructive animate-in fade-in slide-in-from-top-1">

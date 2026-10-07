@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --text-sm: 14px;
-  --text-xsm: 13px;
+  --text-sm: 14.5px;
+  --text-xsm: 13.5px;
 }
 
 @theme inline {
@@ -74,23 +74,23 @@
 
 :root {
   --background: #FAF9F5;
-  --foreground: #222;
-  --card: #fcfbf8;
-  --card-foreground: #222;
-  --popover: #fcfbf8;
-  --popover-foreground: #222;
+  --foreground: var(--color-neutral-900);
+  --card: #FCFBF8;
+  --card-foreground: var(--color-neutral-900);
+  --popover: #FCFBF8;
+  --popover-foreground: var(--color-neutral-900);
   --primary: #00D66F;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: #E6E1DA;
   --secondary-foreground: #171717;
-  --muted: #F3ECE4;
-  --muted-foreground: oklch(52.78% 0.00006 271.152);
+  --muted: #D8D1C760;
+  --muted-foreground: #76847e;
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: #43261d14;
-  --input: #F5F5F5;
-  --ring: #00D66F;
+  --input: #A2A9A3;
+  --ring: var(--color-blue-300);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -101,8 +101,8 @@
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: #00D66F;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: #EBEBEB;
-  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-accent: #E6E1DA;
+  --sidebar-accent-foreground: var(--color-neutral-900);
   --sidebar-border: #e5e5e508;
   --sidebar-ring: oklch(0.708 0 0);
   --btn-primary: #000;
@@ -186,4 +186,13 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield; /* Firefox */
     appearance: textfield;
+}
+
+@theme {
+  --animate-shine: shine 2.5s ease-in-out infinite;
+
+  @keyframes shine {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(300%); }
+  }
 }

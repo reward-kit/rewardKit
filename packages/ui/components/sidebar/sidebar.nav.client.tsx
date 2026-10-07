@@ -11,11 +11,9 @@ import Link from 'next/link'
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../sidebar'
 import { isNavItemActive } from '@rewardkit/lib/nav'
 import { usePathname } from 'next/navigation'
-import { useOrganization } from "@clerk/nextjs"
 
 export function SidebarNavClient() {
     const pathname = usePathname()
-    const { organization } = useOrganization()
 
     const appSidebarNavItems = [
         { label: 'Home', href: `/w`, icon: Home03Icon },
@@ -24,7 +22,7 @@ export function SidebarNavClient() {
     ]
 
     const settingsNavItems = [
-        { label: 'Program', href: `/w/program`, icon: Megaphone01Icon },
+        { label: 'Program', href: `/w/program/general`, icon: Megaphone01Icon },
     ]
     return (
         <>

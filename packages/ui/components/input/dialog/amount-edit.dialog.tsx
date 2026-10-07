@@ -1,3 +1,5 @@
+"use client"
+
 import { useRef, useState, type ComponentProps, type ReactNode } from 'react'
 import { PencilLineIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'

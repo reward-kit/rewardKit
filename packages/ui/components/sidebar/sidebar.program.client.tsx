@@ -58,7 +58,7 @@ export function SidebarProgramClient() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="block cursor-pointer w-full">
-                <div className="flex w-full bg-popover border border-border-1 h-9 shadow-xs group-data-[collapsible=icon]:pl-3 items-center gap-2 rounded-lg p-1.5 py-2 transition-colors hover:bg-sidebar-accent text-sidebar-accent-foreground">
+                <div className="flex w-full bg-popover border border-border-1 h-9 shadow-xs group-data-[collapsible=icon]:pl-2 items-center gap-2 rounded-lg p-1.5 py-2 transition-colors hover:bg-sidebar-accent text-sidebar-accent-foreground">
                     <Avatar className="size-5 shrink-0 rounded-sm">
                         {program?.faviconUrl && (
                             <AvatarImage
