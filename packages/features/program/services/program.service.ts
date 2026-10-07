@@ -165,7 +165,10 @@ export class ProgramService {
         if (!orgInUse && program.orgId) await this.teardownOrganization(program?.orgId)
 
         // program row LAST: while it exists, a failed delete can simply be retried
-        await db.program.deleteOne({ _id: program._id })
+        await Promise.all([
+            db.program.deleteOne({ _id: program._id }),
+            db.partnerGroup.deleteMany({ orgId: program.orgId })
+        ])
 
         // that was their last program: send them back through onboarding
         if (!(await db.program.exists({ userId }))) {
