@@ -45,7 +45,7 @@ export const PartnerGroupsPage = () => {
                                         tooltip={group.default ? "The default group is assigned to every new partner." : undefined}
                                         tooltipTriggerClassName='text-yellow-500 hover:text-yellow-500'
                                         tag={group?.isPrivate ? { title: "private group",children: <HugeiconsIcon size={18} icon={LockKeyholeIcon}/>, className: "bg-transparent border-0" } : undefined}
-                                        className="pr-2 py-3.5"
+                                        className="pr-2"
                                         action={<PartnerGroupActions group={group} />}
                                     />
                                 ))}
