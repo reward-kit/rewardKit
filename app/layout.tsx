@@ -3,6 +3,9 @@ import { Inter, Geist_Mono } from "next/font/google";
 import "../packages/ui/styles/globals.css";
 import { rewardKit } from "@rewardkit/lib/data";
 import { Provider } from "@rewardkit/utils/provider/provider";
+import { ThemeProvider } from "@rewardkit/components/theme-provider";
+import { Toaster } from 'react-hot-toast';
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const geistSans = Inter({
   variable: "--font-sans",
@@ -25,8 +28,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <html
         lang="en"
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        suppressHydrationWarning
       >
-        <body className="min-h-full flex flex-col" suppressHydrationWarning>{children}</body>
+        <body className="min-h-full flex flex-col" suppressHydrationWarning>
+          <NuqsAdapter>
+            <ThemeProvider>
+              <Toaster />
+              {children}
+            </ThemeProvider>
+          </NuqsAdapter>
+        </body>
       </html>
     </Provider>
   );

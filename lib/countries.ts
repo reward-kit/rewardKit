@@ -27,10 +27,34 @@ const COUNTRY_CODES = [
 ] as const
 
 // fixed "en" locale so server and client render the same names (no hydration mismatch)
+export type CountryCode = (typeof COUNTRY_CODES)[number]
+export type CountryOption = { label: string; value: string; imageUrl?: string }
+
+// fixed "en" locale so server and client render the same names (no hydration mismatch)
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" })
 
-export const ALL_COUNTRIES: { label: string; value: string }[] = COUNTRY_CODES
-    .map((code) => ({ label: regionNames.of(code) ?? code, value: code }))
+export const getCountryName = (code: string) => regionNames.of(code) ?? code
+export const getCountryFlagUrl = (code: string) => `/images/country-flags/${code}.png`
+
+// plain list: label + value only
+export const ALL_COUNTRIES: CountryOption[] = COUNTRY_CODES
+    .map((code) => ({ label: getCountryName(code), value: code }))
     .sort((a, b) => a.label.localeCompare(b.label))
 
-export const getCountryName = (code: string) => regionNames.of(code) ?? code
+// same list with a flag on every option
+export const ALL_COUNTRIES_WITH_FLAGS: CountryOption[] = ALL_COUNTRIES
+    .map((c) => ({ ...c, imageUrl: getCountryFlagUrl(c.value) }))
+
+export type CountryInfo = { code: string; name: string; flagUrl: string }
+
+// returns name + flag for a country code (case-insensitive, safe on bad input)
+export const getCountry = (code: string): CountryInfo => {
+    const upper = code.trim().toUpperCase()
+    let name = upper
+    try {
+        name = regionNames.of(upper) ?? upper
+    } catch {
+        // Intl.DisplayNames throws RangeError on malformed codes, so fall back to the raw code
+    }
+    return { code: upper, name, flagUrl: getCountryFlagUrl(upper) }
+}

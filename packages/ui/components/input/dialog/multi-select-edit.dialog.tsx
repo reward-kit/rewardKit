@@ -61,21 +61,25 @@ export const EditMultiSelectDialog = <T extends string | number>({
     )
     const [selected, setSelected] = useState<string[]>(savedKeys)
 
+    const MAX_SHOWN = 2
+    const shown = savedOptions.slice(0, MAX_SHOWN)
+    const extra = savedOptions.length - shown.length
+
     const currentLabel = savedOptions.length ? (
-        <span className="block min-w-0 truncate">
-            {savedOptions.map((o, i) => (
+        <span
+            className="min-w-0 flex-1 truncate text-right"
+            title={savedOptions.map((o) => o.label).join(', ')}
+        >
+            {shown.map((o, i) => (
                 <span key={String(o.value)}>
                     {o.imageUrl && (
-                        <Image
-                            src={o.imageUrl}
-                            alt=""
-                            className="mr-1 inline-block size-3 align-[-1px]"
-                        />
+                        <Image src={o.imageUrl} alt="" className="mr-1 inline-block size-3 align-[-1px]" />
                     )}
                     {o.label}
-                    {i < savedOptions.length - 1 && ', '}
+                    {i < shown.length - 1 && ', '}
                 </span>
             ))}
+            {extra > 0 && <span className="ml-1 text-muted-foreground">+{extra} more</span>}
         </span>
     ) : null
 
@@ -99,7 +103,7 @@ export const EditMultiSelectDialog = <T extends string | number>({
                     <div
                         {...props}
                         className={cn(
-                            'text-xsm flex min-w-0 justify-end font-medium tracking-tight items-center gap-2 outline-none focus-visible:outline-none focus-visible:ring-0',
+                            'text-xsm flex min-w-0 max-w-full flex-1 justify-end items-center gap-2 outline-none focus-visible:outline-none focus-visible:ring-0',
                             triggerClassName
                         )}
                     >
@@ -113,33 +117,31 @@ export const EditMultiSelectDialog = <T extends string | number>({
                     </div>
                 )}
             />
-            <DialogContent className={cn('min-w-md', contentClassName)}>
-                <form onSubmit={onSubmit}>
-                    <DialogHeader>
-                        <DialogTitle>{title}</DialogTitle>
-                        {description && <DialogDescription>{description}</DialogDescription>}
-                    </DialogHeader>
+            <DialogContent className={cn('min-w-md', contentClassName)} render={(props) => <form {...props} onSubmit={onSubmit} />}>
+                <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                    {description && <DialogDescription>{description}</DialogDescription>}
+                </DialogHeader>
 
-                    <div className="p-6 pt-0 flex flex-col max-w-full gap-4">
-                        <MultiSelectInput
-                            {...selectProps}
-                            label={label}
-                            placeholder={placeholder}
-                            options={options.map((o) => ({ label: o.label, value: String(o.value), imageUrl: o.imageUrl }))}
-                            value={selected}
-                            onChange={(val) => setSelected(Array.isArray(val) ? val : [])}
-                        />
-                    </div>
+                <div className="flex flex-col max-w-full gap-4">
+                    <MultiSelectInput
+                        {...selectProps}
+                        label={label}
+                        placeholder={placeholder}
+                        options={options.map((o) => ({ label: o.label, value: String(o.value), imageUrl: o.imageUrl }))}
+                        value={selected}
+                        onChange={(val) => setSelected(Array.isArray(val) ? val : [])}
+                    />
+                </div>
 
-                    <DialogFooter>
-                        <DialogClose ref={closeRef} render={<Button type="button" size="sm" variant="ghost" />}>
-                            {cancelLabel}
-                        </DialogClose>
-                        <Button type="submit" size="sm" isLoading={isSaving} disabled={!isDirty}>
-                            {saveLabel}
-                        </Button>
-                    </DialogFooter>
-                </form>
+                <DialogFooter>
+                    <DialogClose ref={closeRef} render={<Button type="button" size="sm" variant="outline" />}>
+                        {cancelLabel}
+                    </DialogClose>
+                    <Button type="submit" size="sm" isLoading={isSaving} disabled={!isDirty}>
+                        {saveLabel}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     )

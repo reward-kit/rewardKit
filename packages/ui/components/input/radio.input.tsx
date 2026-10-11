@@ -63,7 +63,7 @@ export const RadioInput = <T extends string>({
                     </Radio.Root>
 
                     <span className="flex min-w-0 flex-col gap-0.5">
-                        <span className="text-sm font-medium tracking-tight">{o.label}</span>
+                        <span className="text-sm">{o.label}</span>
                         {o.description && (
                             <span className="text-xs text-muted-foreground">{o.description}</span>
                         )}

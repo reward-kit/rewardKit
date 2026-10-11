@@ -58,7 +58,7 @@ export function SidebarProgramClient() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="block cursor-pointer w-full">
-                <div className="flex w-full bg-popover border border-border-1 h-9 shadow-xs group-data-[collapsible=icon]:pl-2 items-center gap-2 rounded-lg p-1.5 py-2 transition-colors hover:bg-sidebar-accent text-sidebar-accent-foreground">
+                <div className="flex w-full bg-popover border hover:border-sidebar-accent/50 h-9 shadow-xs group-data-[collapsible=icon]:pl-2 items-center gap-2 rounded-lg p-1.5 py-2 transition-colors hover:bg-sidebar-accent/50 text-sidebar-accent-foreground">
                     <Avatar className="size-5 shrink-0 rounded-sm">
                         {program?.faviconUrl && (
                             <AvatarImage
@@ -68,14 +68,14 @@ export function SidebarProgramClient() {
                             />
                         )}
                         <AvatarFallback
-                            className="rounded-sm text-[10px]/snug font-medium"
+                            className="rounded-sm text-[10px]/snug font-normal"
                             style={{ backgroundColor: background, color: foreground }}
                         >
                             {initial}
                         </AvatarFallback>
                     </Avatar>
-                    <span className="flex-1 truncate text-left text-sm font-semibold group-data-[collapsible=icon]:hidden">
-                        {program?.name ?? "Select program"}
+                    <span className="flex-1 truncate text-left text-sm font-medium group-data-[collapsible=icon]:hidden">
+                        {program?.productName ?? "Select program"}
                     </span>
                     <IconSelector
                         size={14}
@@ -84,7 +84,7 @@ export function SidebarProgramClient() {
                 </div>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="start" sideOffset={8} className="min-w-78">
+            <DropdownMenuContent align="start" className="min-w-44" sideOffset={8}>
                 {programs?.data?.programs.map((m) => {
                     const memberColor = getAvatarColor(m.name)
                     return (
@@ -102,17 +102,17 @@ export function SidebarProgramClient() {
                                         className="rounded-sm text-xs font-medium"
                                         style={{ backgroundColor: memberColor.background, color: memberColor.foreground }}
                                     >
-                                        {getInitial(m.name)}
+                                        {getInitial(m.productName)}
                                     </AvatarFallback>
                                 </Avatar>
-                                <span className="truncate font-semibold">{m.name}</span>
+                                <span className="truncate font-normal">{m.productName}</span>
                             </div>
                             {m.id === program?.id && <IconCheck size={14} className="shrink-0" />}
                         </DropdownMenuItem>
                     )
                 })}
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleCreateNew}>
+                <DropdownMenuItem onClick={handleCreateNew} className={"whitespace-nowrap"}>
                     <IconPlus size={18} stroke={1.2} className="bg-white border p-0.5" />
                     Create new program
                 </DropdownMenuItem>

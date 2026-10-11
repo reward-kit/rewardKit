@@ -22,11 +22,11 @@ export const GeneralSettingsPage = () => {
     const isProgramActive = program?.status == "active"
 
     return (
-        <Dashboard className='max-w-2xl mx-auto'>
-            <DashboardHeader className='px-7'>
-                <DashboardTitle>General Settings</DashboardTitle>
+        <Dashboard className='max-w-190 px-4 mx-auto'>
+            <DashboardHeader className='px-6 pt-12 mb-6'>
+                <DashboardTitle className="text-[26px]">General Settings</DashboardTitle>
             </DashboardHeader>
-            <DashboardContent>
+            <DashboardContent showFooter>
                 <div className='grid grid-cols-1 gap-6'>
                     <Settings>
                         <SettingsHeader>

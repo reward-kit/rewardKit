@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import { type ProgramResource, CUSTOMER_IDENTITY_VISIBILITY, PAYOUT_METHOD, PAYOUT_TERM, PROGRAM_COMMISSION_TYPE, PROGRAM_STATUS, PROGRAM_TYPE, URL_PARAMETER } from "@rewardkit/packages/types/program/program.schema"
+import { type ProgramResource, CUSTOMER_IDENTITY_VISIBILITY, PAYOUT_TERM, PROGRAM_COMMISSION_TYPE, PROGRAM_STATUS, PROGRAM_TYPE, URL_PARAMETER } from "@rewardkit/packages/types/program/program.schema"
 import { ID_PREFIX, idField, transform } from "../lib/id";
+import { PAYOUT_METHOD } from "@rewardkit/packages/types/payout/payout.schema";
 
 const ProgramSchema = new mongoose.Schema<ProgramResource>({
     _id: idField(ID_PREFIX.program),

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { ZOrganization } from "../organization/organization.schema";
 import { ZWebsiteUrl } from "../website/website.schema";
+import { PAYOUT_METHOD } from "../payout/payout.schema";
 
 export const PROGRAM_STATUS = {
     ACTIVE: "active",
@@ -28,11 +29,6 @@ export const PAYOUT_TERM = {
     NET_30: 30,
     NET_45: 45,
     NET_60: 60,
-} as const;
-
-export const PAYOUT_METHOD = {
-    PAYPAL: "paypal",
-    WISE: "wise"
 } as const;
 
 export const CUSTOMER_IDENTITY_VISIBILITY = {
@@ -74,3 +70,4 @@ export const ZProgramResource = z.object({
 })
 
 export type ProgramResource = z.infer<typeof ZProgramResource>;
+export { PAYOUT_METHOD };

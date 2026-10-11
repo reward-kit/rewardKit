@@ -11,14 +11,14 @@ const inputVariants = cva(
     file:h-full [&[type=file]]:py-0 file:border-solid file:border-input file:bg-transparent 
     file:font-medium file:not-italic file:text-foreground file:p-0 file:border-0 file:border-e
     aria-invalid:border-destructive/60 aria-invalid:ring-destructive/10 dark:aria-invalid:border-destructive dark:aria-invalid:ring-destructive/20
-    hover:border-shadow-xs outline-none focus-visible:ring-2 focus-visible:ring-ring font-medium bg-input/14 shadow-xs shadow-border
+    hover:border-shadow-xs outline-none focus-visible:ring-1 focus-visible:bg-transparent! focus-visible:ring-ring-2 bg-input/5 
   `,
   {
     variants: {
       variant: {
-        lg: "h-10.75 text-xsm px-4 rounded-md font-medium tracking-tight file:pe-4 file:me-4",
-        md: "h-9 px-2 text-xsm rounded-md file:pe-3 file:me-3",
-        sm: "h-7 px-2.5 text-xs rounded-md file:pe-2.5 file:me-2.5",
+        lg: "h-10.75 text-sm px-4 rounded-md tracking-tight file:pe-4 file:me-4",
+        md: "h-9 px-2 text-sm rounded-md file:pe-3 file:me-3",
+        sm: "h-8.25 px-2.5 text-xsm/snug rounded-sm placeholder:text-xsm/snug file:pe-2.5 file:me-2.5",
       },
     },
     defaultVariants: {
@@ -34,7 +34,7 @@ const inputAddonVariants = cva(
       variant: {
         lg: "rounded-full h-10 min-w-10 px-4 [&_svg:not([class*=size-])]:size-4.5",
         md: "rounded-full h-9 min-w-9 px-3 [&_svg:not([class*=size-])]:size-4.5",
-        sm: "rounded-full h-8 min-w-7 text-xs px-2.5 [&_svg:not([class*=size-])]:size-3.5",
+        sm: "rounded-full h-7 min-w-7 text-xsm/snug px-2.5 [&_svg:not([class*=size-])]:size-3.5",
       },
       mode: {
         default: "",
@@ -78,10 +78,11 @@ const inputGroupVariants = cva(
 const inputWrapperVariants = cva(
   `
     flex items-center gap-1.5
-    has-[:focus-visible]:ring-blue-300  
-    has-[:focus-visible]:border-blue-300  
-    has-[:focus-visible]:ring
-    has-[:focus-visible]:outline-none 
+    has-[:focus-visible]:bg-input/3
+    has-[:focus-visible]:ring-ring/50
+    has-[:focus-visible]:border-ring
+    has-[:focus-visible]:ring-2
+    has-[:focus-visible]:outline-none
     transition-all duration-200
     [&_[data-slot=datefield]]:grow 
     [&_[data-slot=input]]:data-focus-within:ring-transparent  
@@ -96,6 +97,7 @@ const inputWrapperVariants = cva(
     [&_[data-slot=input]]:border-0 
     [&_[data-slot=input]]:bg-transparent 
     [&_[data-slot=input]]:p-0
+    [&_[data-slot=input]]:rounded-none
     [&_[data-slot=input]]:shadow-none 
     [&_[data-slot=input]]:focus-visible:ring-0 
     [&_[data-slot=input]]:h-auto 

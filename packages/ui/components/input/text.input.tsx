@@ -5,7 +5,9 @@ import { cn } from '@rewardkit/lib/utils';
 import { IconEye, IconEyeOff, IconCheck, IconAlertCircle } from '@tabler/icons-react'
 import { Spinner } from '@rewardkit/packages/ui/components/spinner';
 
-interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+type InputVariant = React.ComponentProps<typeof Input>["variant"];
+interface TextInputProps
+    extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
     label?: string;
     labelClassName?: string;
     required?: boolean;
@@ -17,7 +19,10 @@ interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement
     isError?: boolean;
     errorMessage?: string;
     suffix?: string;
+    startingIcon?: React.ReactNode;
     hint?: string;
+    variant?: InputVariant;
+    focusRing?: boolean;
 }
 
 export const TextInput = ({
@@ -32,6 +37,9 @@ export const TextInput = ({
     isSuccess = false,
     isError = false,
     errorMessage,
+    startingIcon,
+    variant,
+    focusRing = true,
     onBlur,
     hint,
     ...inputProps
@@ -41,7 +49,7 @@ export const TextInput = ({
     const prefix = inputProps.prefix;
     const suffix = inputProps.suffix;
     return (
-        <div className={cn('flex flex-col gap-3 w-full', parentClassName)}>
+        <div className={cn('flex flex-col gap-2 w-full', parentClassName)}>
             {label && (
                 <Label className={cn(labelClassName, isError && "text-destructive")}>
                     {label}
@@ -50,17 +58,23 @@ export const TextInput = ({
             )}
             <InputWrapper
                 className={cn(
-                    "bg-transparent border pl-3 pr-3 overflow-hidden",
+                    "pl-3 pr-3 overflow-hidden",
                     prefix && "pl-0",
                     suffix && "pr-0",
+                    !focusRing && "has-[:focus-visible]:ring-0 has-[:focus-visible]:bg-input/8 bg-input/5 has-focus-visible:border-input",
                     isError && "border-destructive focus-visible:ring-destructive",
                     isSuccess && "border-emerald-500 focus-visible:ring-emerald-500",
                     inputProps.className
-                )}>
+                )} variant={variant}>
                 {prefix && (
-                    <p className="text-muted-foreground text-xsm/snug bg-muted/50 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-l-sm">
+                    <p className="text-muted-foreground text-sm/snug bg-input/5 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-l-sm">
                         {prefix}
                     </p>
+                )}
+                {startingIcon && (
+                    <div className='text-muted-foreground'>
+                        {startingIcon}
+                    </div>
                 )}
                 <Input
                     type={isPasswordType && showVisibilityToggle ? (isVisible ? "text" : "password") : type}
@@ -69,10 +83,12 @@ export const TextInput = ({
                     onBlur={onBlur}
                     disabled={isLoading || inputProps.disabled}
                     prefix={inputProps.prefix}
+                    className={cn(
+                        !focusRing && "has-focus-visible:ring-0 has-focus-visible:border-input", inputProps.className)}
                     {...inputProps}
                 />
                 {suffix && (
-                    <p className="text-muted-foreground text-xsm/snug bg-muted/50 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-r-sm">
+                    <p className="text-muted-foreground text-xsm/snug bg-input/5 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-r-sm">
                         {suffix}
                     </p>
                 )}

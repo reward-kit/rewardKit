@@ -11,12 +11,12 @@ export const ProgramCurrencyDialog = () => {
     return (
         <EditCommandAvatarDialog
             title="Update program currency"
-            description="Update the program's currency. NOTE: Only new data will be converted to the new currency."
+            description="Update the program's currency. "
             label="Program Currency"
             value={program?.currency}
             options={CURRENCY_OPTIONS}
             isSaving={isUpdating}
-            inputProps={{ isError: update.isError, errorMessage: getTrpcErrorMessage(update.error) }}
+            inputProps={{ isError: update.isError, errorMessage: getTrpcErrorMessage(update.error), hint: "Only new data will be converted to the new currency." }}
             onSave={(currency) =>
                 program?.id && handleUpdate({ programId: program.id, program: { currency } })
             }

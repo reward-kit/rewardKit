@@ -35,7 +35,7 @@ export const SidebarUserClient = () => {
 
                 <div className="flex flex-col gap-0 text-sm text-start p-2">
                     <span className="text-foreground font-medium tracking-tight">{user?.fullName}</span>
-                    <span className="leading-4 text-xs text-muted-foreground font-medium tracking-tight truncate">{user?.emailAddresses[0].emailAddress}</span>
+                    <span className="leading-4 text-xs text-muted-foreground font-medium tracking-tight truncate">{user?.emailAddresses[0]?.emailAddress ?? ""}</span>
                 </div>
                 <DropdownMenuItem render={(props) => (<Link {...props} href={`/w/settings`} />)}>
                     Account settings

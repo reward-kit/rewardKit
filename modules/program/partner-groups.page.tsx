@@ -1,26 +1,21 @@
 "use client"
 
 import { useProgram } from '@rewardkit/packages/features/program/hooks/useProgram'
-import { Settings, SettingsContent, SettingsDescription, SettingsFooter, SettingsHeader, SettingsRow, SettingsTitle } from '@rewardkit/packages/ui/components/layout/settings.layout'
+import { Settings, SettingsContent, SettingsHeader, SettingsRow, SettingsTitle } from '@rewardkit/packages/ui/components/layout/settings.layout'
 import { Small } from '@rewardkit/packages/ui/components/typography'
 import { Dashboard, DashboardContent, DashboardHeader, DashboardTitle } from '@rewardkit/packages/ui/components/layout/dashboard.layout'
-import { Button } from '@rewardkit/packages/ui/components/button'
 import { usePartnerGroups } from '@rewardkit/packages/features/partner-groups/hooks/usePartnerGroups'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { LockKeyholeIcon, StarIcon, UserMultiple03Icon } from '@hugeicons/core-free-icons'
+import { LockKeyholeIcon, UserMultiple03Icon } from '@hugeicons/core-free-icons'
 import { PartnerGroupCreateDialog } from './partner-group/partner-group.create.dialog'
-import { Badge } from '@rewardkit/components/reui/badge'
-import Link from 'next/link'
 import { PartnerGroupActions } from './partner-group/partner-group.actions'
 
 export const PartnerGroupsPage = () => {
-    const { partnerGroups, isLoading, error } = usePartnerGroups();
-    const { program } = useProgram()
-
+    const { partnerGroups } = usePartnerGroups();
     return (
-        <Dashboard className='max-w-2xl mx-auto'>
-            <DashboardHeader className='px-7'>
-                <DashboardTitle>Partner Groups</DashboardTitle>
+        <Dashboard className='max-w-190 px-4 mx-auto'>
+            <DashboardHeader className='px-6 pt-12 mb-6'>
+                <DashboardTitle className="text-[26px]">Partner Groups</DashboardTitle>
             </DashboardHeader>
             <DashboardContent>
                 <div className='grid grid-cols-1 gap-6'>

@@ -60,11 +60,11 @@ export const PartnerGroupCreateDialog = () => {
             <DialogContent className={"md:max-w-lg w-full"}>
                 <DialogHeader>
                     <DialogTitle>Create group</DialogTitle>
-                    <DialogDescription>Sort your affiliates into groups to simplify tracking and management.</DialogDescription>
                 </DialogHeader>
+                <DialogDescription>Sort your affiliates into groups to simplify tracking and management.</DialogDescription>
 
                 <ScrollArea>
-                    <form id={FORM_ID} onSubmit={onSubmit} noValidate className='p-6 pt-0 flex flex-col gap-4'>
+                    <form id={FORM_ID} onSubmit={onSubmit} noValidate className='p-4 flex flex-col gap-4'>
                         <TextInput label='Group name' placeholder='Agency partners' autoFocus disabled={isCreating} {...form.field("name")} />
                         <TextareaInput label='Description (Optional)' placeholder='Earn 20% as agency partner' maxLength={200} disabled={isCreating} {...form.field("description")} />
                         <TextInput

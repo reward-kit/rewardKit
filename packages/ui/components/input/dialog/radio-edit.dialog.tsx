@@ -62,7 +62,7 @@ export const EditRadioDialog = <T extends string>({
                     <div
                         {...props}
                         className={cn(
-                            'flex min-w-0 items-center justify-end gap-2 text-sm font-medium tracking-tight outline-none focus-visible:outline-none focus-visible:ring-0',
+                            'flex min-w-0 items-center justify-end gap-2 text-sm outline-none focus-visible:outline-none focus-visible:ring-0',
                             triggerClassName
                         )}
                     >
@@ -76,32 +76,30 @@ export const EditRadioDialog = <T extends string>({
                     </div>
                 )}
             />
-            <DialogContent className={cn('min-w-md', contentClassName)}>
-                <form onSubmit={onSubmit}>
-                    <DialogHeader>
-                        <DialogTitle>{title}</DialogTitle>
-                        {description && <DialogDescription>{description}</DialogDescription>}
-                    </DialogHeader>
+            <DialogContent className={cn('min-w-md', contentClassName)} render={(props) => <form {...props} onSubmit={onSubmit} />}>
+                <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                    {description && <DialogDescription>{description}</DialogDescription>}
+                </DialogHeader>
 
-                    <div className="flex flex-col gap-4 p-6 pt-0">
-                        <RadioInput
-                            {...radioProps}
-                            label={label}
-                            options={options}
-                            value={selected}
-                            onChange={setSelected}
-                        />
-                    </div>
+                <div className="flex flex-col gap-4">
+                    <RadioInput
+                        {...radioProps}
+                        label={label}
+                        options={options}
+                        value={selected}
+                        onChange={setSelected}
+                    />
+                </div>
 
-                    <DialogFooter>
-                        <DialogClose ref={closeRef} render={<Button type="button" size="sm" variant="ghost" />}>
-                            {cancelLabel}
-                        </DialogClose>
-                        <Button type="submit" size="sm" isLoading={isSaving} disabled={!isDirty}>
-                            {saveLabel}
-                        </Button>
-                    </DialogFooter>
-                </form>
+                <DialogFooter>
+                    <DialogClose ref={closeRef} render={<Button type="button" size="sm" variant="outline" />}>
+                        {cancelLabel}
+                    </DialogClose>
+                    <Button type="submit" size="sm" isLoading={isSaving} disabled={!isDirty}>
+                        {saveLabel}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     )

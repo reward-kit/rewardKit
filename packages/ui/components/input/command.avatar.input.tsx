@@ -45,6 +45,7 @@ interface CommandAvatarInputProps {
     errorMessage?: string
     size?: "sm" | "default"
     options?: CommandAvatarOption[]
+    hint?: string;
 }
 
 export const CommandAvatarInput = ({
@@ -66,6 +67,7 @@ export const CommandAvatarInput = ({
     errorMessage,
     size = "default",
     options = [],
+    hint,
 }: CommandAvatarInputProps) => {
     const [open, setOpen] = useState(false)
     const triggerRef = useRef<HTMLButtonElement>(null)
@@ -95,7 +97,7 @@ export const CommandAvatarInput = ({
             {label && (
                 <Label className={cn(labelClassName, "text-xsm", isError && "text-destructive")}>
                     {label}
-                    {required && <span className='text-red-500 ml-1'>*</span>}
+                    {required && <span className='text-red-500 hidden ml-1'>*</span>}
                 </Label>
             )}
 
@@ -109,7 +111,7 @@ export const CommandAvatarInput = ({
                                 disabled={isDisabled}
                                 onBlur={onBlur}
                                 className={cn(
-                                    "flex w-full items-center justify-between rounded-md border font-medium tracking-tight text-sm placeholder:text-muted-foreground focus:outline-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
+                                    "flex w-full items-center justify-between rounded-md bg-input/5 text-sm placeholder:text-muted-foreground focus:outline-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
                                     size === "sm" ? "h-8 px-3 text-xs" : "h-9 px-3 py-2",
                                     (isLoading || isSuccess || isError) ? 'pr-14' : 'pr-8',
                                     isError && "border-destructive focus:ring-destructive",
@@ -195,6 +197,11 @@ export const CommandAvatarInput = ({
                 </div>
             </div>
 
+            {hint && (
+                <span className="text-xs italic text-muted-foreground">
+                    {hint}
+                </span>
+            )}
             {/* Error Message Feedback */}
             {isError && errorMessage && (
                 <span className="text-xs text-destructive animate-in fade-in slide-in-from-top-1">
