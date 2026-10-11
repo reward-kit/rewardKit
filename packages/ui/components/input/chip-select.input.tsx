@@ -55,7 +55,7 @@ export const ChipSelectInput = ({
 
     const chipClass = (active: boolean) =>
         cn(
-            'h-8 min-w-fit px-4 rounded-lg border bg-card text-sm font-medium transition-colors',
+            'h-8 min-w-fit px-4 rounded-lg border bg-card text-sm font-normal transition-colors',
             'hover:bg-muted/60 disabled:opacity-60 disabled:cursor-not-allowed',
             active && 'border-foreground/10 bg-muted',
             isError && !active && 'border-destructive'

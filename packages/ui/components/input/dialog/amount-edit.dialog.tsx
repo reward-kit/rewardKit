@@ -65,7 +65,7 @@ export const EditAmountDialog = ({
                     <div
                         {...props}
                         className={cn(
-                            'text-xsm flex font-medium justify-end tracking-tight items-center gap-2 outline-none focus-visible:outline-none focus-visible:ring-0',
+                            'text-xsm flex justify-end items-center gap-2 outline-none focus-visible:outline-none focus-visible:ring-0',
                             triggerClassName
                         )}
                     >
@@ -83,32 +83,30 @@ export const EditAmountDialog = ({
                     </div>
                 )}
             />
-            <DialogContent className={cn('min-w-md', contentClassName)}>
-                <form onSubmit={onSubmit}>
-                    <DialogHeader>
-                        <DialogTitle>{title}</DialogTitle>
-                        {description && <DialogDescription>{description}</DialogDescription>}
-                    </DialogHeader>
+            <DialogContent className={cn('min-w-md', contentClassName)} render={(props) => <form {...props} onSubmit={onSubmit} />}>
+                <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                    {description && <DialogDescription>{description}</DialogDescription>}
+                </DialogHeader>
 
-                    <div className="p-6 pt-0 flex flex-col gap-4">
-                        <PrefixTextInput
-                            autoComplete="off"
-                            {...inputProps}
-                            label={label}
-                            value={draft}
-                            onChange={setDraft}
-                        />
-                    </div>
+                <div className="flex flex-col gap-4">
+                    <PrefixTextInput
+                        autoComplete="off"
+                        {...inputProps}
+                        label={label}
+                        value={draft}
+                        onChange={setDraft}
+                    />
+                </div>
 
-                    <DialogFooter>
-                        <DialogClose ref={closeRef} render={<Button type="button" size="sm" variant="ghost" />}>
-                            {cancelLabel}
-                        </DialogClose>
-                        <Button type="submit" size="sm" isLoading={isSaving} disabled={!isDirty}>
-                            {saveLabel}
-                        </Button>
-                    </DialogFooter>
-                </form>
+                <DialogFooter>
+                    <DialogClose ref={closeRef} render={<Button type="button" size="sm" variant="outline" />}>
+                        {cancelLabel}
+                    </DialogClose>
+                    <Button type="submit" size="sm" isLoading={isSaving} disabled={!isDirty}>
+                        {saveLabel}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     )

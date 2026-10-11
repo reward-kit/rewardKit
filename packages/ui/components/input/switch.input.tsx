@@ -57,7 +57,7 @@ export const SwitchInput = ({
                 )}
             >
                 {description && (
-                    <span className="text-xsm tracking-tight text-muted-foreground select-none">
+                    <span className="text-xsm text-muted-foreground select-none">
                         {description}
                     </span>
                 )}

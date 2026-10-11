@@ -8,6 +8,7 @@ export const ID_PREFIX = {
     affiliate: "aff",
     commission: "com",
     payout: "pay",
+    partner: "prt",
     group: "grp",
     apiKey: "sk",
 } as const

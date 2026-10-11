@@ -81,7 +81,7 @@ export const TextareaEditDialog = ({
                     <div
                         {...props}
                         className={cn(
-                            'text-xsm flex justify-end font-medium tracking-tight items-center gap-2 outline-none focus-visible:outline-none focus-visible:ring-0',
+                            'text-xsm flex justify-end items-center gap-2 outline-none focus-visible:outline-none focus-visible:ring-0',
                             triggerClassName
                         )}
                     >
@@ -95,35 +95,33 @@ export const TextareaEditDialog = ({
                     </div>
                 )}
             />
-            <DialogContent className={cn('min-w-md', contentClassName)}>
-                <form onSubmit={onSubmit} onChange={onChange}>
-                    <DialogHeader>
-                        <DialogTitle>{title}</DialogTitle>
-                        {description && <DialogDescription>{description}</DialogDescription>}
-                    </DialogHeader>
+            <DialogContent className={cn('min-w-md', contentClassName)} render={(props) => <form {...props} onSubmit={onSubmit} onChange={onChange} />}>
+                <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                    {description && <DialogDescription>{description}</DialogDescription>}
+                </DialogHeader>
 
-                    <div className="p-6 pt-0 flex flex-col gap-4">
-                        <TextareaInput
-                            label={label}
-                            name={name}
-                            rows={rows}
-                            maxLength={maxLength}
-                            placeholder={placeholder}
-                            defaultValue={value ?? ''}
-                            {...inputProps}
-                        />
-                        {error}
-                    </div>
+                <div className="flex flex-col gap-4">
+                    <TextareaInput
+                        label={label}
+                        name={name}
+                        rows={rows}
+                        maxLength={maxLength}
+                        placeholder={placeholder}
+                        defaultValue={value ?? ''}
+                        {...inputProps}
+                    />
+                    {error}
+                </div>
 
-                    <DialogFooter>
-                        <DialogClose ref={closeRef} render={<Button type="button" size="sm" variant="ghost" />}>
-                            {cancelLabel}
-                        </DialogClose>
-                        <Button isLoading={isSaving} ref={setSubmitRef} type="submit" size="sm" disabled={isSaving}>
-                            {saveLabel}
-                        </Button>
-                    </DialogFooter>
-                </form>
+                <DialogFooter>
+                    <DialogClose ref={closeRef} render={<Button type="button" size="sm" variant="outline" />}>
+                        {cancelLabel}
+                    </DialogClose>
+                    <Button isLoading={isSaving} ref={setSubmitRef} type="submit" size="sm" disabled={isSaving}>
+                        {saveLabel}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     )

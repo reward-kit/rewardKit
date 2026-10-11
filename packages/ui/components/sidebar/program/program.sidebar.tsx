@@ -8,19 +8,21 @@ import {
     SidebarMenuItem,
     SidebarMenuButton,
     SidebarHeader,
+    SidebarFooter,
 } from '@rewardkit/packages/ui/components/sidebar'
 import { ProgramNavClient } from './program.nav.client'
 import { SidebarProgramClient } from '../sidebar.program.client'
+import { ThemeToggle } from '@rewardkit/components/toggleTheme'
 
 export const ProgramSidebar = () => {
 
     return (
-        <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"><div className='px-2 pt-2'>
-            <SidebarHeader className="flex gap-4">
+        <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!">
+            <SidebarHeader>
                 <SidebarProgramClient />
             </SidebarHeader>
             <SidebarContent className='gap-0'>
-                <SidebarGroup className='pb-0'>
+                <SidebarGroup className='py-0'>
                     <SidebarMenu>
                         <SidebarMenuItem>
                             <SidebarMenuButton render={(props) => <Link {...props} href={`/w/`} />}>Back</SidebarMenuButton>
@@ -29,7 +31,10 @@ export const ProgramSidebar = () => {
                 </SidebarGroup>
                 <ProgramNavClient />
             </SidebarContent>
-        </div>
+
+            <SidebarFooter>
+                <ThemeToggle />
+            </SidebarFooter>
         </Sidebar>
     )
 }

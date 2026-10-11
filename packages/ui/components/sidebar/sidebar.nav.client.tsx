@@ -11,13 +11,14 @@ import Link from 'next/link'
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../sidebar'
 import { isNavItemActive } from '@rewardkit/lib/nav'
 import { usePathname } from 'next/navigation'
+import { partnersHref } from '@rewardkit/packages/features/partner/lib/partner.search-params'
 
 export function SidebarNavClient() {
     const pathname = usePathname()
 
     const appSidebarNavItems = [
         { label: 'Home', href: `/w`, icon: Home03Icon },
-        { label: 'Partners', href: `/w/partners`, icon: HandshakeIcon },
+        { label: 'Partners', href: `/w/partners`, to: partnersHref(), icon: HandshakeIcon },
         { label: 'Customers', href: `/w/customers`, icon: UserMultiple03Icon },
     ]
 
@@ -33,7 +34,7 @@ export function SidebarNavClient() {
                             const isActive = isNavItemActive(pathname, item.href)
                             return (
                                 <SidebarMenuItem key={item.href}>
-                                    <SidebarMenuButton isActive={isActive} render={(props) => <Link {...props} href={item.href} />}>
+                                    <SidebarMenuButton isActive={isActive} render={(props) => <Link {...props} href={item.to ?? item.href} />}>
                                         <HugeiconsIcon icon={item.icon} size={18} color="currentColor" strokeWidth={1.85} />
                                         {item.label}
                                     </SidebarMenuButton>
@@ -52,7 +53,7 @@ export function SidebarNavClient() {
                             return (
                                 <SidebarMenuItem key={item.href}>
                                     <SidebarMenuButton isActive={isActive} render={(props) => <Link {...props} href={item.href} />}>
-                                        <HugeiconsIcon icon={item.icon} size={18} color="currentColor" strokeWidth={1.85} />
+                                        <HugeiconsIcon icon={item.icon} size={18} color="currentColor" strokeWidth={2} />
                                         {item.label}
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>

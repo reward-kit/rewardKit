@@ -228,7 +228,7 @@ const ProgramForm = ({ program }: { program?: ProgramResource }) => {
                 />
 
                 <div className="flex flex-col gap-2">
-                    <span className="text-sm font-medium">Set your commission rate</span>
+                    <span className="text-sm font-normal">Set your commission rate</span>
                     <div className="flex gap-3">
                         <div className="flex-1">
                             <TextInput

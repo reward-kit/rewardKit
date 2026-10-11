@@ -6,15 +6,17 @@ import { faviconService } from "./favicon.service";
 import { s3StorageService } from "@rewardkit/packages/infra/aws/s3Storage";
 import { after } from "next/server";
 import { partnerGroupService } from "../../partner-groups/services/partner-groups.service";
+import { parseSubdomain } from "@rewardkit/lib/domain";
+import { RESERVED_SUBDOMAINS } from "../lib/reserved-subdomains";
 
-const RESERVED_SUBDOMAINS = new Set([
-    "www", "app", "api", "admin", "dashboard", "mail", "support", "docs", "blog", "status", "rewardkit", "admin", "console", "clerk", "status",
-])
+// packages/features/program/lib/reserved-subdomains.ts
 
 export class ProgramService {
 
     async createProgram({ userId, programData }: CreateProgramRequest): Promise<CreateProgramResponse> {
-        const subdomain = programData.subdomain.toLowerCase()
+        const parsed = parseSubdomain(programData.subdomain)
+        if (!parsed.ok) throw new ConflictError(parsed.message)
+        const subdomain = parsed.slug
         if (RESERVED_SUBDOMAINS.has(subdomain)) {
             throw new ConflictError("This subdomain is reserved. Pick another.")
         }
@@ -183,7 +185,9 @@ export class ProgramService {
 
     async checkSubdomainAvailability({ subdomain }: CheckSubdomainRequest): Promise<CheckSubdomainResponse> {
 
-        const slug = subdomain.toLowerCase()
+        const parsed = parseSubdomain(subdomain)
+        if (!parsed.ok) return { success: true, available: false, reason: parsed.reason }
+        const slug = parsed.slug
 
         if (RESERVED_SUBDOMAINS.has(slug)) {
             return { success: true, available: false, reason: "reserved" }

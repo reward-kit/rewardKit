@@ -55,7 +55,7 @@ export const SettingsDescription = ({ children, className }: WithChildren) => (
 export const SettingsContent = ({ children, className }: WithChildren) => (
     <div
         className={cn(
-            "w-full overflow-hidden rounded-2xl border border-border bg-card divide-y divide-border px-2.75",
+            "w-full overflow-hidden rounded-2xl border border-black/6 bg-card divide-y divide-black/6 px-4",
             className
         )}
     >
@@ -120,7 +120,7 @@ export const SettingsRowHeading = ({ title, tag, tooltip, tooltipIcon, className
     if (!title && !tag && !tooltip) return null
 
     return (
-        <div className={cn("flex items-center gap-1.5 text-xsm! font-medium tracking-tight", className)}>
+        <div className={cn("flex items-center gap-1.5 text-xsm!", className)}>
             {title && <div className="min-w-0">{title}</div>}
             {tooltip && <InfoTooltip triggerClassName={tooltipTriggerClassName} contentClassName={tooltipContentClassName} icon={tooltipIcon}>{tooltip}</InfoTooltip>}
             {tag && <Badge size="sm" variant="invert-light" {...tag} />}
@@ -170,14 +170,14 @@ export const SettingsRow = ({
 }: SettingsRowProps) => (
     <div
         className={cn(
-            "group flex w-full flex-col items-start justify-start gap-4 py-2.5 sm:flex-row sm:items-center sm:justify-between",
+            "group flex w-full flex-col items-start justify-start gap-4 py-3 sm:flex-row sm:items-center sm:justify-between",
             clickable && "cursor-pointer hover:bg-muted",
             className
         )}
         {...rest}
     >
         {children ?? (
-            <div className="flex min-w-0 flex-col gap-1 sm:max-w-sm">
+            <div className="flex min-w-0  flex-col gap-0.5 sm:max-w-sm">
                 <SettingsRowHeading
                     title={title}
                     tag={tag}

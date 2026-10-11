@@ -1,5 +1,5 @@
 import React from "react"
-import { H2, Paragraph, Small } from "@rewardkit/packages/ui/components/typography"
+import { H2, H3, Paragraph, Small } from "@rewardkit/packages/ui/components/typography"
 import { cn } from "@rewardkit/lib/utils"
 
 export const Dashboard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
@@ -22,23 +22,27 @@ export const DashboardHeader = ({
   children: React.ReactNode,
   className?: string,
 }) => {
-  return <div className={cn("relative w-full flex flex-col p-4 pt-6 gap-1", className)}>{children}</div>
+  return <div className={cn("relative w-full flex flex-wrap flex-col p-3 gap-1", className)}>{children}</div>
 }
 
 export const DashboardHeaderAction = ({
   children,
+  className
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  className?: string,
 }) => {
-  return <div className="absolute right-4 top-4">{children}</div>
+  return <div className={cn("sm:absolute right-4 top-4", className)}>{children}</div>
 }
 
 export const DashboardTitle = ({
   children,
+  className
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  className?: string,
 }) => {
-  return <H2>{children}</H2>
+  return <H3 className={cn(className)}>{children}</H3>
 }
 
 export const DashboardDescription = ({
@@ -49,17 +53,17 @@ export const DashboardDescription = ({
   return <Small>{children}</Small>
 }
 
-export const DashboardContent = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+export const DashboardContent = ({ children, className, showFooter = false }: { children: React.ReactNode, className?: string, showFooter?: boolean }) => {
   return (
-    <div className={cn("w-full relative flex flex-1 flex-col py-2 px-4", className)}>
+    <div className={cn("w-full relative flex flex-1 flex-col py-2.5 px-3", className)}>
       {children}
 
       {/* mt-auto pushes it to the bottom when content is short; in flow, so it never overlaps */}
-      <div className="mt-auto w-full pt-6 pb-4 text-center">
+      {showFooter && <div className="mt-auto w-full pt-6 pb-4 text-center">
         <Paragraph className="text-xs! text-muted-foreground">
           &copy; 2026, RewardKit LLP. All rights reserved
         </Paragraph>
-      </div>
+      </div>}
     </div>
   )
 }

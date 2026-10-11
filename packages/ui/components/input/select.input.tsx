@@ -28,6 +28,7 @@ interface SelectInputProps {
     errorMessage?: string;
     size?: "sm" | "default";
     children?: React.ReactNode;
+    hint?: string;
     options?: Array<{ label: string; value: string | number }>;
     selectProps?: ComponentProps<typeof Select>
 }
@@ -50,6 +51,7 @@ export const SelectInput = ({
     size = "default",
     children,
     options,
+    hint,
     selectProps
 }: SelectInputProps) => {
     const isDisabled = disabled || isLoading
@@ -112,6 +114,11 @@ export const SelectInput = ({
                 </div>
             </div>
 
+            {hint && (
+                <span className="text-xs italic text-muted-foreground">
+                    {hint}
+                </span>
+            )}
             {/* Error Message Feedback */}
             {isError && errorMessage && (
                 <span className="text-xs text-destructive animate-in fade-in slide-in-from-top-1">

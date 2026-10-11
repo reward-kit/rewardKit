@@ -43,7 +43,7 @@ export function ProgramNavClient() {
                                         <HugeiconsIcon icon={item.icon} size={18} color="currentColor" strokeWidth={1.85} />
                                         {item.label}
                                         {item.isNew && (
-                                            <Badge shine variant="success-light" className="ml-auto text-xs font-medium leading-none">
+                                            <Badge shine variant="success-light" size="xs" className="ml-auto leading-none">
                                                 New
                                             </Badge>
                                         )}
