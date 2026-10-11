@@ -103,7 +103,7 @@
   --sidebar-foreground: var(--color-neutral-700);
   --sidebar-primary: #00D66F;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: #EBEBEA;
+  --sidebar-accent: #E6E1DA;
   --sidebar-accent-foreground: var(--color-neutral-700);
   --sidebar-border: #e5e5e508;
   --sidebar-ring: oklch(0.708 0 0);
