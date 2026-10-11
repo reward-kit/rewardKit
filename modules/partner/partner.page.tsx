@@ -38,7 +38,7 @@ export const PartnerPage = () => {
     <Dashboard>
       <DashboardHeader>
         <DashboardTitle className="text-base">Partners</DashboardTitle>
-        <DashboardHeaderAction className="top-2 gap-1 flex items-center">
+        <DashboardHeaderAction className="top-2.5 gap-1 flex items-center">
           <div className="w-full">
             <TextInput
               value={search}
