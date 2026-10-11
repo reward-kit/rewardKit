@@ -34,7 +34,7 @@ export type CountryOption = { label: string; value: string; imageUrl?: string }
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" })
 
 export const getCountryName = (code: string) => regionNames.of(code) ?? code
-export const getCountryFlagUrl = (code: string) => `/images/country-flags/${code}.png`
+export const getCountryFlagUrl = (code: string) => `/images/country-flags/${code.toLowerCase()}.png`
 
 // plain list: label + value only
 export const ALL_COUNTRIES: CountryOption[] = COUNTRY_CODES
