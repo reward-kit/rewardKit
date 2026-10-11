@@ -22,7 +22,7 @@ export const DashboardHeader = ({
   children: React.ReactNode,
   className?: string,
 }) => {
-  return <div className={cn("relative w-full flex flex-wrap flex-col p-3 gap-1", className)}>{children}</div>
+  return <div className={cn("relative w-full flex flex-wrap flex-col p-3 py-3.25 gap-1", className)}>{children}</div>
 }
 
 export const DashboardHeaderAction = ({
