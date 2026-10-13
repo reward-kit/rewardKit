@@ -23,7 +23,7 @@ function BootSplash({ onTimeout }: { onTimeout?: () => void }) {
         >
             <div className="flex flex-col items-center gap-4">
                 <div className="relative overflow-hidden rounded-xl">
-                    <Image src="/svg/rewardkit_emblem.svg" className="w-12" alt="rewardkit" />
+                    <Image src="/svg/rewardKit_emblem.svg" className="w-12" alt="rewardkit" />
                     <div className="absolute inset-0 -translate-x-full animate-shine bg-linear-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
                 </div>
             </div>
