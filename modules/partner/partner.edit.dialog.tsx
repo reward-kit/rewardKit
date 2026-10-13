@@ -12,10 +12,11 @@ import { TextInput } from '@rewardkit/packages/ui/components/input/text.input'
 import { SelectInput } from '@rewardkit/packages/ui/components/input/select.input'
 import { ScrollArea } from '@rewardkit/packages/ui/components/scroll-area'
 import { CommandAvatarInput } from '@rewardkit/packages/ui/components/input/command.avatar.input'
-import { PARTNER_STATUS, PARTNER_STATUS_OPTIONS, PartnerResource } from '@rewardkit/packages/types/partner/partner.schema'
-import { PAYOUT_METHOD_OPTIONS } from './partner.create.dialog'
+import { PARTNER_STATUS, PartnerResource } from '@rewardkit/packages/types/partner/partner.schema'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { PencilEdit01Icon } from '@hugeicons/core-free-icons'
+import { PAYOUT_METHOD_OPTIONS } from '@rewardkit/packages/features/payouts/constant'
+import { PARTNER_STATUS_OPTIONS } from '@rewardkit/packages/features/partner/contants/status'
 
 const FORM_ID = "edit-partner-form"
 
@@ -45,11 +46,6 @@ export const PartnerEditDialog = ({ partnerData, children }: Props) => {
     const { handleUpdate, isUpdating } = usePartner(partnerId)
 
     const [open, setOpen] = useState(false)
-
-    const groupOptions = partnerGroups.map((group) => ({
-        label: group.name,
-        value: group.id ?? group._id ?? "",
-    }))
 
     const form = useSchemaForm({
         schema: ZCreatePartnerInput.shape.partnerData,
@@ -94,11 +90,8 @@ export const PartnerEditDialog = ({ partnerData, children }: Props) => {
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger render={(props) => <Button {...props} type="button" variant="outline" size="xs" />}>
-                {children ?? <div className="flex items-center gap-1">
-                    <HugeiconsIcon icon={PencilEdit01Icon}/>
-                    <span>Edit details</span>
-                </div>}
+            <DialogTrigger render={(props) => <Button {...props} type="button" variant="secondary" className="rounded-full" size="xs" />}>
+                Edit details
             </DialogTrigger>
 
             <DialogContent className="w-full md:max-w-md">
@@ -124,49 +117,6 @@ export const PartnerEditDialog = ({ partnerData, children }: Props) => {
                             errorMessage={form.errors.countryCode}
                             disabled={isUpdating}
                         />
-                        <SelectInput
-                            label="Group (Optional)"
-                            placeholder="Select group"
-                            value={form.values.groupId || null}
-                            onChange={(v) => form.setValue("groupId", v ?? "")}
-                            options={groupOptions}
-                            isError={!!form.errors.groupId}
-                            errorMessage={form.errors.groupId}
-                            disabled={isUpdating}
-                        />
-                        <SelectInput
-                            label="Status"
-                            placeholder="Select status"
-                            value={form.values.status || null}
-                            onChange={(v) => form.setValue("status", (v as any) ?? PARTNER_STATUS.PENDING)}
-                            options={PARTNER_STATUS_OPTIONS}
-                            isError={!!form.errors.status}
-                            errorMessage={form.errors.status}
-                            disabled={isUpdating}
-                        />
-                        <SelectInput
-                            label="Payout method (Optional)"
-                            placeholder="Select payout method"
-                            value={form.values.payoutMethod || null}
-                            onChange={(v) => form.setValue("payoutMethod", (v as any) || null)}
-                            options={PAYOUT_METHOD_OPTIONS}
-                            isError={!!form.errors.payoutMethod}
-                            errorMessage={form.errors.payoutMethod}
-                            disabled={isUpdating}
-                        />
-                        {form.values.payoutMethod && (
-                            <TextInput
-                                type="email"
-                                label="Payout email"
-                                placeholder="payouts@example.com"
-                                required
-                                disabled={isUpdating}
-                                isError={!!form.errors.payoutDetails}
-                                errorMessage={form.errors.payoutDetails}
-                                value={typeof form.values.payoutDetails === 'object' && form.values.payoutDetails !== null ? form.values.payoutDetails.email : ""}
-                                onChange={(v) => form.setValue("payoutDetails", { email: v })}
-                            />
-                        )}
                     </form>
                 </ScrollArea>
 
@@ -176,7 +126,7 @@ export const PartnerEditDialog = ({ partnerData, children }: Props) => {
                     </DialogClose>
                     {/* outside the <form> in the DOM, so it is linked with the form attribute */}
                     <Button type="submit" form={FORM_ID} size="sm" isLoading={isUpdating} disabled={isUpdating}>
-                        Save changes
+                        Update partner
                     </Button>
                 </DialogFooter>
             </DialogContent>

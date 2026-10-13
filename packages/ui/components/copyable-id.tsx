@@ -55,8 +55,8 @@ export const CopyableId = ({ value, className, label = "Copy ID", isLoading = fa
                     <TooltipTrigger>
                         <code
                             className={cn(
-                                "max-w-60 w-fit truncate rounded-md bg-muted px-2 py-1 font-mono text-xs text-foreground",
-                                !showCopyButton && "cursor-pointer",
+                                "max-w-60 w-fit truncate rounded-md px-2 py-1 text-xs text-foreground",
+                                !showCopyButton && "cursor-pointer bg-muted text-foreground",
                             )}
                             title={value}
                         >

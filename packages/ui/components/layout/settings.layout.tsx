@@ -55,7 +55,7 @@ export const SettingsDescription = ({ children, className }: WithChildren) => (
 export const SettingsContent = ({ children, className }: WithChildren) => (
     <div
         className={cn(
-            "w-full overflow-hidden rounded-2xl border border-black/6 bg-card divide-y divide-black/6 px-4",
+            "w-full overflow-hidden rounded-2xl border border-black/6 bg-popover divide-y divide-black/6 px-4",
             className
         )}
     >

@@ -169,7 +169,8 @@ export class ProgramService {
         // program row LAST: while it exists, a failed delete can simply be retried
         await Promise.all([
             db.program.deleteOne({ _id: program._id }),
-            db.partnerGroup.deleteMany({ orgId: program.orgId })
+            db.partnerGroup.deleteMany({ orgId: program.orgId }),
+            db.partner.deleteMany({ orgId: program.orgId })
         ])
 
         // that was their last program: send them back through onboarding

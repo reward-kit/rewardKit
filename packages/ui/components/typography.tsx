@@ -21,7 +21,7 @@ export function H2({ children, className }: { children?: React.ReactNode, classN
 
 export function H3({ children, className }: { children?: React.ReactNode, className?: string }) {
   return (
-    <h3 className={cn(headingStyle, "scroll-m-20 font-stack text-xl font-semibold tracking-tight", className)}>
+    <h3 className={cn(headingStyle, "scroll-m-20 font-stack text-xl font-semibold", className)}>
       {children}
     </h3>
   )

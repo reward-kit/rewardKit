@@ -60,7 +60,7 @@ export const MultiSelectInput = ({
                         <button
                             type="button"
                             className={cn(
-                                'flex h-9 w-full min-w-0 items-center justify-between gap-2 rounded-md bg-input/5 px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50',
+                                'flex h-9 w-full min-w-0 items-center bg-input justify-between gap-2 rounded-md px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50',
                                 isError && 'border-destructive'
                             )}
                         />
@@ -101,7 +101,7 @@ export const MultiSelectInput = ({
             </Popover>
 
             {isError && errorMessage && (
-                <span className="text-xs text-destructive">{errorMessage}</span>
+                <span className="text-xxs text-destructive">{errorMessage}</span>
             )}
         </div>
     )

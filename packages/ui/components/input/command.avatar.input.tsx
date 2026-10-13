@@ -111,7 +111,7 @@ export const CommandAvatarInput = ({
                                 disabled={isDisabled}
                                 onBlur={onBlur}
                                 className={cn(
-                                    "flex w-full items-center justify-between rounded-md bg-input/5 text-sm placeholder:text-muted-foreground focus:outline-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
+                                    "flex w-full items-center bg-input justify-between rounded-md text-sm placeholder:text-muted-foreground focus:outline-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
                                     size === "sm" ? "h-8 px-3 text-xs" : "h-9 px-3 py-2",
                                     (isLoading || isSuccess || isError) ? 'pr-14' : 'pr-8',
                                     isError && "border-destructive focus:ring-destructive",
@@ -198,13 +198,13 @@ export const CommandAvatarInput = ({
             </div>
 
             {hint && (
-                <span className="text-xs italic text-muted-foreground">
+                <span className="text-xxs italic text-muted-foreground">
                     {hint}
                 </span>
             )}
             {/* Error Message Feedback */}
             {isError && errorMessage && (
-                <span className="text-xs text-destructive animate-in fade-in slide-in-from-top-1">
+                <span className="text-xxs text-destructive animate-in fade-in slide-in-from-top-1">
                     {errorMessage}
                 </span>
             )}

@@ -65,7 +65,7 @@ export const RadioInput = <T extends string>({
                     <span className="flex min-w-0 flex-col gap-0.5">
                         <span className="text-sm">{o.label}</span>
                         {o.description && (
-                            <span className="text-xs text-muted-foreground">{o.description}</span>
+                            <span className="text-xxs text-muted-foreground">{o.description}</span>
                         )}
                     </span>
                 </label>
@@ -73,7 +73,7 @@ export const RadioInput = <T extends string>({
         </RadioGroup>
 
         {isError && errorMessage && (
-            <span className="text-xs text-destructive">{errorMessage}</span>
+            <span className="text-xxs text-destructive">{errorMessage}</span>
         )}
     </div>
 )

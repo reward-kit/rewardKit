@@ -1,40 +1,18 @@
 "use client"
-import Link from 'next/link'
+
 import {
     Sidebar,
     SidebarContent,
-    SidebarGroup,
-    SidebarMenu,
-    SidebarMenuItem,
-    SidebarMenuButton,
-    SidebarHeader,
-    SidebarFooter,
 } from '@rewardkit/packages/ui/components/sidebar'
 import { ProgramNavClient } from './program.nav.client'
-import { SidebarProgramClient } from '../sidebar.program.client'
-import { ThemeToggle } from '@rewardkit/components/toggleTheme'
 
 export const ProgramSidebar = () => {
 
     return (
-        <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!">
-            <SidebarHeader>
-                <SidebarProgramClient />
-            </SidebarHeader>
-            <SidebarContent className='gap-0'>
-                <SidebarGroup className='py-0'>
-                    <SidebarMenu>
-                        <SidebarMenuItem>
-                            <SidebarMenuButton render={(props) => <Link {...props} href={`/w/`} />}>Back</SidebarMenuButton>
-                        </SidebarMenuItem>
-                    </SidebarMenu>
-                </SidebarGroup>
+        <Sidebar className="absolute! top-0 bottom-0 h-full! border-r-0! bg-transparent px-0">
+            <SidebarContent className='gap-0 mt-4'>
                 <ProgramNavClient />
             </SidebarContent>
-
-            <SidebarFooter>
-                <ThemeToggle />
-            </SidebarFooter>
         </Sidebar>
     )
 }

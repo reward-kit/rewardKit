@@ -42,7 +42,7 @@ export const PartnerInvitedListTable = () => {
         <div className="flex h-full w-full flex-col">
             <DataTable
                 table={table}
-                variant="grid"
+                variant="plain"
                 footer="total"
                 loading={isLoading}
                 pagination={{ page, limit: pageSize, totalPages, total }}

@@ -33,20 +33,14 @@ export function ProgramNavClient() {
         <>
             <SidebarGroup>
                 <SidebarGroupContent>
-                    <SidebarGroupLabel>Program</SidebarGroupLabel>
                     <SidebarMenu>
                         {programSidebarNavItems.map((item) => {
                             const isActive = isNavItemActive(pathname, item.href)
                             return (
-                                <SidebarMenuItem key={item.href}>
-                                    <SidebarMenuButton isActive={isActive} render={(props: any) => <Link {...props} href={item.href} />}>
-                                        <HugeiconsIcon icon={item.icon} size={18} color="currentColor" strokeWidth={1.85} />
+                                <SidebarMenuItem key={item.href} className='flex flex-col gap-2'>
+                                    <SidebarMenuButton isActive={isActive} className='data-active:bg-transparent hover:bg-transparent text-xsm! active:bg-transparent text-muted-foreground [&_svg]:size-4' render={(props: any) => <Link {...props} href={item.href} />}>
+                                        <HugeiconsIcon icon={item.icon} size={18} color="currentColor" strokeWidth={2} />
                                         {item.label}
-                                        {item.isNew && (
-                                            <Badge shine variant="success-light" size="xs" className="ml-auto leading-none">
-                                                New
-                                            </Badge>
-                                        )}
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             )

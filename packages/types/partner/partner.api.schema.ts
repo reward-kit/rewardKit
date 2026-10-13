@@ -1,6 +1,6 @@
 import z from "zod"
 import { ZBaseAPIResponse } from "../api/base.api.schema"
-import { ZPartner, ZPartnerBase, PARTNER_STATUS } from "./partner.schema"
+import { ZPartner, PARTNER_STATUS } from "./partner.schema"
 import { ZPaginatedResponse } from "../paginated-response"
 
 // fields the server owns and the client should never send
@@ -21,7 +21,7 @@ const ZPartnerServerFields = {
 // ---------- Create ----------
 export const ZCreatePartnerRequest = z.object({
     orgId: z.string(),
-    partnerData: ZPartnerBase.omit(ZPartnerServerFields).partial({ groupId: true }),
+    partnerData: ZPartner.omit(ZPartnerServerFields).partial({ groupId: true }),
 })
 export type CreatePartnerRequest = z.infer<typeof ZCreatePartnerRequest>
 
@@ -52,7 +52,7 @@ export type GetPartnerResponse = z.infer<typeof ZGetPartnerResponse>
 export const ZUpdatePartnerRequest = z.object({
     orgId: z.string(),
     partnerId: z.string(),
-    partnerData: ZPartnerBase.omit(ZPartnerServerFields).partial(),
+    partnerData: ZPartner.omit(ZPartnerServerFields).partial(),
 })
 export type UpdatePartnerRequest = z.infer<typeof ZUpdatePartnerRequest>
 
@@ -108,10 +108,11 @@ export const ZPartnerCountsResponse = ZBaseAPIResponse.extend({
 })
 export type PartnerCountsResponse = z.infer<typeof ZPartnerCountsResponse>
 
+const ZOptionalReason = z.string().trim().max(500).optional()
 export const ZPartnerStatusChange = z.discriminatedUnion("status", [
-    z.object({ status: z.literal(PARTNER_STATUS.ACTIVE) }), // approve or reactivate
-    z.object({ status: z.literal(PARTNER_STATUS.REJECTED), reason: z.string().trim().min(1).max(500) }),
-    z.object({ status: z.literal(PARTNER_STATUS.SUSPENDED), reason: z.string().trim().min(1).max(500) }),
+    z.object({ status: z.literal(PARTNER_STATUS.ACTIVE) }),
+    z.object({ status: z.literal(PARTNER_STATUS.REJECTED), reason: ZOptionalReason }),
+    z.object({ status: z.literal(PARTNER_STATUS.SUSPENDED), reason: ZOptionalReason }),
 ])
 export type PartnerStatusChange = z.infer<typeof ZPartnerStatusChange>
 

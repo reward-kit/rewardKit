@@ -111,7 +111,7 @@ export const ChipSelectInput = ({
             )}
 
             {isError && errorMessage && (
-                <span className="text-xs text-destructive animate-in fade-in slide-in-from-top-1">
+                <span className="text-xxs text-destructive animate-in fade-in slide-in-from-top-1">
                     {errorMessage}
                 </span>
             )}

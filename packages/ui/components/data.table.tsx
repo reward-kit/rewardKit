@@ -52,19 +52,31 @@ const rootVariants = cva("w-full overflow-hidden", {
     defaultVariants: { variant: "card" },
 });
 
+// NEW: applied to the <table> itself. `border-separate` is required for row gaps.
+const tableVariants = cva("", {
+    variants: {
+        variant: {
+            grid: "",
+            card: "",
+            plain: "border-separate border-spacing-y-1", // gap between rows
+        },
+    },
+    defaultVariants: { variant: "card" },
+});
+
 const headVariants = cva(
-    "whitespace-nowrap text-left align-middle text-muted-foreground",
+    "whitespace-nowrap text-left align-middle text-muted-foreground! [--header-text-color:text-muted-foreground]",
     {
         variants: {
             variant: {
                 grid: "border-b border-border last:border-r-0",
                 card: "border-b border-border",
-                plain: "border-y",
+                plain: "",
             },
             size: {
-                sm: "h-8 px-3 text-xs [--header-text-size:sm]",
-                md: "h-9 px-3 text-xs [--header-text-size:sm]",
-                lg: "h-12 px-4 text-sm [--header-text-size:xsm]",
+                sm: "h-8.75 px-3 text-xxs! [--header-text-size:sm]",
+                md: "h-9.5 px-3 text-xsm [--header-text-size:sm]",
+                lg: "h-12 px-4 text-xsm [--header-text-size:xsm]",
             },
         },
         defaultVariants: { variant: "card", size: "md" },
@@ -72,10 +84,10 @@ const headVariants = cva(
 );
 
 // text style for plain (non-sortable) header content; keep in sync with SortableHeader
-const headerTextVariants = cva("font-normal text-muted-foreground/70!", {
+const headerTextVariants = cva("font-normal text-muted-foreground/50!", {
     variants: {
         size: {
-            sm: "text-[11px]",
+            sm: "text-xxs!",
             md: "text-xsm!",
             lg: "text-xsm",
         },
@@ -83,27 +95,37 @@ const headerTextVariants = cva("font-normal text-muted-foreground/70!", {
     defaultVariants: { size: "md" },
 });
 
+// CHANGED: plain rows are transparent; the background/border/radius live on the cells.
+// (In border-separate mode, <tr> can't be rounded or bordered.)
 const rowVariants = cva("transition-colors", {
     variants: {
         variant: {
             grid: "border-b border-border last:border-b-0",
             card: "border-b border-border last:border-b-0",
-            plain: "",
+            plain: "bg-transparent hover:bg-transparent",
         },
         clickable: {
-            true: "cursor-pointer hover:bg-accent/40",
+            true: "cursor-pointer",
             false: "",
         },
     },
+    compoundVariants: [
+        { clickable: true, variant: ["grid", "card"], class: "hover:bg-accent/40" },
+        { clickable: true, variant: "plain", class: "[&:hover>td]:bg-accent/60" },
+    ],
     defaultVariants: { variant: "card", clickable: false },
 });
 
+// CHANGED: plain cells get the card background, a border, and rounded outer corners
 const cellVariants = cva("align-middle", {
     variants: {
         variant: {
             grid: "border-border last:border-r-0",
             card: "",
-            plain: "",
+            plain:
+                "bg-card transition-colors " +
+                "first:rounded-l-xl " +
+                "last:rounded-r-xl",
         },
         size: {
             sm: "px-3 py-2.5 text-xs",
@@ -114,7 +136,7 @@ const cellVariants = cva("align-middle", {
     defaultVariants: { variant: "card", size: "md" },
 });
 
-const footerVariants = cva("flex items-center text-muted-foreground", {
+const footerVariants = cva("flex items-center text-muted-foreground/70", {
     variants: {
         variant: {
             grid: "border-t border-border px-3 py-1",
@@ -153,7 +175,7 @@ export const PlainHeader = ({
     className?: string;
 }) => {
     const { size } = React.useContext(DataTableStyleContext);
-    return <span className={cn(headerTextVariants({ size }), className)}>{title}</span>;
+    return <span className={cn(headerTextVariants({ size }), "text-muted-foreground!", className)}>{title}</span>;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -240,7 +262,7 @@ function RowsSelect({ pagination, onLimitChange, limitOptions }: Pick<FooterProp
                 onValueChange={(v) => v && onLimitChange(Number(v))}
             >
                 <SelectTrigger size="sm">
-                    <SelectValue className={"text-xs"}/>
+                    <SelectValue className={"text-xs"} />
                 </SelectTrigger>
                 <SelectContent align="end" alignItemWithTrigger={false} className="w-20">
                     {limitOptions.map((n) => (
@@ -476,6 +498,7 @@ export type DataTableProps<TFeatures extends TableFeatures, TData extends RowDat
         errorComponent?: React.ReactNode;
         emptyStateComponent?: React.ReactNode;
         skeletonVariant?: DataTableSkeleton;
+        hideFooter?: boolean
     };
 
 // getVisibleCells / size only exist when those features are registered
@@ -519,7 +542,8 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
     isError,
     errorComponent,
     emptyStateComponent,
-    showRefreshButton
+    showRefreshButton,
+    hideFooter = false
 }: DataTableProps<TFeatures, TData>) {
     const colSpan = table.getAllLeafColumns().length;
     const rows = table.getRowModel().rows;
@@ -530,12 +554,16 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
 
     const FooterComponent = footer !== "none" && pagination ? FOOTERS[footer] : null;
 
+    // NEW: selected-row highlight. Plain rows paint on cells, others on the <tr>.
+    const selectedClass = variant === "plain" ? "[&>td]:bg-accent" : "bg-accent";
+
     return (
         <DataTableStyleContext.Provider value={{ variant: variant ?? "card", size: size ?? "md" }}>
             <div className={cn(rootVariants({ variant }), className)}>
                 {toolbar && <div className="p-3">{toolbar}</div>}
 
-                <Table>
+                {/* CHANGED: table variant (border-separate + spacing for plain) */}
+                <Table className={tableVariants({ variant })}>
                     <TableHeader>
                         {table.getHeaderGroups().map((group) => (
                             <TableRow key={group.id} className="hover:bg-transparent">
@@ -609,7 +637,7 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
                                             onClick={() => onRowClick?.(row)}
                                             className={cn(
                                                 rowVariants({ variant, clickable }),
-                                                i === selectedRowIndex && "bg-accent",
+                                                i === selectedRowIndex && selectedClass,
                                             )}
                                         >
                                             {cells.map((cell) => (
@@ -629,7 +657,7 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
                     </TableBody>
                 </Table>
 
-                {FooterComponent && pagination && (
+                {FooterComponent && pagination && !hideFooter && (
                     <div className={footerVariants({ variant, size })}>
                         <FooterComponent
                             pagination={pagination}
@@ -648,4 +676,4 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
     );
 }
 
-export { rootVariants, headVariants, headerTextVariants, rowVariants, cellVariants, footerVariants };
+export { rootVariants, tableVariants, headVariants, headerTextVariants, rowVariants, cellVariants, footerVariants };

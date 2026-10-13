@@ -11,6 +11,15 @@ import { cn } from '@rewardkit/lib/utils'
 import { IconCheck, IconAlertCircle } from '@tabler/icons-react'
 import { Spinner } from '@rewardkit/packages/ui/components/spinner'
 
+export interface SelectOption {
+    label: string;
+    value: string | number;
+    /** Rendered instead of `label` when present (e.g. a badge) */
+    custom?: React.ReactNode;
+    /** Small helper text under the option in the dropdown */
+    hint?: string;
+}
+
 interface SelectInputProps {
     label?: string;
     labelClassName?: string;
@@ -29,7 +38,7 @@ interface SelectInputProps {
     size?: "sm" | "default";
     children?: React.ReactNode;
     hint?: string;
-    options?: Array<{ label: string; value: string | number }>;
+    options?: SelectOption[];
     selectProps?: ComponentProps<typeof Select>
 }
 
@@ -56,10 +65,12 @@ export const SelectInput = ({
 }: SelectInputProps) => {
     const isDisabled = disabled || isLoading
 
+    const renderOption = (opt: SelectOption) => opt.custom ?? opt.label
+
     return (
         <div className={cn('flex flex-col gap-2.5 w-full', parentClassName)}>
             {label && (
-                <Label className={cn(labelClassName, isError && "text-destructive")}>
+                <Label className={cn(labelClassName)}>
                     {label}
                     {required && <span className='text-red-500 ml-1'>*</span>}
                 </Label>
@@ -85,16 +96,24 @@ export const SelectInput = ({
                             triggerClassName
                         )}
                     >
-                        <SelectValue placeholder={placeholder} />
+                        <SelectValue placeholder={placeholder}>
+                            {(selected: string | null) => {
+                                const opt = options?.find((o) => String(o.value) === String(selected))
+                                return opt ? renderOption(opt) : placeholder
+                            }}
+                        </SelectValue>
                     </SelectTrigger>
                     <SelectContent align='start' className={"border-input"} alignItemWithTrigger={false} >
-                        {children || (
-                            options?.map((item) => (
-                                <SelectItem key={item.value} value={item.value}>
-                                    {item.label}
-                                </SelectItem>
-                            ))
-                        )}
+                        {children || options?.map((item) => (
+                            <SelectItem key={item.value} value={item.value}>
+                                <div className="flex flex-col items-start gap-0.5">
+                                    {renderOption(item)}
+                                    {item.hint && (
+                                        <span className="text-xxs text-muted-foreground">{item.hint}</span>
+                                    )}
+                                </div>
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
 
@@ -115,13 +134,13 @@ export const SelectInput = ({
             </div>
 
             {hint && (
-                <span className="text-xs italic text-muted-foreground">
+                <span className="text-xxs! italic text-muted-foreground">
                     {hint}
                 </span>
             )}
             {/* Error Message Feedback */}
             {isError && errorMessage && (
-                <span className="text-xs text-destructive animate-in fade-in slide-in-from-top-1">
+                <span className="text-xxs text-destructive animate-in fade-in slide-in-from-top-1">
                     {errorMessage}
                 </span>
             )}
