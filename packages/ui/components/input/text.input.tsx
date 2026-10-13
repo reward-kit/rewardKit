@@ -51,7 +51,7 @@ export const TextInput = ({
     return (
         <div className={cn('flex flex-col gap-2 w-full', parentClassName)}>
             {label && (
-                <Label className={cn(labelClassName, isError && "text-destructive")}>
+                <Label className={cn(labelClassName, "mb-1")}>
                     {label}
                     {required && <span className='text-red-500 hidden ml-1'>*</span>}
                 </Label>
@@ -61,13 +61,13 @@ export const TextInput = ({
                     "pl-3 pr-3 overflow-hidden",
                     prefix && "pl-0",
                     suffix && "pr-0",
-                    !focusRing && "has-[:focus-visible]:ring-0 has-[:focus-visible]:bg-input/8 bg-input/5 has-focus-visible:border-input",
+                    !focusRing && "has-[:focus-visible]:ring-0 has-[:focus-visible]:bg-input/80 has-focus-visible:border-input",
                     isError && "border-destructive focus-visible:ring-destructive",
                     isSuccess && "border-emerald-500 focus-visible:ring-emerald-500",
                     inputProps.className
                 )} variant={variant}>
                 {prefix && (
-                    <p className="text-muted-foreground text-sm/snug bg-input/5 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-l-sm">
+                    <p className="text-muted-foreground text-sm/snug bg-neutral-200 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-l-sm">
                         {prefix}
                     </p>
                 )}
@@ -88,7 +88,7 @@ export const TextInput = ({
                     {...inputProps}
                 />
                 {suffix && (
-                    <p className="text-muted-foreground text-xsm/snug bg-input/5 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-r-sm">
+                    <p className="text-muted-foreground text-xsm/snug bg-neutral-200 px-3 self-stretch flex items-center shrink-0 whitespace-nowrap rounded-r-sm">
                         {suffix}
                     </p>
                 )}
@@ -122,13 +122,13 @@ export const TextInput = ({
             </InputWrapper>
             {/* Error Message Feedback */}
             {hint && (
-                <span className="text-xs italic text-muted-foreground">
+                <span className="text-xxs italic text-muted-foreground">
                     {hint}
                 </span>
             )}
             {/* Error Message Feedback */}
             {isError && errorMessage && (
-                <span className="text-xs text-destructive animate-in fade-in slide-in-from-top-1">
+                <span className="text-xxs text-destructive animate-in fade-in slide-in-from-top-1">
                     {errorMessage}
                 </span>
             )}

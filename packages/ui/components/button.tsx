@@ -10,7 +10,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-btn-primary text-btn-primary-foreground hover:bg-btn-primary/80",
         outline:
-          "border-border bg-card hover:bg-card/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input/8 dark:bg-input/5 dark:hover:bg-input/50",
+          "border-border hover:bg-card/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input/8 dark:bg-input/5 dark:hover:bg-input/50",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
@@ -22,8 +22,8 @@ const buttonVariants = cva(
       size: {
         default:
           "h-10 min-w-28 gap-1.5 px-4 pr-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xs: "h-7 gap-1 rounded-md px-3 text-xxs/snug in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-9 gap-1 rounded-full px-3.5 text-[0.8rem]/snug in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+        xs: "h-7.75 gap-1 rounded-md px-3 text-xxs/snug! in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-8.75 gap-1 rounded-full px-3.5 text-[0.8rem]/snug in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
         lg: "h-11.5 min-w-20 text-sm font-semibold tracking-tight gap-1.5 px-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         xl: "h-12.5 gap-1.5 px-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         _2xl: "h-14.5 gap-1.5 text-base text-balance px-4.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",

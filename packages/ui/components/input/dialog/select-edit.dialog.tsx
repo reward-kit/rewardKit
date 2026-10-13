@@ -30,6 +30,9 @@ type EditSelectDialogProps<T extends string | number> = {
         'label' | 'value' | 'onChange' | 'options' | 'placeholder'
     >
     isMultiple?: boolean
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
+    hideTrigger?: boolean
 }
 
 export const EditSelectDialog = <T extends string | number>({
@@ -47,6 +50,9 @@ export const EditSelectDialog = <T extends string | number>({
     triggerClassName,
     contentClassName,
     selectProps,
+    open,
+    onOpenChange,
+    hideTrigger = false,
 }: EditSelectDialogProps<T>) => {
     const closeRef = useRef<HTMLButtonElement>(null)
 
@@ -66,8 +72,13 @@ export const EditSelectDialog = <T extends string | number>({
     }
 
     return (
-        <Dialog onOpenChange={() => setSelected(savedKey)}>
-            <DialogTrigger
+        <Dialog
+            open={open}
+            onOpenChange={(next) => {
+                setSelected(savedKey)
+                onOpenChange?.(next)
+            }}>
+            {!hideTrigger && (<DialogTrigger
                 nativeButton={false}
                 render={(props) => (
                     <div
@@ -86,7 +97,7 @@ export const EditSelectDialog = <T extends string | number>({
                         </Button>
                     </div>
                 )}
-            />
+            />)}
             <DialogContent className={cn('min-w-md', contentClassName)} render={(props) => <form {...props} onSubmit={onSubmit} />}>
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>

@@ -47,7 +47,8 @@ export function SortableHeader({ column, title, className }: SortableHeaderProps
       type="button"
       onClick={column.getToggleSortingHandler()}
       className={cn(
-        "flex w-full cursor-pointer select-none items-center text-(--header-text-size) gap-1 p-0 font-normal text-muted-foreground/70 hover:opacity-80",
+        "flex w-full cursor-pointer select-none items-center text-(--header-text-size) gap-1 p-0 font-normal hover:opacity-80",
+        "text-muted-foreground/70",
         className,
       )}
     >
@@ -359,7 +360,11 @@ export function TableTabs<K extends string = string>({
           <TabsTrigger className={cn(variant == "underline" && "py-0")} key={tab.key} value={tab.key} disabled={tab.disabled}>
             {tab.label}
             {typeof tab.count === "number" && (
-              <Badge size={"sm"} variant={"secondary"}>
+              <Badge
+                size="sm"
+                variant="secondary"
+                className="in-data-active:bg-muted"
+              >
                 {tab.count}
               </Badge>
             )}

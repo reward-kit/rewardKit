@@ -7,13 +7,15 @@ export const PAYOUT_METHOD = {
 
 export type PayoutMethod = (typeof PAYOUT_METHOD)[keyof typeof PAYOUT_METHOD];
 
-export const ZPaypalPayoutDetails = z.object({
-    email: z.email().trim().toLowerCase(),
-});
+const ZPayoutEmail = z
+    .string()
+    .trim()
+    .toLowerCase()
+    .min(1, "Email is required")
+    .pipe(z.email("Enter a valid email address"));
 
-export const ZWisePayoutDetails = z.object({
-    email: z.email().trim().toLowerCase(),
-});
+export const ZPaypalPayoutDetails = z.object({ email: ZPayoutEmail });
+export const ZWisePayoutDetails = z.object({ email: ZPayoutEmail });
 
 // one schema per method; add bank fields etc. here later
 export const PAYOUT_DETAILS_SCHEMA = {

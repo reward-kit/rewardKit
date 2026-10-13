@@ -10,7 +10,6 @@ import {
 } from "./partner.column.table";
 import { DataTable } from "@rewardkit/packages/ui/components/data.table";
 import { Button } from "@rewardkit/packages/ui/components/button";
-import { usePartnerCounts } from "../../hooks/usePartnerCounts";
 import { useActivePartners } from "../../hooks/useActivePartners";
 
 export const PartnerActiveListTable = () => {

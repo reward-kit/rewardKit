@@ -1,10 +1,8 @@
 import { auth } from '@clerk/nextjs/server'
 import { OrganizationNotSelected } from '@rewardkit/components/organization/organization.not-selected'
-import { SidebarProvider, SidebarInset } from '@rewardkit/packages/ui/components/sidebar'
-import { AppHeader } from '@rewardkit/packages/ui/components/sidebar/app.header'
-import { AppHeaderMobile } from '@rewardkit/packages/ui/components/sidebar/app.header.mobile'
-import { AppSidebar } from '@rewardkit/packages/ui/components/sidebar/appSidebar'
-import {  redirect } from 'next/navigation'
+import { AppBootGate } from '@rewardkit/packages/features/app/app-boot-gate'
+import { AppHeader } from '@rewardkit/packages/ui/components/header/app-header'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 export default async function Layout({
@@ -18,15 +16,11 @@ export default async function Layout({
     }
 
     return (
-        <div className="flex w-screen overflow-x-hidden h-svh flex-col [--header-height:3rem]">
-            <AppHeader />
-            <SidebarProvider className="min-h-0 flex-1">
-                <AppSidebar />
-                <SidebarInset className="overflow-auto overflow-x-hidden">
-                    <AppHeaderMobile enableSidebarTrigger />
-                    <div>{orgId ? children : <OrganizationNotSelected />}</div>
-                </SidebarInset>
-            </SidebarProvider>
-        </div>
+        <AppBootGate>
+            <div className="flex w-screen overflow-x-hidden h-svh flex-col [--header-height:4rem]">
+                <AppHeader />
+                <div className='max-w-7xl pt-4 mx-auto'>{orgId ? children : <OrganizationNotSelected />}</div>
+            </div>
+        </AppBootGate>
     )
 }

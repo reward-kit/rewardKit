@@ -5,7 +5,7 @@ import { ThemeToggle } from '@rewardkit/components/toggleTheme'
 
 export const AppSidebar = async () => {
     return (
-        <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!">
+        <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]! px-1">
             <SidebarHeader className="flex">
                 <SidebarProgramClient />
             </SidebarHeader>

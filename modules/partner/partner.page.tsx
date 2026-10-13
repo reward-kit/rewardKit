@@ -18,6 +18,10 @@ import { useInvitedPartners } from '@rewardkit/packages/features/partner/hooks/u
 import { usePendingPartners } from '@rewardkit/packages/features/partner/hooks/usePendingPartners'
 import { PartnerInvitedListTable } from '@rewardkit/packages/features/partner/components/table/partner.invited.table'
 import { PartnerPendingListTable } from '@rewardkit/packages/features/partner/components/table/partner.pending.table'
+import { CreatePartnerModal } from '@rewardkit/packages/features/partner/components/create-partner/create-partner.modal'
+import { Button } from '@rewardkit/packages/ui/components/button'
+import { IconInnerShadowBottomRightFilled } from '@tabler/icons-react'
+import { useState } from 'react'
 
 export const PartnerPage = () => {
   const [tab, setTab] = useQueryState("tab", partnerTabParser)
@@ -26,6 +30,7 @@ export const PartnerPage = () => {
   const { total: suspendedTotal } = useSuspendedPartners({ syncUrl: true })
   const { total: invitedTotal } = useInvitedPartners({ syncUrl: true })
   const { total: pendingTotal } = usePendingPartners({ syncUrl: true })
+  const [openCreateModal, setOpenCreateModal] = useState(false)
 
   const TABS: TableTab[] = [
     { key: PARTNER_STATUS.ACTIVE, label: "Active", count: activeTotal ?? 0 },
@@ -45,30 +50,33 @@ export const PartnerPage = () => {
               onChange={setSearch}
               placeholder="Search partner..."
               variant="sm"
-              className="sm:max-w-lg w-full h-7.5 rounded-lg truncate shadow-none text-xs/snug"
+              className="sm:max-w-lg w-full rounded-lg truncate shadow-none text-xs/snug"
               autoComplete="off"
               focusRing={false}
               startingIcon={<HugeiconsIcon icon={Search01Icon} size={16} />}
             />
           </div>
-          <PartnerCreateDialog />
+          <Button variant="secondary" size="sm" className="rounded-[12px] pr-2.25! px-2" onClick={() => setOpenCreateModal(true)}>
+            <IconInnerShadowBottomRightFilled />
+            Create partner
+          </Button>
+          <CreatePartnerModal open={openCreateModal} onOpenChange={setOpenCreateModal} />
         </DashboardHeaderAction>
       </DashboardHeader>
 
-      <DashboardContent className="px-0 pt-0">
-        <div className="px-3 border-t">
-          <TableTabs
-            variant="underline"
-            value={tab}
-            onChange={(v) => setTab(v as PartnerTableStatus)}
-            tabs={TABS}
-          />
-        </div>
+      <DashboardContent>
+        <TableTabs
+          value={tab}
+          onChange={(v) => setTab(v as PartnerTableStatus)}
+          tabs={TABS}
+        />
 
-        {tab === "active" && <PartnerActiveListTable />}
-        {tab === "pending" && <PartnerPendingListTable />}
-        {tab === "invited" && <PartnerInvitedListTable />}
-        {tab === "suspended" && <PartnerSuspendedListTable />}
+        <div className='pt-6'>
+          {tab === "active" && <PartnerActiveListTable />}
+          {tab === "pending" && <PartnerPendingListTable />}
+          {tab === "invited" && <PartnerInvitedListTable />}
+          {tab === "suspended" && <PartnerSuspendedListTable />}
+        </div>
       </DashboardContent>
     </Dashboard>
   )

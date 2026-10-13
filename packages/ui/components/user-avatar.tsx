@@ -13,7 +13,7 @@ const style = new Style(openPeeps);
 const avatarVariants = cva('shrink-0', {
     variants: {
         size: {
-            xs: 'size-6',
+            xs: 'size-7.25',
             sm: 'size-8',
             md: 'size-10',
             lg: 'size-12',
@@ -64,6 +64,7 @@ export function UserAvatar({ seed = 'Alice', firstName, size, className }: UserA
                 backgroundColor: ['ece7de'],
                 clothingColor: ['9aa88f', 'c08e77', '8fa3b8', 'd9cbb3', 'b09aa8', '7d8894'],
                 headContrastColor: ['2c1b18', '724133', '4a312c', 'a55728', 'b58143', 'd6b370'],
+                skinColor: ['ffdbb4', 'edb98a', 'd08b5b'],
                 maskProbability: 0,
             }).toDataUri(),
         [seed, px],

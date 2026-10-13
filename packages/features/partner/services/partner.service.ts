@@ -27,6 +27,21 @@ export class PartnerServiceError extends AppError {
     }
 }
 
+const GROUP_LOOKUP: any[] = [
+    {
+        $lookup: {
+            from: "partner_group", // or db.partnerGroup.collection.name
+            localField: "groupId",
+            foreignField: "_id",
+            as: "group",
+            pipeline: [
+                { $project: { name: 1, description: 1, default: 1, isPrivate: 1 } },
+            ],
+        },
+    },
+    { $unwind: { path: "$group", preserveNullAndEmptyArrays: true } },
+]
+
 export class PartnerService {
     //Create
     async create({ orgId, partnerData }: CreatePartnerRequest): Promise<PartnerResource> {
@@ -48,11 +63,22 @@ export class PartnerService {
         }
     }
 
-    // Get
     async get({ orgId, partnerId }: GetPartnerRequest): Promise<PartnerResource> {
-        const doc = await db.partner.findOne({ _id: partnerId, orgId })
-        if (!doc) throw this.notFound()
-        return this.toResource(doc)
+        const [raw] = await db.partner
+            .aggregate([
+                { $match: { _id: partnerId, orgId } },
+                { $limit: 1 },
+                ...GROUP_LOOKUP,
+            ])
+            .option({ maxTimeMS: 5000 })
+
+        if (!raw) throw this.notFound()
+
+        const doc = db.partner.hydrate(raw)
+        // hydrate drops fields that aren't in the partner schema, so re-attach the joined group
+        const resource = this.toResource(doc) as PartnerResource & { group?: unknown }
+        resource.group = raw.group ?? null
+        return resource
     }
 
     // Update (profile fields only)
@@ -82,9 +108,7 @@ export class PartnerService {
         const sortField = sortBy && SORTABLE.has(sortBy) ? sortBy : "createdAt"
         const dir = desc ? -1 : 1
 
-        const filter = this.buildFilter({ orgId, groupId, status, search })
-
-        const PARTNER_LIST_PROJECTION = {
+        const partnerProjection = {
             orgId: 1,
             groupId: 1,
             firstName: 1,
@@ -95,18 +119,29 @@ export class PartnerService {
             tags: 1,
             status: 1,
             payoutMethod: 1,
+            rejectedReason: 1,
+            rejectedAt: 1,
+            suspendedReason: 1,
+            suspendedAt: 1,
             createdAt: 1,
             updatedAt: 1,
-        } as const
+            group: 1,
+        }
+
+        const filter = this.buildFilter({ orgId, groupId, status, search })
 
         const [docs, total] = await Promise.all([
-            db.partner.find(filter, PARTNER_LIST_PROJECTION)
-                .sort({ [sortField]: dir, _id: dir })
-                .skip((pageN - 1) * limitN)
-                .limit(limitN)
-                .lean()
-                .maxTimeMS(5000),
-            db.partner.countDocuments(filter).maxTimeMS(5000),
+            db.partner
+                .aggregate([
+                    { $match: filter },
+                    { $sort: { [sortField]: dir, _id: dir } },
+                    { $skip: (pageN - 1) * limitN },
+                    { $limit: limitN },
+                    ...GROUP_LOOKUP,          // now runs on at most `limitN` docs
+                    { $project: partnerProjection },
+                ])
+                .option({ maxTimeMS: 5000 }),
+            db.partner.countDocuments(filter),
         ])
 
         const totalPages = Math.max(1, Math.ceil(total / limitN))

@@ -1,12 +1,7 @@
 import { useProgram } from "@rewardkit/packages/features/program/hooks/useProgram"
-import { PAYOUT_METHOD } from "@rewardkit/packages/types/program/program.schema"
 import { EditMultiSelectDialog } from "../../../packages/ui/components/input/dialog/multi-select-edit.dialog"
 import { getTrpcErrorMessage } from "@rewardkit/lib/trpc/getTRPCError"
-
-const PAYOUT_METHOD_OPTIONS = [
-    { label: 'PayPal', value: PAYOUT_METHOD.PAYPAL, imageUrl: '/svg/paypal.svg' },
-    { label: 'Wise', value: PAYOUT_METHOD.WISE, imageUrl: '/svg/wise.svg' },
-] as const
+import { PAYOUT_METHOD_OPTIONS } from "@rewardkit/packages/features/payouts/constant"
 
 export const ProgramPayoutMethodDialog = () => {
     const { program, handleUpdate, update, isUpdating } = useProgram()

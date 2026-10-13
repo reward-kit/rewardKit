@@ -12,9 +12,6 @@ export const TrackingAndSafeguardPage = () => {
 
     return (
         <Dashboard className='max-w-190 px-4 mx-auto'>
-            <DashboardHeader className='px-6 pt-12 mb-6'>
-                <DashboardTitle className="text-[26px]">Tracking and safeguards</DashboardTitle>
-            </DashboardHeader>
             <DashboardContent>
                 <div className='grid grid-cols-1 gap-6'>
                     <Settings>

@@ -16,7 +16,7 @@ const FORM_ID = "create-partner-group-form"
 const INITIAL_VALUES = {
     name: "",
     description: "",
-    website: "", // host only, "https://" is the input prefix
+    website: "",
     payout: "",
     isPrivate: false,
 }
@@ -64,7 +64,7 @@ export const PartnerGroupCreateDialog = () => {
                 <DialogDescription>Sort your affiliates into groups to simplify tracking and management.</DialogDescription>
 
                 <ScrollArea>
-                    <form id={FORM_ID} onSubmit={onSubmit} noValidate className='p-4 flex flex-col gap-4'>
+                    <form id={FORM_ID} onSubmit={onSubmit} noValidate className='px-1 flex flex-col gap-4'>
                         <TextInput label='Group name' placeholder='Agency partners' autoFocus disabled={isCreating} {...form.field("name")} />
                         <TextareaInput label='Description (Optional)' placeholder='Earn 20% as agency partner' maxLength={200} disabled={isCreating} {...form.field("description")} />
                         <TextInput

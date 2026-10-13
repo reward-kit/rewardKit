@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { usePartner } from '@rewardkit/packages/features/partner/hooks/usePartner'
 import { usePartnerGroups } from '@rewardkit/packages/features/partner-groups/hooks/usePartnerGroups'
-import { CreatePartnerInput, ZCreatePartnerInput } from '@rewardkit/packages/types/partner/partner.api.schema'
+import { ZCreatePartnerInput } from '@rewardkit/packages/types/partner/partner.api.schema'
 import { PAYOUT_METHOD } from '@rewardkit/packages/types/payout/payout.schema'
 import { ALL_COUNTRIES_WITH_FLAGS } from '@rewardkit/lib/countries'
 import { toOptionalString, useSchemaForm } from '@rewardkit/hooks/useForm'
@@ -14,14 +14,10 @@ import { SelectInput } from '@rewardkit/packages/ui/components/input/select.inpu
 import { ScrollArea } from '@rewardkit/packages/ui/components/scroll-area'
 import { CommandAvatarInput } from '@rewardkit/packages/ui/components/input/command.avatar.input'
 import { IconInnerShadowBottomRightFilled } from '@tabler/icons-react'
-import { PARTNER_STATUS, PARTNER_STATUS_OPTIONS } from '@rewardkit/packages/types/partner/partner.schema'
+import { PARTNER_STATUS } from '@rewardkit/packages/types/partner/partner.schema'
+import { PAYOUT_METHOD_OPTIONS } from '@rewardkit/packages/features/payouts/constant'
 
 const FORM_ID = "create-partner-form"
-
-export const PAYOUT_METHOD_OPTIONS = [
-    { label: "PayPal", value: PAYOUT_METHOD.PAYPAL },
-    { label: "Wise", value: PAYOUT_METHOD.WISE },
-]
 
 const INITIAL_VALUES = {
     firstName: "",
@@ -80,7 +76,7 @@ export const PartnerCreateDialog = () => {
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger render={(props) => <Button {...props} variant={"secondary"} size={"sm"} className={"rounded-[12px] active:text-white focus:text-white bg-blue-600! focus-within: h-8 px-2 text-white data-popup-open:text-white!"} />}>
+            <DialogTrigger render={(props) => <Button {...props} variant={"secondary"} size={"sm"} className={"rounded-[12px] h-8 pr-2.5! px-2"} />}>
                 <IconInnerShadowBottomRightFilled />
                 Create partner
             </DialogTrigger>
@@ -116,16 +112,6 @@ export const PartnerCreateDialog = () => {
                             options={groupOptions}
                             isError={!!form.errors.groupId}
                             errorMessage={form.errors.groupId}
-                            disabled={isCreating}
-                        />
-                        <SelectInput
-                            label='Status'
-                            placeholder='Select status'
-                            value={form.values.status || null}
-                            onChange={(v) => form.setValue("status", (v as any) ?? PARTNER_STATUS.ACTIVE)}
-                            options={PARTNER_STATUS_OPTIONS}
-                            isError={!!form.errors.status}
-                            errorMessage={form.errors.status}
                             disabled={isCreating}
                         />
                         <SelectInput

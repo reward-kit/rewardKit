@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { PAYOUT_DETAILS_SCHEMA, PAYOUT_METHOD, ZPayoutDetails } from "../payout/payout.schema";
+import { PAYOUT_METHOD, ZPayoutDetails } from "../payout/payout.schema";
+import { ZPartnerGroups } from "../partner-groups/partner-groups.schema";
 
 export const PARTNER_STATUS = {
     PENDING: "pending",
@@ -9,14 +10,6 @@ export const PARTNER_STATUS = {
     INVITED: "invited",
 } as const;
 
-export const PARTNER_STATUS_OPTIONS = Object.entries(PARTNER_STATUS).map(
-    ([key, value]) => ({
-        label: key.charAt(0) + key.slice(1).toLowerCase(),
-        value: value,
-    })
-);
-
-export type PartnerStatus = (typeof PARTNER_STATUS)[keyof typeof PARTNER_STATUS];
 
 const isoDate = z.iso.datetime();
 
@@ -42,43 +35,28 @@ const partnerShape = {
     updatedAt: z.string().optional(),
 }
 
-// Plain object with no refinements, so .omit() / .pick() / .partial() are safe
-export const ZPartnerBase = z.object({
+export const ZPartner = z.object({
     ...partnerShape,
-    tags: partnerShape.tags.default([]),
-    status: partnerShape.status.default(PARTNER_STATUS.PENDING).optional(),
-    payoutMethod: partnerShape.payoutMethod,
-    payoutDetails: partnerShape.payoutDetails,
-    rejectedAt: partnerShape.rejectedAt,
-    rejectedReason: partnerShape.rejectedReason,
-    suspendedAt: partnerShape.suspendedAt,
-    suspendedReason: partnerShape.suspendedReason,
+    status: partnerShape.status.optional(),
+    group: ZPartnerGroups.optional(),
 })
 
-// Full shape with cross-field rules, used for responses
-export const ZPartner = ZPartnerBase.superRefine((p, ctx) => {
-    if (p.status !== PARTNER_STATUS.REJECTED && (p.rejectedAt || p.rejectedReason)) {
-        ctx.addIssue({ code: "custom", path: ["status"], message: "Rejected fields set but status is not rejected" });
-    }
-    if (p.status !== PARTNER_STATUS.SUSPENDED && (p.suspendedAt || p.suspendedReason)) {
-        ctx.addIssue({ code: "custom", path: ["status"], message: "Suspended fields set but status is not suspended" });
-    }
-    if (p.payoutMethod) {
-        const result = PAYOUT_DETAILS_SCHEMA[p.payoutMethod].safeParse(p.payoutDetails);
-        if (!result.success) {
-            ctx.addIssue({
-                code: "custom",
-                path: ["payoutDetails"],
-                message: `Invalid payout details for ${p.payoutMethod}`,
-            });
-        }
-    } else if (p.payoutDetails) {
-        ctx.addIssue({
-            code: "custom",
-            path: ["payoutMethod"],
-            message: "Payout details set but no payout method",
-        });
-    }
-});
+export const ZPayoutFields = z.object({
+    payoutMethod: partnerShape.payoutMethod,
+    payoutDetails: z.record(z.string(), z.string()).nullable(),
+})
 
+export const ADMIN_PARTNER_STATUS = [
+    PARTNER_STATUS.ACTIVE,
+    PARTNER_STATUS.SUSPENDED,
+    PARTNER_STATUS.REJECTED,
+] as const;
+
+export const ZPartnerStatusFields = z.object({
+    status: z.enum(ADMIN_PARTNER_STATUS).nullable(),
+    reason: z.string().max(500, "Reason must be 500 characters or fewer"),
+})
+
+export type AdminPartnerStatus = (typeof ADMIN_PARTNER_STATUS)[number];
 export type PartnerResource = z.infer<typeof ZPartner>;
+export type PartnerStatus = (typeof PARTNER_STATUS)[keyof typeof PARTNER_STATUS];

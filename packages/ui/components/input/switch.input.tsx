@@ -57,7 +57,7 @@ export const SwitchInput = ({
                 )}
             >
                 {description && (
-                    <span className="text-xsm text-muted-foreground select-none">
+                    <span className="text-xxsm text-muted-foreground select-none">
                         {description}
                     </span>
                 )}
@@ -73,12 +73,12 @@ export const SwitchInput = ({
             </label>
 
             {hint && (
-                <span className="text-xs italic text-muted-foreground">
+                <span className="text-xxs italic text-muted-foreground">
                     {hint}
                 </span>
             )}
             {isError && errorMessage && (
-                <span className="text-xs text-destructive animate-in fade-in slide-in-from-top-1">
+                <span className="text-xxs text-destructive animate-in fade-in slide-in-from-top-1">
                     {errorMessage}
                 </span>
             )}
