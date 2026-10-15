@@ -60,7 +60,7 @@ export const AppTooltip = ({
             ) : (
                 <TooltipTrigger className={cn(className)}>{children}</TooltipTrigger>
             )}
-            <TooltipContent className="whitespace-nowrap" side={side} align={align}>
+            <TooltipContent className="w-fit" side={side} align={align}>
                 {content}
             </TooltipContent>
         </Tooltip>

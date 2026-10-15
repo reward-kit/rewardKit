@@ -27,19 +27,9 @@ export const PartnerGroupActions = ({ group }: { group: PartnerGroupsResource })
     }
 
     return (
-        <div className="relative flex items-center gap-2">
-            <Button
-                size="xs"
-                nativeButton={false}
-                className="rounded-full"
-                variant="outline"
-                render={(props) => <Link {...props} href={`/w/program/partner-groups/group/${group.id}`} />}
-            >
-                Settings
-            </Button>
-
+        <div className="relative flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
             <DropdownMenu>
-                <DropdownMenuTrigger aria-label="Group actions">
+                <DropdownMenuTrigger aria-label="Group actions" className={"mr-4"} onClick={(e) => e.preventDefault()}>
                     <IconDotsFilled size={15} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>

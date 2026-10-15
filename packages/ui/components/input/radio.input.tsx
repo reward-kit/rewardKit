@@ -50,16 +50,16 @@ export const RadioInput = <T extends string>({
                 <label
                     key={o.value}
                     className={cn(
-                        'flex cursor-pointer items-start gap-3 rounded-md border p-3 transition-colors hover:bg-muted/50',
-                        'has-data-checked:border-btn-primary has-data-checked:bg-muted/40',
+                        'flex cursor-pointer items-start text-xs! gap-3 rounded-md border p-3 transition-colors hover:bg-input/50',
+                        'has-data-checked:border-input has-data-checked:bg-input',
                         disabled && 'cursor-not-allowed opacity-50'
                     )}
                 >
                     <Radio.Root
                         value={o.value}
-                        className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-input outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-checked:border-btn-primary"
+                        className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-checked:border-input"
                     >
-                        <Radio.Indicator className="size-2 rounded-full bg-btn-primary" />
+                        <Radio.Indicator className="size-2 rounded-full bg-btn-primary border" />
                     </Radio.Root>
 
                     <span className="flex min-w-0 flex-col gap-0.5">

@@ -9,8 +9,6 @@ import type { PartnerStatus } from "@rewardkit/packages/types/partner/partner.sc
 import { PARTNER_SORT_FIELDS, PARTNER_URL_KEYS, partnerTableParsers, PartnerTableStatus } from "../lib/partner.search-params"
 import { useDebounce } from "@rewardkit/hooks/useDebounce"
 
-const REALTIME_REFRESH_INTERVAL = 30_000
-
 export const EMPTY_STATUS_COUNTS: PartnerStatusCounts = {
     active: 0,
     pending: 0,
@@ -76,7 +74,6 @@ export function usePartnerList(
             enabled: enabled && !!orgId,
             refetchOnWindowFocus: false,
             refetchIntervalInBackground: false,
-            refetchInterval: REALTIME_REFRESH_INTERVAL,
             retry: 1,
         },
     )
@@ -88,7 +85,6 @@ export function usePartnerList(
             enabled: enabled && !!orgId,
             refetchOnWindowFocus: false,
             refetchIntervalInBackground: false,
-            refetchInterval: REALTIME_REFRESH_INTERVAL,
             retry: 1,
         },
     )

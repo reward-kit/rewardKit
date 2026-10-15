@@ -19,7 +19,9 @@ export function TRPCProviders({ children }: { children: React.ReactNode }) {
         () =>
             new QueryClient({
                 defaultOptions: {
-                    queries: {
+                    queries: {      // fresh for 1 min, so remounts reuse the cache
+                        refetchOnWindowFocus: false,
+                        refetchOnReconnect: false,
                         throwOnError: isServerError, // 4xx stay in your components
                         retry: (failureCount, error) => {
                             const status = (error as TRPCClientError<any>).data?.httpStatus
@@ -30,7 +32,7 @@ export function TRPCProviders({ children }: { children: React.ReactNode }) {
                 },
             })
     )
-    
+
     const [trpcClient] = useState(() =>
         trpc.createClient({
             links: [

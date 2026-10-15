@@ -14,7 +14,7 @@ interface PayoutMethodCardProps {
 
 export const PayoutMethodCard = ({ partner, className }: PayoutMethodCardProps) => {
     const partnerId = partner?.id ?? partner?._id
-    const { update } = usePartner(partnerId)
+    const { update } = usePartner()
     const [dirty, setDirty] = React.useState(false)
 
     return (

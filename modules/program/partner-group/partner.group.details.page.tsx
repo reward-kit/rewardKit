@@ -11,8 +11,8 @@ export const PartnerGroupDetailsPage = ({ groupId }: { groupId: string }) => {
     const { group, isLoading, isError, notFound } = usePartnerGroup(groupId)
 
     return (
-        <Dashboard className="max-w-2xl mx-auto">
-            <DashboardHeader className="px-7 gap-4">
+        <Dashboard className="max-w-5xl mx-auto w-full">
+            <DashboardHeader className="gap-4">
                 <div className="flex items-center justify-between gap-1">
                     <DashboardTitle>{group?.name ?? "Partner group"}</DashboardTitle>
                     <Button variant="outline" nativeButton={false} className="w-fit" size="xs" render={(props) => <Link {...props} href="/w/program/partner-groups" />}>

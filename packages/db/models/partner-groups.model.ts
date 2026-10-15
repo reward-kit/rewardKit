@@ -13,7 +13,7 @@ const PartnerGroupSchema = new mongoose.Schema<PartnerGroupsResource>({
     isPrivate: { type: Boolean, default: false },
     websiteUrl: { type: String, default: null },
     // no default on purpose: undefined = inherit the program's payoutMinimumThreshold
-    payoutMinimumThreshold: { type: Number, min: 0 },
+    payoutMinimumThreshold: { type: Number, min: 0, default: null, validate: Number.isInteger },
     allowManualLeadSubmission: { type: Boolean, default: false },
 }, { timestamps: true })
 

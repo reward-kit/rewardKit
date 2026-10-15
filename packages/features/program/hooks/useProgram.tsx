@@ -5,8 +5,6 @@ import type { ProgramResource } from "@rewardkit/packages/types/program/program.
 import { trpc } from "@rewardkit/trpc/react/client"
 import { useOrganization } from "@clerk/nextjs"
 
-const REALTIME_REFRESH_INTERVAL = 30_000;
-
 export function useProgram({ enabled = true }: { enabled?: boolean } = {}) {
     const { organization, isLoaded: orgLoaded } = useOrganization()
     const orgId = organization?.id
@@ -16,7 +14,6 @@ export function useProgram({ enabled = true }: { enabled?: boolean } = {}) {
         enabled: enabled && !!orgId, // getCurrentProgram is an orgProcedure, so it needs an active org
         refetchOnWindowFocus: false,
         refetchIntervalInBackground: false,
-        refetchInterval: REALTIME_REFRESH_INTERVAL,
         retry: 1,
     })
 
@@ -24,7 +21,6 @@ export function useProgram({ enabled = true }: { enabled?: boolean } = {}) {
         enabled,
         refetchOnWindowFocus: false,
         refetchIntervalInBackground: false,
-        refetchInterval: REALTIME_REFRESH_INTERVAL,
         retry: 1,
     })
 

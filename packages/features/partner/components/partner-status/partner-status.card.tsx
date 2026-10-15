@@ -20,7 +20,7 @@ interface PartnerStatusCardProps {
 
 export const PartnerStatusCard = ({ partner, className }: PartnerStatusCardProps) => {
     const partnerId = partner?.id ?? partner?._id
-    const { changeStatus } = usePartner(partnerId)
+    const { changeStatus } = usePartner()
     const [dirty, setDirty] = React.useState(false)
 
     // same rule the form uses for its default status
