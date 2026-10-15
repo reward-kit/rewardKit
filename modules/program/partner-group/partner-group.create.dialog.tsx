@@ -53,8 +53,8 @@ export const PartnerGroupCreateDialog = () => {
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger render={(props) => <Button {...props} variant={"secondary"} size={"sm"} className={"rounded-full"} />}>
-                Create group
+            <DialogTrigger render={(props) => <Button {...props} size={"sm"} className={"rounded-full"} />}>
+                Create
             </DialogTrigger>
 
             <DialogContent className={"md:max-w-lg w-full"}>

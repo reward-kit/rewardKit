@@ -7,8 +7,6 @@ import type {
     CreatePartnerInput,
 } from "@rewardkit/packages/types/partner/partner.api.schema"
 
-const REALTIME_REFRESH_INTERVAL = 30_000
-
 /** Runs a mutation promise and returns null on failure (the mutation's onError already toasts). */
 const safe = async <T,>(fn: () => Promise<T>): Promise<T | null> => {
     try {
@@ -34,7 +32,6 @@ export function usePartner(partnerId?: string, { enabled = true }: { enabled?: b
             enabled: enabled && !!orgId && !!partnerId, // orgProcedure, so it needs an active org
             refetchOnWindowFocus: false,
             refetchIntervalInBackground: false,
-            refetchInterval: REALTIME_REFRESH_INTERVAL,
             retry: 1,
         },
     )

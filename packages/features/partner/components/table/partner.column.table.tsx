@@ -85,7 +85,7 @@ export const partnerColumns = ({
         // },
         {
             id: "partner",
-            size: 240,
+            size: 200,
             header: ({ column }) => <SortableHeader column={column} title="Partner" />,
             accessorFn: (row) => `${row.firstName} ${row.lastName}`,
             sortFn: (a, b) =>
@@ -96,7 +96,7 @@ export const partnerColumns = ({
             cell: ({ row }) => {
                 const p = row.original;
                 return (
-                    <div className="flex items-center gap-2">
+                    <div className="flex max-w-50 w-full items-center gap-2">
                         <UserAvatar seed={p._id} size={"xs"} firstName={p.firstName} />
                         <div className="flex min-w-0 flex-col gap-1 leading-tight">
                             <span className="truncate font-medium text-xsm">
@@ -140,7 +140,7 @@ export const partnerColumns = ({
             accessorFn: (row) => row.stats?.revenue ?? 0,
             sortFn: (a, b) => cmp(a.original.stats?.revenue ?? 0, b.original.stats?.revenue ?? 0),
             cell: ({ row }) => (
-                <div className="text-right font-medium text-xsm">{money(row.original.stats?.revenue, currency)}</div>
+                <div className="text-right max-w-20 w-full font-medium text-xsm">{money(row.original.stats?.revenue, currency)}</div>
             ),
         },
         {
@@ -150,7 +150,7 @@ export const partnerColumns = ({
             accessorFn: (row) => row.stats?.earnings ?? 0,
             sortFn: (a, b) => cmp(a.original.stats?.earnings ?? 0, b.original.stats?.earnings ?? 0),
             cell: ({ row }) => (
-                <div className="text-right font-medium text-xsm">{money(row.original.stats?.earnings, currency)}</div>
+                <div className="text-right max-w-20 w-full font-medium text-xsm">{money(row.original.stats?.earnings, currency)}</div>
             ),
         },
         {
@@ -187,7 +187,7 @@ export const partnerColumns = ({
                 const group = row.original.group;
                 if (!group) return <span className="text-muted-foreground">—</span>;
                 return (
-                    <div className="flex items-center gap-1.25 cursor-default min-w-0">
+                    <div className="flex items-center max-w-20 w-full gap-1.25 cursor-default min-w-0">
                         {group.default && (
                             <AppTooltip content="This is the default group">
                                 <Star className="size-3.5 fill-orange-400 text-orange-400 shrink-0" />
@@ -224,7 +224,7 @@ export const partnerColumns = ({
                 const data = row.original;
                 if (!data) return <span className="text-muted-foreground"></span>;
                 return (
-                    <div className="flex justify-start" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex justify-start mr-2" onClick={(e) => e.stopPropagation()}>
                         <PartnerActions partner={row?.original} aria-label="Partner actions" />
                     </div>
                 );

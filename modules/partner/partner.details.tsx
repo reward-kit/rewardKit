@@ -123,7 +123,7 @@ export const PartnerDetails = () => {
                                         <H3>Settings</H3>
                                         <Paragraph>Manage partner</Paragraph>
                                     </div> */}
-                                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-1 max-w-xl mx-auto">
+                                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-1 max-w-xl">
                                         {partner && isAdminStatus(partner?.status) && <PartnerStatusCard className="w-full min-w-0" partner={partner} />}
                                         {partner && <PayoutMethodCard className="w-full min-w-0" partner={partner} />}
                                         {partner && program && <PartnerPayoutThresholdCard program={program} className="w-full min-w-0" partner={partner} />}

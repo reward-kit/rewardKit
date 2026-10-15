@@ -3,11 +3,12 @@
 import { usePartnerGroups } from "@rewardkit/packages/features/partner-groups/hooks/usePartnerGroups"
 import type { usePartnerGroup } from "@rewardkit/packages/features/partner-groups/hooks/usePartnerGroup"
 import { Switch } from "@rewardkit/packages/ui/components/switch"
-import { Settings, SettingsContent, SettingsDescription, SettingsHeader, SettingsRow, SettingsTitle } from "@rewardkit/packages/ui/components/layout/settings.layout"
+import { Settings, SettingsContent, SettingsDescription, SettingsFooter, SettingsHeader, SettingsRow, SettingsTitle } from "@rewardkit/packages/ui/components/layout/settings.layout"
 import { GroupDescriptionDialog } from "./inputs/group.description.dialog"
 import { GroupNameDialog } from "./inputs/group.name.dialog"
 import { GroupPayoutDialog } from "./inputs/group.payout.dialog"
 import { GroupWebsiteDialog } from "./inputs/group.website.dialog"
+import { Small } from "@rewardkit/packages/ui/components/typography"
 
 type Group = NonNullable<ReturnType<typeof usePartnerGroup>["group"]>
 
@@ -57,6 +58,10 @@ export const PartnerGroupEditForm = ({ group }: { group: Group }) => {
                         }
                     />
                 </SettingsContent>
+
+                <SettingsFooter>
+                    <Small className="text-xs">Modify partner group</Small>
+                </SettingsFooter>
             </Settings>
         </div>
     )

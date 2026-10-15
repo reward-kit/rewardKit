@@ -43,7 +43,7 @@ export const PartnerEditDialog = ({ partnerData, children }: Props) => {
     const partnerId = (partnerData.id ?? partnerData._id) as string
 
     const { partnerGroups } = usePartnerGroups()
-    const { handleUpdate, isUpdating } = usePartner(partnerId)
+    const { handleUpdate, isUpdating } = usePartner()
 
     const [open, setOpen] = useState(false)
 

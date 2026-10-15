@@ -19,7 +19,6 @@ import {
 import { EditSelectDialog } from "@rewardkit/packages/ui/components/input/dialog/select-edit.dialog"
 import { PartnerRow } from "../partner.column.table"
 import { usePartner } from "../../../hooks/usePartner"
-import { PARTNER_STATUS_OPTIONS } from "../../../contants/status"
 import { EditPartnerStatusModal } from "../../partner-status/partner-status.model"
 
 type Props = { partner: PartnerRow }
@@ -82,7 +81,7 @@ export const PartnerActions = ({ partner }: Props) => {
                 </DropdownMenuContent>
             </DropdownMenu>
             {partner && <EditPartnerStatusModal partner={partner} open={statusOpen} onOpenChange={setStatusOpen} />}
-            <UpdateGroupDialog partner={partner} open={groupOpen} onOpenChange={setGroupOpen} />
+            {/* <UpdateGroupDialog partner={partner} open={groupOpen} onOpenChange={setGroupOpen} /> */}
         </>
     )
 }

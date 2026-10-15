@@ -22,7 +22,7 @@ export const DashboardHeader = ({
   children: React.ReactNode,
   className?: string,
 }) => {
-  return <div className={cn("relative w-full flex flex-wrap flex-col p-3.5 py-3.25 gap-1", className)}>{children}</div>
+  return <div className={cn("relative w-full flex flex-wrap flex-col py-3.25 gap-1", className)}>{children}</div>
 }
 
 export const DashboardHeaderAction = ({
@@ -32,7 +32,7 @@ export const DashboardHeaderAction = ({
   children: React.ReactNode,
   className?: string,
 }) => {
-  return <div className={cn("sm:absolute right-4 top-4", className)}>{children}</div>
+  return <div className={cn("sm:absolute right-0 top-4", className)}>{children}</div>
 }
 
 export const DashboardTitle = ({
@@ -67,11 +67,11 @@ export const DashboardContent = ({
   loadingSkeleton?: React.ReactNode
 }) => {
   return (
-    <div className={cn("relative flex flex-1 flex-col py-2.5 px-3", className)}>
+    <div className={cn("relative flex flex-1 flex-col py-2.5", className)}>
       {isLoading ? (
         <div className="flex-1 flex flex-col h-full w-full">
           {loadingSkeleton ?? (
-            <div className="flex-1 flex flex-col items-center justify-center gap-3 max-w-[calc(100vw-24.15rem)] w-full max-h-[calc(100vh-6rem)]">
+            <div className="flex-1 flex flex-col items-center justify-center gap-3 max-w-screen shrink-0 w-full max-h-[calc(100vh-10rem)]">
               <div className="relative overflow-hidden rounded-xl">
                 <Image src="/svg/rewardKit_emblem.svg" className="w-12 grayscale brightness-120 opacity-35" alt="rewardkit" />
                 <div className="absolute inset-0 -translate-x-full animate-shine bg-linear-to-r from-transparent via-white/40 to-transparent pointer-events-none" />

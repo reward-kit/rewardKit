@@ -49,8 +49,8 @@ export const SwitchInput = ({
             <label
                 htmlFor={id}
                 className={cn(
-                    "flex w-full items-center justify-between gap-3 rounded-lg border bg-transparent px-3 py-2.5",
-                    "cursor-pointer has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring/50",
+                    "flex w-full items-center justify-between gap-3 rounded-lg border bg-transparent text-xsm! px-3 py-2.5",
+                    "cursor-pointer has-focus-visible:ring-2 has-focus-visible:ring-ring/50",
                     isError && "border-destructive",
                     disabled && "cursor-not-allowed opacity-50",
                     className

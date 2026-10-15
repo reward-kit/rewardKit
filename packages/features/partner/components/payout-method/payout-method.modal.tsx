@@ -14,7 +14,7 @@ interface EditPayoutMethodModalProps {
 }
 
 export const EditPayoutMethodModal = ({ partner, open, onOpenChange, mode }: EditPayoutMethodModalProps) => {
-    const { update } = usePartner(partner?.id)
+    const { update } = usePartner()
 
     return (
         <FormModal

@@ -11,7 +11,7 @@ const ProgramSchema = new mongoose.Schema<ProgramResource>({
     productName: { type: String, default: null },
     status: { type: String, default: PROGRAM_STATUS.ACTIVE, enum: Object.values(PROGRAM_STATUS) },
     type: { type: String, default: PROGRAM_TYPE.PUBLIC, enum: Object.values(PROGRAM_TYPE) },
-    payoutMinimumThreshold: { type: Number, default: 0, min: 0 },
+    payoutMinimumThreshold: { type: Number, min: 0, default: null, validate: Number.isInteger },
     payoutTerm: { type: Number, default: PAYOUT_TERM.NET_30, enum: Object.values(PAYOUT_TERM) },
     payoutMethods: { type: [String], default: [PAYOUT_METHOD.PAYPAL], enum: Object.values(PAYOUT_METHOD) },
     cookieDuration: { type: Number, default: 30, max: 365, min: 1 },

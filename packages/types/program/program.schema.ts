@@ -46,7 +46,7 @@ export const ZProgramResource = z.object({
     productName: z.string(),
     status: z.enum(PROGRAM_STATUS).optional(),
     type: z.enum(PROGRAM_TYPE).optional(),
-    payoutMinimumThreshold: z.number().min(0).optional(),
+    payoutMinimumThreshold: z.number().int().min(0, "Must be 0 or more").nullable().optional(),
     payoutTerm: z.enum(PAYOUT_TERM).optional(),
     payoutMethods: z.array(z.enum(PAYOUT_METHOD)).optional(),
     cookieDuration: z.number().min(1).max(365).optional().nullable(),
@@ -70,4 +70,5 @@ export const ZProgramResource = z.object({
 })
 
 export type ProgramResource = z.infer<typeof ZProgramResource>;
+export type ProgramStatus = (typeof PROGRAM_STATUS)[keyof typeof PROGRAM_STATUS];
 export { PAYOUT_METHOD };

@@ -12,7 +12,7 @@ export const ZPartnerGroups = z.object({
     default: z.boolean().optional(),
     isPrivate: z.boolean().optional(),
     websiteUrl: ZWebsiteUrl.optional().nullable(),
-    payoutMinimumThreshold: z.number().min(0).optional(),
+    payoutMinimumThreshold: z.number().int().min(0, "Must be 0 or more").nullable().optional(),
     allowManualLeadSubmission: z.boolean().optional(),
     createdAt: z.string().optional(),
     updatedAt: z.string().optional(),

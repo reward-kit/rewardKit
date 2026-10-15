@@ -1,0 +1,1 @@
+export const stripProtocol = (url?: string | null) => (url ?? "").replace(/^https?:\/\//i, "").replace(/\/+$/, "")

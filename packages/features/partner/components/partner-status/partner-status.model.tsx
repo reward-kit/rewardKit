@@ -15,7 +15,7 @@ interface EditPartnerStatusModalProps {
 
 export const EditPartnerStatusModal = ({ partner, open, onOpenChange, mode }: EditPartnerStatusModalProps) => {
     const partnerId = partner?.id ?? partner?._id
-    const { changeStatus } = usePartner(partnerId)
+    const { changeStatus } = usePartner()
     return (
         <FormModal
             mode={mode}

@@ -16,6 +16,8 @@ type HugeIcon = React.ComponentProps<typeof HugeiconsIcon>["icon"]
 /** Tabler icons are regular React components, e.g. IconInfoCircle */
 type TablerIcon = React.ComponentType<{ size?: number | string; className?: string }>
 
+type SettingsVariant = "default" | "danger"
+
 export type AnyIcon = HugeIcon | TablerIcon
 
 /** Renders either icon library through one component. */
@@ -29,33 +31,62 @@ const AppIcon = ({ icon, size = 14, className }: { icon: AnyIcon; size?: number;
 }
 
 /** One section: heading + card. Stack several inside a page wrapper (e.g. `flex flex-col gap-8`). */
-export const Settings = ({ children, className }: WithChildren) => (
-    <section className={cn("flex w-full flex-col gap-4", className)}>{children}</section>
+export const Settings = ({
+    children,
+    className,
+    variant = "default",
+}: WithChildren & { variant?: SettingsVariant }) => (
+    <section
+        data-variant={variant}
+        className={cn(
+            "group/settings flex w-full flex-col bg-popover shadow-xs drop-shadow-input border-input border drop-shadow-sm rounded-2xl",
+            "",
+            className
+        )}
+    >
+        {children}
+    </section>
 )
 
 /** Heading above the card. */
 export const SettingsHeader = ({ children, className }: WithChildren) => (
-    <div className={cn("relative flex w-full flex-col gap-1 px-3", className)}>{children}</div>
+    <div
+        className={cn(
+            "relative flex w-full border-b flex-col gap-1 px-5 pb-5 border-input pt-5",
+            className
+        )}
+    >
+        {children}
+    </div>
 )
 
 /** Optional button/control aligned to the right of the heading. */
 export const SettingsHeaderAction = ({ children }: { children: React.ReactNode }) => (
-    <div className="absolute right-1 top-0">{children}</div>
+    <div className="absolute right-5 top-5">{children}</div>
 )
 
 export const SettingsTitle = ({ children, className }: WithChildren) => (
-    <Paragraph className={cn("font-medium text-sm", className)}>{children}</Paragraph>
+    <Paragraph
+        className={cn(
+            "font-medium text-sm",
+            "group-data-[variant=danger]/settings:text-destructive",
+            className
+        )}
+    >
+        {children}
+    </Paragraph>
 )
 
+
 export const SettingsDescription = ({ children, className }: WithChildren) => (
-    <ExtraSmall className={cn("hidden text-muted-foreground", className)}>{children}</ExtraSmall>
+    <ExtraSmall className={cn("text-muted-foreground", "group-data-[variant=danger]/settings:text-red-500", className)}>{children}</ExtraSmall>
 )
 
 /** The rounded card. Direct children (SettingsRow) get dividers between them. */
 export const SettingsContent = ({ children, className }: WithChildren) => (
     <div
         className={cn(
-            "w-full overflow-hidden rounded-2xl border border-black/6 bg-popover divide-y divide-black/6 px-4",
+            "w-full overflow-hidden divide-black/6",
             className
         )}
     >
@@ -64,7 +95,14 @@ export const SettingsContent = ({ children, className }: WithChildren) => (
 )
 
 export const SettingsFooter = ({ children, className }: WithChildren) => (
-    <div className={cn("w-full", className)}>{children}</div>
+    <div
+        className={cn(
+            "w-full px-5 py-5 border-t border-input",
+            className
+        )}
+    >
+        {children}
+    </div>
 )
 
 /* -------------------------------------------------------------------------- */
@@ -150,6 +188,7 @@ type SettingsRowProps = Omit<React.ComponentProps<"div">, "title"> & {
 
     tooltipTriggerClassName?: string
     tooltipContentClassName?: string
+    onClick?: () => void;
 }
 
 export const SettingsRow = ({
@@ -165,18 +204,20 @@ export const SettingsRow = ({
     actionClassName,
     tooltipContentClassName,
     tooltipTriggerClassName,
+    onClick,
     children,
     ...rest // onClick, id, data-*, aria-* etc. go straight to the root
 }: SettingsRowProps) => (
     <div
         className={cn(
-            "group flex w-full flex-col items-start justify-start gap-4 py-3 sm:flex-row sm:items-center sm:justify-between",
-            clickable && "cursor-pointer hover:bg-muted",
+            "group flex w-full flex-col items-start justify-start px-5 gap-4 py-3 sm:flex-row sm:items-center sm:justify-between",
+            clickable && "cursor-pointer hover:bg-input",
             className
         )}
         {...rest}
+        onClick={onClick}
     >
-        {children ?? (
+        {children ?? title ? (
             <div className="flex min-w-0  flex-col gap-0.5 sm:max-w-sm">
                 <SettingsRowHeading
                     title={title}
@@ -191,7 +232,7 @@ export const SettingsRow = ({
                     <div className="text-xs font-normal text-muted-foreground/80">{description}</div>
                 )}
             </div>
-        )}
+        ) : null}
         {action && <div className={cn("flex shrink-0 justify-end", actionClassName)}>{action}</div>}
     </div>
 )
