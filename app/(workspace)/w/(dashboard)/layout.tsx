@@ -19,7 +19,9 @@ export default async function Layout({
         <AppBootGate>
             <div className="flex w-screen overflow-x-hidden h-svh flex-col [--header-height:4rem]">
                 <AppHeader />
-                <div className='max-w-7xl pt-4 mx-auto'>{orgId ? children : <OrganizationNotSelected />}</div>
+                <div className="w-full flex-1 pt-4">
+                    {orgId ? children : <OrganizationNotSelected />}
+                </div>
             </div>
         </AppBootGate>
     )

@@ -9,6 +9,7 @@ import {
 import { type PartnerResource } from "@rewardkit/packages/types/partner/partner.schema";
 import { PAYOUT_METHOD_OPTIONS } from "@rewardkit/packages/features/payouts/constant";
 import { PartnerPayoutValues, ZPartnerPayout } from "@rewardkit/packages/types/partner/partner.validation";
+import { DirtyReporter } from "@rewardkit/packages/ui/components/form/dirty-reporter";
 
 export interface PayoutMethodValues {
     payoutMethod: PayoutMethod;
@@ -26,12 +27,14 @@ interface PayoutMethodFormProps {
     id?: string;
     partner?: Pick<PartnerResource, "payoutMethod" | "payoutDetails"> | null;
     onSubmit: (values: PartnerPayoutValues) => void;
+    onDirtyChange?: (dirty: boolean) => void
 }
 
 export const PayoutMethodForm = ({
     id = "payout-method-form",
     partner,
     onSubmit,
+    onDirtyChange
 }: PayoutMethodFormProps) => {
 
     const defaultValues: z.input<typeof ZPartnerPayout> = {
@@ -54,7 +57,7 @@ export const PayoutMethodForm = ({
     return (
         <form
             id={id}
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-4"
             onSubmit={(e) => {
                 e.preventDefault();
                 form.handleSubmit();
@@ -67,6 +70,7 @@ export const PayoutMethodForm = ({
                 }}
                 children={(field) => (
                     <field.SelectField
+                        hideLabel
                         label="Payout method"
                         placeholder="Select a method"
                         options={PAYOUT_METHOD_OPTIONS}
@@ -81,11 +85,16 @@ export const PayoutMethodForm = ({
                             <form.AppField
                                 key={`${method}-${f.name}`}
                                 name={`payoutDetails.${f.name}`}
-                                children={(field) => <field.TextField autoComplete="false" label={f.label} type={f.type} />}
+                                children={(field) => <field.TextField hideLabel autoComplete="false" placeholder={f.label} label={f.label} type={f.type} />}
                             />
                         ))
                         : null
                 }
+            </form.Subscribe>
+            <form.Subscribe selector={(state) => state.isDefaultValue}>
+                {(isDefaultValue) => (
+                    <DirtyReporter isDefaultValue={isDefaultValue} onDirtyChange={onDirtyChange} />
+                )}
             </form.Subscribe>
         </form>
     );

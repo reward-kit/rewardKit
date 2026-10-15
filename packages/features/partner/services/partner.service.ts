@@ -89,7 +89,7 @@ export class PartnerService {
             const doc = await db.partner.findOneAndUpdate(
                 { _id: partnerId, orgId },
                 { $set: partnerData },
-                { new: true, runValidators: true },
+                { returnDocument: "after", runValidators: true },
             )
             if (!doc) throw this.notFound()
             return this.toResource(doc)

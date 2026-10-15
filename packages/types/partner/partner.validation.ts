@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { PAYOUT_DETAILS_SCHEMA, PayoutMethod } from "../payout/payout.schema";
 import { AdminPartnerStatus, PARTNER_STATUS, ZPartner, ZPartnerStatusFields, ZPayoutFields } from "./partner.schema";
+import { toMinorUnits } from "@rewardkit/lib/amount/money";
 
 const refinePayout = (p: z.infer<typeof ZPayoutFields>, ctx: z.RefinementCtx) => {
     if (!p.payoutMethod) {
@@ -70,3 +71,19 @@ export const ZPartnerStatus = ZPartnerStatusFields
     })
 
 export type PartnerStatusValues = z.infer<typeof ZPartnerStatus>
+
+export const ZPartnerPayoutThreshold = z.object({
+    payoutMinimumThreshold: z
+        .string()
+        .trim()
+        .refine(
+            (v) => v === "" || toMinorUnits(v) !== null,
+            "Enter a valid amount, up to 2 decimals",
+        )
+        .transform((v) => toMinorUnits(v)),
+})
+
+// what the form holds (string)
+export type PartnerPayoutThresholdFormValues = z.input<typeof ZPartnerPayoutThreshold>
+// what the API gets (number | null)
+export type PartnerPayoutThresholdValues = z.output<typeof ZPartnerPayoutThreshold>
