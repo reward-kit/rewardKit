@@ -10,6 +10,7 @@ interface TextInputProps
     extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
     label?: string;
     labelClassName?: string;
+    hideLabel?: boolean;
     required?: boolean;
     onChange?: (value: string, e?: React.ChangeEvent<HTMLInputElement>) => void;
     showVisibilityToggle?: boolean;
@@ -42,6 +43,7 @@ export const TextInput = ({
     focusRing = true,
     onBlur,
     hint,
+    hideLabel = false,
     ...inputProps
 }: TextInputProps) => {
     const [isVisible, setIsVisible] = useState(false)
@@ -50,7 +52,7 @@ export const TextInput = ({
     const suffix = inputProps.suffix;
     return (
         <div className={cn('flex flex-col gap-2 w-full', parentClassName)}>
-            {label && (
+            {label && !hideLabel && (
                 <Label className={cn(labelClassName, "mb-1")}>
                     {label}
                     {required && <span className='text-red-500 hidden ml-1'>*</span>}

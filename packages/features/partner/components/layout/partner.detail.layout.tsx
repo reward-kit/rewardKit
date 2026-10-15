@@ -34,7 +34,7 @@ export const PartnerDetail = ({ children, className }: WithChildren) => {
  */
 export const PartnerDetailLeftPanel = ({ children, className }: WithChildren) => {
     return (
-        <div className={cn("w-full shrink-0 flex flex-col gap-4", className)}>
+        <div className={cn("w-full shrink-0 flex justify-between items-center gap-4", className)}>
             {children}
         </div>
     )
@@ -80,7 +80,7 @@ export const PartnerDetailProfileCard = ({
     statusHint
 }: PartnerProfileHeaderProps) => {
     return (
-        <div className={cn("flex flex-col w-full min-w-0 items-start gap-1 lg:shrink-0", className)}>
+        <div className={cn("flex flex-col w-full min-w-0 items-start gap-1", className)}>
             {/* Right: details, vertically centered against the left column */}
             <div className="flex min-w-0 w-full max-w-7xl mx-auto p-4 py-8 pt-4 flex-1 flex-col justify-center gap-4">
                 <div className="flex w-full justify-between items-start">

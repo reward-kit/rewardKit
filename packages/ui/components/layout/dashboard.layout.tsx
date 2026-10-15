@@ -4,7 +4,7 @@ import { cn } from "@rewardkit/lib/utils"
 import { Image } from "../image"
 
 export const Dashboard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
-  return <div className={cn("relative min-h-[calc(100vh-50px)] flex flex-col", className)}>{children}</div>
+  return <div className={cn("relative min-h-[calc(100vh-50px)] max-w-5xl mx-auto flex flex-col", className)}>{children}</div>
 }
 
 export const DashboardTopContainer = ({
@@ -73,7 +73,7 @@ export const DashboardContent = ({
           {loadingSkeleton ?? (
             <div className="flex-1 flex flex-col items-center justify-center gap-3 max-w-[calc(100vw-24.15rem)] w-full max-h-[calc(100vh-6rem)]">
               <div className="relative overflow-hidden rounded-xl">
-                <Image src="/svg/rewardkit_emblem.svg" className="w-12 grayscale brightness-120 opacity-35" alt="rewardkit" />
+                <Image src="/svg/rewardKit_emblem.svg" className="w-12 grayscale brightness-120 opacity-35" alt="rewardkit" />
                 <div className="absolute inset-0 -translate-x-full animate-shine bg-linear-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
               </div>
             </div>

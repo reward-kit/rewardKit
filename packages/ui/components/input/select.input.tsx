@@ -23,6 +23,7 @@ export interface SelectOption {
 interface SelectInputProps {
     label?: string;
     labelClassName?: string;
+    hideLabel?: boolean;
     required?: boolean;
     placeholder?: string;
     value?: string | null;
@@ -61,7 +62,8 @@ export const SelectInput = ({
     children,
     options,
     hint,
-    selectProps
+    selectProps,
+    hideLabel,
 }: SelectInputProps) => {
     const isDisabled = disabled || isLoading
 
@@ -69,7 +71,7 @@ export const SelectInput = ({
 
     return (
         <div className={cn('flex flex-col gap-2.5 w-full', parentClassName)}>
-            {label && (
+            {label && !hideLabel && (
                 <Label className={cn(labelClassName)}>
                     {label}
                     {required && <span className='text-red-500 ml-1'>*</span>}
