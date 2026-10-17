@@ -6,15 +6,7 @@ import { trpc } from "@rewardkit/trpc/react/client"
 import type {
     CreatePartnerInput,
 } from "@rewardkit/packages/types/partner/partner.api.schema"
-
-/** Runs a mutation promise and returns null on failure (the mutation's onError already toasts). */
-const safe = async <T,>(fn: () => Promise<T>): Promise<T | null> => {
-    try {
-        return await fn()
-    } catch {
-        return null
-    }
-}
+import { safeAsync } from "@rewardkit/utils/provider/safe"
 
 export function usePartner(partnerId?: string, { enabled = true }: { enabled?: boolean } = {}) {
     const { organization, isLoaded: orgLoaded } = useOrganization()
@@ -82,16 +74,16 @@ export function usePartner(partnerId?: string, { enabled = true }: { enabled?: b
 
     // create keeps your { partner } wrapper; the rest take the endpoint's input as-is
     const handleCreate = ({ partner }: { partner: CreatePartnerInput["partnerData"] }) =>
-        safe(() => create.mutateAsync({ partnerData: partner }))
+        safeAsync(() => create.mutateAsync({ partnerData: partner }))
 
     const handleUpdate = (input: Parameters<typeof update.mutateAsync>[0]) =>
-        safe(() => update.mutateAsync(input))
+        safeAsync(() => update.mutateAsync(input))
 
     const handleChangeStatus = (input: Parameters<typeof changeStatus.mutateAsync>[0]) =>
-        safe(() => changeStatus.mutateAsync(input))
+        safeAsync(() => changeStatus.mutateAsync(input))
 
     const handleDelete = (input: Parameters<typeof remove.mutateAsync>[0]) =>
-        safe(() => remove.mutateAsync(input))
+        safeAsync(() => remove.mutateAsync(input))
 
     return {
         // a disabled query still returns its cached data, so hide the old partner once the org is cleared

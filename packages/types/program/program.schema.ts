@@ -71,4 +71,5 @@ export const ZProgramResource = z.object({
 
 export type ProgramResource = z.infer<typeof ZProgramResource>;
 export type ProgramStatus = (typeof PROGRAM_STATUS)[keyof typeof PROGRAM_STATUS];
+export type UrlParameter = (typeof URL_PARAMETER)[keyof typeof URL_PARAMETER]
 export { PAYOUT_METHOD };

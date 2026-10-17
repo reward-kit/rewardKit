@@ -92,8 +92,6 @@ export const AppCopyTooltip = ({
         }
     }
 
-    const asChild = React.isValidElement(children)
-
     return (
         <Tooltip open={isOpen} onOpenChange={setIsOpen}>
             <TooltipTrigger
@@ -107,7 +105,7 @@ export const AppCopyTooltip = ({
                 align={align}
                 className="flex items-center gap-2 py-1 pr-1 whitespace-nowrap text-xs/snug"
             >
-                <span className="truncate max-w-50">
+                <span className="truncate">
                     {content ?? copyValue}
                 </span>
 

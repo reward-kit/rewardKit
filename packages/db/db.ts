@@ -1,4 +1,5 @@
 import { ApiKey } from "./models/api-key.model";
+import { Link } from "./models/link.model";
 import { Organization } from "./models/organization.model";
 import { PartnerGroup } from "./models/partner-groups.model";
 import { Partner } from "./models/partner.model";
@@ -11,5 +12,6 @@ export const db = {
     program: Program,
     apiKey: ApiKey,
     partnerGroup: PartnerGroup,
-    partner: Partner
+    partner: Partner,
+    link: Link
 }
