@@ -4,17 +4,7 @@ import toast from "react-hot-toast"
 import { useOrganization } from "@clerk/nextjs"
 import { trpc } from "@rewardkit/trpc/react/client"
 import type { CreatePartnerGroupInput } from "@rewardkit/packages/types/partner-groups/partner-groups.api.schema"
-
-const REALTIME_REFRESH_INTERVAL = 30_000
-
-/** Runs a mutation promise and returns null on failure (the mutation's onError already toasts). */
-const safe = async <T,>(fn: () => Promise<T>): Promise<T | null> => {
-    try {
-        return await fn()
-    } catch {
-        return null
-    }
-}
+import { safeAsync } from "@rewardkit/utils/provider/safe"
 
 export function usePartnerGroups({ enabled = true }: { enabled?: boolean } = {}) {
     const { organization, isLoaded: orgLoaded } = useOrganization()
@@ -27,7 +17,6 @@ export function usePartnerGroups({ enabled = true }: { enabled?: boolean } = {})
         enabled: enabled && !!orgId, // orgProcedure, so it needs an active org
         refetchOnWindowFocus: false,
         refetchIntervalInBackground: false,
-        refetchInterval: REALTIME_REFRESH_INTERVAL,
         retry: 1,
     })
 
@@ -78,16 +67,16 @@ export function usePartnerGroups({ enabled = true }: { enabled?: boolean } = {})
 
     // create keeps your { group } wrapper; the rest take the endpoint's input as-is
     const handleCreate = ({ group }: { group: CreatePartnerGroupInput["groupData"] }) =>
-        safe(() => create.mutateAsync({ groupData: group }))
+        safeAsync(() => create.mutateAsync({ groupData: group }))
 
     const handleUpdate = (input: Parameters<typeof update.mutateAsync>[0]) =>
-        safe(() => update.mutateAsync(input))
+        safeAsync(() => update.mutateAsync(input))
 
     const handleDelete = (input: Parameters<typeof remove.mutateAsync>[0]) =>
-        safe(() => remove.mutateAsync(input))
+        safeAsync(() => remove.mutateAsync(input))
 
     const handleSetDefault = (input: Parameters<typeof setDefault.mutateAsync>[0]) =>
-        safe(() => setDefault.mutateAsync(input))
+        safeAsync(() => setDefault.mutateAsync(input))
 
     return {
         // a disabled query still returns its cached data, so hide old groups once the org is cleared

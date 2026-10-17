@@ -560,7 +560,7 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
     return (
         <DataTableStyleContext.Provider value={{ variant: variant ?? "card", size: size ?? "md" }}>
             <div className={cn(rootVariants({ variant }), className)}>
-                {toolbar && <div className="p-3">{toolbar}</div>}
+                {toolbar && <div className="pl-3 pb-4 pt-2">{toolbar}</div>}
 
                 {/* CHANGED: table variant (border-separate + spacing for plain) */}
                 <Table className={tableVariants({ variant })}>
