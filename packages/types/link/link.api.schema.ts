@@ -39,19 +39,17 @@ export type LinkData = z.infer<typeof ZLinkData>
 // Dummy numbers for now (derived from the link id so they stay stable).
 // Swap for real tracking data once the clicks/leads/customers collections exist.
 export const ZLinkStats = z.object({
-    clicks: z.number().int().min(0),
-    leads: z.number().int().min(0),
-    customers: z.number().int().min(0),
-    revenue: z.number().int().min(0),    // minor units (cents)
-    commission: z.number().int().min(0), // minor units (cents)
+    total_clicks: z.number().int().min(0),
+    total_customers: z.number().int().min(0),
+    total_revenue: z.number().int().min(0),    // minor units (cents)
+    total_commission: z.number().int().min(0), // minor units (cents)
 })
 export type LinkStats = z.infer<typeof ZLinkStats>
 
 // A row in the partner links table: the stored link + its own metrics + resolved url.
 export const ZLinkListItem = ZLinkSchema.extend({
     url: z.string().optional(),
-    stats: ZLinkStats,
-})
+}).extend(ZLinkStats.shape)
 export type LinkListItem = z.infer<typeof ZLinkListItem>
 
 // ---------- Create ----------
@@ -86,7 +84,6 @@ export const ZGetLinkResponse = ZBaseAPIResponse.extend({
 })
 export type GetLinkResponse = z.infer<typeof ZGetLinkResponse>
 
-// ---------- List (links of one partner, paginated) ----------
 export const ZListLinksRequest = z.object({
     orgId: z.string(),
     partnerId: z.string(),

@@ -18,6 +18,15 @@ const ZPartnerServerFields = {
 
 // orgId comes from the session on the server, never from the client
 
+// A partner as returned by list/get, with the computed visitor/click counts.
+export const ZPartnerWithStats = ZPartner.extend({
+    total_visitors: z.number().int().nonnegative().default(0),
+    total_clicks: z.number().int().nonnegative().default(0),
+    total_revenue: z.number().int().nonnegative().default(0),
+    total_customers: z.number().int().nonnegative().default(0),
+})
+export type PartnerWithStats = z.infer<typeof ZPartnerWithStats>
+
 // ---------- Create ----------
 export const ZCreatePartnerRequest = z.object({
     orgId: z.string(),
@@ -44,7 +53,7 @@ export const ZGetPartnerInput = ZGetPartnerRequest.omit({ orgId: true })
 export type GetPartnerInput = z.infer<typeof ZGetPartnerInput>
 
 export const ZGetPartnerResponse = ZBaseAPIResponse.extend({
-    partner: ZPartner,
+    partner: ZPartnerWithStats,
 })
 export type GetPartnerResponse = z.infer<typeof ZGetPartnerResponse>
 
@@ -89,7 +98,7 @@ export const ZListPartnersInput = ZListPartnersRequest.omit({ orgId: true })
 export type ListPartnersInput = z.infer<typeof ZListPartnersInput>
 
 export const ZListPartnersResponse = ZBaseAPIResponse
-    .extend(ZPaginatedResponse(ZPartner).shape)
+    .extend(ZPaginatedResponse(ZPartnerWithStats).shape,)
 export type ListPartnersResponse = z.infer<typeof ZListPartnersResponse>
 
 // ---------- Counts (per status, honouring the same filters as the list) ----------

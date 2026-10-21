@@ -3,7 +3,6 @@
 import { useQueryState } from 'nuqs'
 import { PartnerActiveListTable } from '@rewardkit/packages/features/partner/components/table/partner.active.table'
 import { Dashboard, DashboardContent, DashboardHeader, DashboardHeaderAction, DashboardTitle } from '@rewardkit/packages/ui/components/layout/dashboard.layout'
-import { PartnerCreateDialog } from './partner.create.dialog'
 import { TextInput } from '@rewardkit/packages/ui/components/input/text.input'
 import { TableTab, TableTabs } from '@rewardkit/packages/ui/components/table'
 import { HugeiconsIcon } from '@hugeicons/react'

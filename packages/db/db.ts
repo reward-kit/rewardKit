@@ -5,6 +5,8 @@ import { PartnerGroup } from "./models/partner-groups.model";
 import { Partner } from "./models/partner.model";
 import { Program } from "./models/program.model";
 import { User } from "./models/user.model";
+import { Visitor } from "./models/visitor.model";
+import { Click } from "./models/click.model";
 
 export const db = {
     user: User,
@@ -13,5 +15,7 @@ export const db = {
     apiKey: ApiKey,
     partnerGroup: PartnerGroup,
     partner: Partner,
-    link: Link
+    link: Link,
+    visitor: Visitor,
+    click: Click
 }

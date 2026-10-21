@@ -18,17 +18,9 @@ import { UserAvatar } from "@rewardkit/packages/ui/components/user-avatar";
 import { PartnerActions } from "./actions/partner.actions";
 import { formatDate } from "@rewardkit/lib/date/formateDate";
 import { AppCopyTooltip, AppTooltip } from "@rewardkit/packages/ui/components/tooltip/tooltip";
+import { RouterOutputs } from "@rewardkit/trpc";
 
-export type PartnerRow = PartnerResource & {
-    group?: { id: string; name: string; default: boolean } | null;
-    stats?: {
-        revenue: number;   // minor units (cents)
-        earnings: number;  // minor units (cents)
-        customers: number;
-        clicks: number;
-        leads: number;
-    };
-};
+export type PartnerRow = RouterOutputs["partner"]["listPartners"]["data"][number]
 
 // single source of truth for the table's features
 export const partnerTableFeatures = tableFeatures({
@@ -137,45 +129,37 @@ export const partnerColumns = ({
             id: "revenue",
             size: 150,
             header: ({ column }) => <SortableHeader column={column} title="Revenue" className="justify-end" />,
-            accessorFn: (row) => row.stats?.revenue ?? 0,
-            sortFn: (a, b) => cmp(a.original.stats?.revenue ?? 0, b.original.stats?.revenue ?? 0),
+            accessorFn: (row) => row.total_revenue ?? 0,
+            sortFn: (a, b) => cmp(a.original.total_revenue ?? 0, b.original.total_revenue ?? 0),
             cell: ({ row }) => (
-                <div className="text-right max-w-20 w-full font-medium text-xsm">{money(row.original.stats?.revenue, currency)}</div>
+                <div className="text-right max-w-20 w-full font-medium text-xsm">{money(row.original.total_revenue, currency)}</div>
             ),
         },
         {
             id: "earnings",
             size: 150,
             header: ({ column }) => <SortableHeader column={column} title="Earnings" className="justify-end" />,
-            accessorFn: (row) => row.stats?.earnings ?? 0,
-            sortFn: (a, b) => cmp(a.original.stats?.earnings ?? 0, b.original.stats?.earnings ?? 0),
+            accessorFn: (row) => row.total_revenue ?? 0,
+            sortFn: (a, b) => cmp(a.original.total_revenue ?? 0, b.original.total_revenue ?? 0),
             cell: ({ row }) => (
-                <div className="text-right max-w-20 w-full font-medium text-xsm">{money(row.original.stats?.earnings, currency)}</div>
+                <div className="text-right max-w-20 w-full font-medium text-xsm">{money(row.original.total_revenue, currency)}</div>
             ),
         },
         {
             id: "customers",
             size: 130,
             header: ({ column }) => <SortableHeader column={column} title="Customers" className="justify-end" />,
-            accessorFn: (row) => row.stats?.customers ?? 0,
-            sortFn: (a, b) => cmp(a.original.stats?.customers ?? 0, b.original.stats?.customers ?? 0),
-            cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.stats?.customers)}</div>,
+            accessorFn: (row) => row.total_customers ?? 0,
+            sortFn: (a, b) => cmp(a.original.total_customers ?? 0, b.original.total_customers ?? 0),
+            cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.total_customers)}</div>,
         },
         {
             id: "clicks",
             size: 130,
             header: ({ column }) => <SortableHeader column={column} title="Clicks" className="justify-end" />,
-            accessorFn: (row) => row.stats?.clicks ?? 0,
-            sortFn: (a, b) => cmp(a.original.stats?.clicks ?? 0, b.original.stats?.clicks ?? 0),
-            cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.stats?.clicks)}</div>,
-        },
-        {
-            id: "leads",
-            size: 130,
-            header: ({ column }) => <SortableHeader column={column} title="Leads" className="justify-end" />,
-            accessorFn: (row) => row.stats?.leads ?? 0,
-            sortFn: (a, b) => cmp(a.original.stats?.leads ?? 0, b.original.stats?.leads ?? 0),
-            cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.stats?.leads)}</div>,
+            accessorFn: (row) => row.total_clicks ?? 0,
+            sortFn: (a, b) => cmp(a.original.total_clicks ?? 0, b.original.total_clicks ?? 0),
+            cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original?.total_clicks)}</div>,
         },
         {
             id: "group",

@@ -9,13 +9,13 @@ import {
     type ColumnDef,
     createSortedRowModel,
 } from "@rewardkit/packages/ui/components/table";
-import type { LinkListItem } from "@rewardkit/packages/types/link/link.api.schema";
 import { formatDate } from "@rewardkit/lib/date/formateDate";
 import { formatMoney } from "@rewardkit/lib/amount/money";
 import { AppCopyTooltip } from "@rewardkit/packages/ui/components/tooltip/tooltip";
 import { LinkActions } from "./actions/link.actions";
+import { RouterOutputs } from "@rewardkit/trpc";
 
-export type LinkRow = LinkListItem;
+export type LinkRow = RouterOutputs["link"]["listLinks"]["data"][number];
 
 // single source of truth for the table's features
 export const linkTableFeatures = tableFeatures({
@@ -67,35 +67,27 @@ export const linkColumns = ({ currency = "USD" }: LinkColumnsOptions = {}): Link
         id: "clicks",
         size: 110,
         header: ({ column }) => <SortableHeader column={column} title="Clicks" className="justify-end" />,
-        accessorFn: (row) => row.stats?.clicks ?? 0,
-        sortFn: (a, b) => cmp(a.original.stats?.clicks ?? 0, b.original.stats?.clicks ?? 0),
-        cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.stats?.clicks)}</div>,
-    },
-    {
-        id: "leads",
-        size: 110,
-        header: ({ column }) => <SortableHeader column={column} title="Leads" className="justify-end" />,
-        accessorFn: (row) => row.stats?.leads ?? 0,
-        sortFn: (a, b) => cmp(a.original.stats?.leads ?? 0, b.original.stats?.leads ?? 0),
-        cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.stats?.leads)}</div>,
+        accessorFn: (row) => row.total_clicks ?? 0,
+        sortFn: (a, b) => cmp(a.original.total_clicks ?? 0, b.original.total_clicks ?? 0),
+        cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.total_clicks)}</div>,
     },
     {
         id: "customers",
         size: 130,
         header: ({ column }) => <SortableHeader column={column} title="Customers" className="justify-end" />,
-        accessorFn: (row) => row.stats?.customers ?? 0,
-        sortFn: (a, b) => cmp(a.original.stats?.customers ?? 0, b.original.stats?.customers ?? 0),
-        cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.stats?.customers)}</div>,
+        accessorFn: (row) => row.total_customers ?? 0,
+        sortFn: (a, b) => cmp(a.original.total_customers ?? 0, b.original.total_customers ?? 0),
+        cell: ({ row }) => <div className="text-right text-xsm">{numeric(row.original.total_customers)}</div>,
     },
     {
         id: "revenue",
         size: 140,
         header: ({ column }) => <SortableHeader column={column} title="Revenue" className="justify-end" />,
-        accessorFn: (row) => row.stats?.revenue ?? 0,
-        sortFn: (a, b) => cmp(a.original.stats?.revenue ?? 0, b.original.stats?.revenue ?? 0),
+        accessorFn: (row) => row.total_revenue ?? 0,
+        sortFn: (a, b) => cmp(a.original.total_revenue ?? 0, b.original.total_revenue ?? 0),
         cell: ({ row }) => (
             <div className="text-right max-w-20 w-full font-medium text-xsm">
-                {money(row.original.stats?.revenue, currency)}
+                {money(row.original.total_revenue, currency)}
             </div>
         ),
     },
@@ -103,11 +95,11 @@ export const linkColumns = ({ currency = "USD" }: LinkColumnsOptions = {}): Link
         id: "commission",
         size: 150,
         header: ({ column }) => <SortableHeader column={column} title="Commission" className="justify-end" />,
-        accessorFn: (row) => row.stats?.commission ?? 0,
-        sortFn: (a, b) => cmp(a.original.stats?.commission ?? 0, b.original.stats?.commission ?? 0),
+        accessorFn: (row) => row.total_commission ?? 0,
+        sortFn: (a, b) => cmp(a.original.total_commission ?? 0, b.original.total_commission ?? 0),
         cell: ({ row }) => (
             <div className="text-right max-w-20 w-full font-medium text-xsm">
-                {money(row.original.stats?.commission, currency)}
+                {money(row.original.total_commission, currency)}
             </div>
         ),
     },
