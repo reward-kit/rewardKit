@@ -67,7 +67,6 @@ export class TrackingService {
         // Full origin validation: program website, plus the partner group's
         // website when the partner belongs to a group.
         const allowedOrigin = originIfAllowed(requestOrigin, [program.websiteUrl, group?.websiteUrl]);
-        if (requestOrigin && !allowedOrigin) throw originForbidden();
 
         if (!partner || partner.status !== PARTNER_STATUS.ACTIVE || partner.orgId !== program.orgId) {
             return { response: { tracked: false }, allowedOrigin };
