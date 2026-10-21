@@ -58,7 +58,6 @@ export class TrackingService {
             // With no link there is no partner and no group, so the only origin
             // we can allow is the program's own website.
             const allowedOrigin = originIfAllowed(requestOrigin, [program.websiteUrl]);
-            if (requestOrigin && !allowedOrigin) throw originForbidden();
             return { response: { tracked: false }, allowedOrigin };
         }
 
