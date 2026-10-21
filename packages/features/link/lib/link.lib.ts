@@ -77,5 +77,5 @@ export function linkStatsFromSeed(seed: string): LinkStats {
     const customers = Math.round(leads * (0.2 + ((h >>> 5) % 40) / 100))   // 20-60% of leads
     const revenue = customers * (2000 + ((h >>> 7) % 8000))                // $20-$100 per customer (cents)
     const commission = Math.round(revenue * 0.2)                           // 20% of revenue
-    return { clicks, leads, customers, revenue, commission }
+    return { total_clicks: clicks, total_customers: customers, total_revenue: revenue, total_commission: commission }
 }
