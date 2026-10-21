@@ -11,7 +11,9 @@ export const ID_PREFIX = {
     partner: "prt",
     group: "grp",
     apiKey: "sk",
-    link: "lnk"
+    link: "lnk",
+    visitor: "vst",
+    click: "clk"
 } as const
 
 export type IdPrefix = (typeof ID_PREFIX)[keyof typeof ID_PREFIX]

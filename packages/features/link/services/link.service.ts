@@ -11,6 +11,7 @@ import {
     type UpdateLinkRequest, type UpdateLinkResponse,
 } from "@rewardkit/packages/types/link/link.api.schema"
 import { allowedUrlParams, buildLinkUrl, generateLinkCode, linkStatsFromSeed, resolveUrlParam } from "../lib/link.lib"
+import type { LinkStats } from "@rewardkit/packages/types/link/link.api.schema"
 
 const DUPLICATE_KEY = 11000
 // only stored fields can be sorted by the database; metrics sort client-side
@@ -69,16 +70,21 @@ export class LinkService {
         }
         if (!doc) throw new LinkServiceError("CONFLICT", "Could not generate a unique link, please try again")
 
-        return { success: true, message: "Link created successfully", link: this.toItem(doc as unknown as Record<string, any>, program) }
+        return { success: true, message: "Link created successfully", link: this.toItem(doc as unknown as Record<string, any>, program, this.buildStats(0)) }
     }
 
     async get({ orgId, partnerId, linkId }: GetLinkRequest): Promise<GetLinkResponse> {
-        const [program, doc] = await Promise.all([
+        const [program, doc, clicks] = await Promise.all([
             db.program.findOne({ orgId }).select(PROGRAM_URL_FIELDS).lean(),
             db.link.findOne({ _id: linkId, orgId, partnerId }).lean(),
+            this.clickCounts(partnerId, [linkId]),
         ])
         if (!doc) throw this.notFound()
-        return { success: true, message: "Link retrieved successfully", link: this.toItem(doc, program) }
+        return {
+            success: true,
+            message: "Link retrieved successfully",
+            link: this.toItem(doc, program, this.buildStats(clicks.get(String(doc._id)))),
+        }
     }
 
     // Optimised for the partner details tab: the DB does match/sort/skip/limit on
@@ -112,12 +118,16 @@ export class LinkService {
             db.link.countDocuments(filter),
         ])
 
+        const clicks = await this.clickCounts(partnerId, docs.map((d: any) => String(d._id)))
+
         const totalPages = Math.max(1, Math.ceil(total / limitN))
 
         return {
             success: true,
             message: "Links retrieved successfully",
-            data: docs.map((doc) => this.toItem(doc, program)),
+            data: docs.map((doc: any) =>
+                this.toItem(doc, program, this.buildStats(clicks.get(String(doc._id)))),
+            ),
             total,
             page: pageN,
             limit: limitN,
@@ -149,7 +159,9 @@ export class LinkService {
         }
         if (!doc) throw this.notFound()
 
-        return { success: true, message: "Link updated successfully", link: this.toItem(doc, program) }
+        const clicks = await this.clickCounts(partnerId, [linkId])
+
+        return { success: true, message: "Link updated successfully", link: this.toItem(doc, program, this.buildStats(clicks.get(String(doc._id)))), }
     }
 
     async delete({ orgId, partnerId, linkId }: DeleteLinkRequest): Promise<DeleteLinkResponse> {
@@ -175,10 +187,33 @@ export class LinkService {
         return filter
     }
 
+    private async clickCounts(partnerId: string, linkIds: string[]): Promise<Map<string, number>> {
+        if (linkIds.length === 0) return new Map()
+        const rows: { _id: string; count: number }[] = await db.click
+            .aggregate([
+                { $match: { partnerId, linkId: { $in: linkIds } } },
+                { $group: { _id: "$linkId", count: { $sum: 1 } } },
+            ])
+            .option({ maxTimeMS: 5000 })
+        return new Map(rows.map((r) => [String(r._id), r.count]))
+    }
+
+    private buildStats(clicks: number | undefined): LinkStats {
+        return {
+            total_clicks: clicks ?? 0,
+            total_customers: 0,
+            total_revenue: 0,
+            total_commission: 0,
+        }
+    }
+
     // Accepts both a mongoose doc's toJSON() and a raw aggregation result.
-    private toItem(raw: Record<string, any>, program: LinkUrlSource | null | undefined): LinkListItem {
+    private toItem(
+        raw: Record<string, any>,
+        program: LinkUrlSource | null | undefined,
+        stats: LinkStats,
+    ): LinkListItem {
         const id = String(raw._id ?? raw.id ?? "")
-        // legacy rows predate urlParam; fall back to whatever the program allows
         const urlParam = raw.urlParam ?? resolveUrlParam(undefined, program?.urlParams)
         return {
             _id: id,
@@ -192,7 +227,7 @@ export class LinkService {
             createdAt: this.toISO(raw.createdAt),
             updatedAt: this.toISO(raw.updatedAt),
             url: buildLinkUrl(program, raw.code, urlParam),
-            stats: linkStatsFromSeed(id || raw.code),
+            ...stats,
         }
     }
 

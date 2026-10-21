@@ -22,31 +22,22 @@ import { isAdminStatus } from "@rewardkit/packages/features/partner/lib/status.l
 import { PartnerPayoutThresholdCard } from "@rewardkit/packages/features/partner/components/payout-minimum-threshold/payout-minimum-threshold.card"
 import { useProgram } from "@rewardkit/packages/features/program/hooks/useProgram"
 import { usePartnerLinks } from "@rewardkit/packages/features/link/hooks/usePartnerLinks"
+import { DetailsCard, DetailsCardContent, DetailsCardHeader, DetailsCardTitle } from "@rewardkit/components/details-card"
+import { Card, CardContent, CardHeader, CardTitle } from "@rewardkit/packages/ui/components/card"
 
 export const PartnerDetails = () => {
     const activeId = useActivePartnerId()
     const partnerId = activeId ?? ""
-    const { partner, isLoading, handleDelete, remove } = usePartner(partnerId)
+    const { partner, isLoading } = usePartner(partnerId)
     const { program } = useProgram();
     const { total } = usePartnerLinks({ partnerId })
     const [editPayout, setEditPayout] = React.useState(false)
     const [editPartnerStatus, setEditPartnerStatus] = React.useState(false)
-
-    const qs = useSearchParams().toString()
-    const backHref = qs ? `/w/partners?${qs}` : partnersHref()
-    const router = useRouter()
-
     const country = partner && getCountry(partner?.countryCode)
 
 
     return (
         <Dashboard>
-            {/* <DashboardHeader>
-                <Link className="flex items-center gap-1 text-sm" href={backHref} >
-                    <ChevronLeft className="size-4" />
-                    Partners
-                </Link>
-            </DashboardHeader> */}
             <DashboardContent isLoading={isLoading} className="py-0 px-0">
                 <PartnerDetail>
                     <PartnerDetailLeftPanel>
@@ -60,15 +51,15 @@ export const PartnerDetails = () => {
                             countryName={country?.name}
                             companyName={partner?.companyName}
                         />
-                        {/* <PartnerDetailMetricsCard metrics={overviewMetrics} /> */}
                     </PartnerDetailLeftPanel>
 
                     <PartnerDetailRightPanel>
-                        <Tabs className="w-full">
+                        <Tabs className="w-full" defaultValue="overview">
                             {/* tab bar scrolls sideways on narrow screens instead of truncating */}
                             <div className="w-full border-b">
                                 <div className="max-w-5xl mx-auto overflow-x-auto pl-3">
                                     <TabsList variant="line" className="pb-0 gap-8 justify-start">
+                                        <TabsTrigger className="pb-0" value="overview">Overview</TabsTrigger>
                                         <TabsTrigger className="pb-0" value="customers">Customers</TabsTrigger>
                                         <TabsTrigger className="pb-0" value="commissions">Commissions</TabsTrigger>
                                         <TabsTrigger className="pb-0" value="transactions">Transactions</TabsTrigger>
@@ -82,6 +73,27 @@ export const PartnerDetails = () => {
 
                             <div className="py-6 max-w-5xl w-full mx-auto pt-0">
                                 {/* overflow-x-auto: tables scroll inside their own box on mobile */}
+                                <TabsContent value="overview">
+                                    {/* Computed stats shipped with the partner payload — no extra fetch. */}
+                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 mt-4">
+                                        <Card size="sm" className="bg-background">
+                                            <CardHeader>
+                                                <CardTitle>Visitors</CardTitle>
+                                            </CardHeader>
+                                            <CardContent className="divide-y-0">
+                                                <span className="text-2xl font-semibold">{partner?.total_visitors ?? 0}</span>
+                                            </CardContent>
+                                        </Card>
+                                        <Card size="sm" className="bg-background">
+                                            <CardHeader>
+                                                <CardTitle>Clicks</CardTitle>
+                                            </CardHeader>
+                                            <CardContent className="divide-y-0">
+                                                <span className="text-2xl font-semibold">{partner?.total_clicks ?? 0}</span>
+                                            </CardContent>
+                                        </Card>
+                                    </div>
+                                </TabsContent>
                                 <TabsContent value="customers" className="overflow-x-auto">
                                     <PartnerActiveListTable />
                                 </TabsContent>

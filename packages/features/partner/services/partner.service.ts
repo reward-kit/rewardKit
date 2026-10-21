@@ -9,8 +9,11 @@ import type {
     DeletePartnerRequest,
     PartnerStatusCounts,
     PartnerCountsRequest,
+    PartnerWithStats,
 } from "@rewardkit/packages/types/partner/partner.api.schema"
 import { db } from "@rewardkit/packages/db/db"
+import { visitorService } from "@rewardkit/packages/features/tracking/services/visitor.service"
+import { clickService } from "@rewardkit/packages/features/tracking/services/click.service"
 
 import { AppError } from "@rewardkit/packages/errors/app-error"
 
@@ -63,7 +66,7 @@ export class PartnerService {
         }
     }
 
-    async get({ orgId, partnerId }: GetPartnerRequest): Promise<PartnerResource> {
+    async get({ orgId, partnerId }: GetPartnerRequest): Promise<PartnerResource & { total_visitors: number, total_clicks: number }> {
         const [raw] = await db.partner
             .aggregate([
                 { $match: { _id: partnerId, orgId } },
@@ -78,7 +81,25 @@ export class PartnerService {
         // hydrate drops fields that aren't in the partner schema, so re-attach the joined group
         const resource = this.toResource(doc) as PartnerResource & { group?: unknown }
         resource.group = raw.group ?? null
-        return resource
+
+        // Visitor/click totals: computed by their own services (aggregation lives there),
+        // both in one Promise.all so details stays two queries regardless of payload size.
+        const programId = await this.resolveProgramId(orgId)
+        const [visitorStats, clickStats] = await Promise.all([
+            visitorService.getStatsByPartner(programId, partnerId),
+            clickService.getStatsByPartner(programId, partnerId),
+        ])
+        return {
+            ...resource,
+            total_visitors: visitorStats.total_visitors,
+            total_clicks: clickStats.total_clicks,
+        }
+    }
+
+    /** One program per org (same rule programService.getProgramByOrgId uses); "" means no stats to compute. */
+    private async resolveProgramId(orgId: string): Promise<string> {
+        const program = await db.program.findOne({ orgId }, { _id: 1 }).lean()
+        return program?._id ? String(program._id) : ""
     }
 
     // Update (profile fields only)
@@ -146,8 +167,22 @@ export class PartnerService {
 
         const totalPages = Math.max(1, Math.ceil(total / limitN))
 
+        // Stats come from their own services: one grouped aggregation per
+        // collection (not per partner), both running in parallel.
+        const partnerIds = docs.map((d) => d._id)
+        const programId = await this.resolveProgramId(orgId)
+        const [visitorCounts, clickCounts] = await Promise.all([
+            visitorService.getCountsByPartnerIds(programId, partnerIds),
+            clickService.getCountsByPartnerIds(programId, partnerIds),
+        ])
+        const data: PartnerWithStats[] = docs.map((d) => ({
+            ...d,
+            total_visitors: visitorCounts.get(d._id) || 0,
+            total_clicks: clickCounts.get(d._id) || 0,
+        }))
+
         return {
-            data: docs,
+            data: data as any,
             total,
             page: pageN,
             limit: limitN,
